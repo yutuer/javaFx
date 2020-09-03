@@ -1,8 +1,8 @@
 package protobufCodeGen;
 
+import protobufCodeGen.listener.PrintCodeListener;
 import protobufCodeGen.out.ConsoleOutput;
 import protobufCodeGen.out.IOutPut;
-import protobufCodeGen.template.PrintEnum;
 import util.Log;
 import util.PropertiesUtils;
 
@@ -17,6 +17,11 @@ import java.util.Properties;
 public class ProtobufCodeGen
 {
 
+    /**
+     * 全局的配置文件引用
+     */
+    public static Properties properties;
+
     public static void main(String[] args)
     {
         if (args == null || args.length < 2)
@@ -29,15 +34,12 @@ public class ProtobufCodeGen
         {
             String propertiesName = args[1];
 
-            Properties properties = PropertiesUtils.getProperties(propertiesName);
+            properties = PropertiesUtils.getProperties(propertiesName);
 
             ProtobufNodeTreeCollection protobufNodeTreeCollection = new ProtobufNodeTreeCollection();
+            protobufNodeTreeCollection.addListener(new PrintCodeListener());
+
             protobufNodeTreeCollection.parse(PropertiesUtils.getString(properties, ProtobufCodeKey.protoFiles, "").split(";"));
-
-            protobufNodeTreeCollection.addTemplateString(PropertiesUtils.getString(properties, ProtobufCodeKey.protoName, ""));
-
-            IOutPut outPut = getInstance(PropertiesUtils.getInt(properties, ProtobufCodeKey.output, 0));
-            protobufNodeTreeCollection.printCode(PrintEnum.values()[PropertiesUtils.getInt(properties, ProtobufCodeKey.printEnum, 0)], outPut);
         }
     }
 

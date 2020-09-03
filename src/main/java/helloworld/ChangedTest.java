@@ -15,7 +15,7 @@ public class ChangedTest
     {
         SimpleIntegerProperty simpleIntegerProperty = new SimpleIntegerProperty(100);
         simpleIntegerProperty.addListener(ChangedTest::changed);
-        simpleIntegerProperty.addListener(ChangedTest::changed2);
+//        simpleIntegerProperty.addListener(ChangedTest::changed2);
 
         System.out.println("-------------------");
         simpleIntegerProperty.set(101);
@@ -28,7 +28,7 @@ public class ChangedTest
         System.out.println("-------------------");
 
         simpleIntegerProperty.removeListener(ChangedTest::changed);
-        simpleIntegerProperty.removeListener(ChangedTest::changed2);
+//        simpleIntegerProperty.removeListener(ChangedTest::changed2);
     }
 
     public static void changed(ObservableValue<? extends Number> prop, Number oldValue, Number newValue)

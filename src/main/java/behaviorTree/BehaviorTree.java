@@ -2,6 +2,7 @@ package behaviorTree;
 
 import behaviorTree.context.IContext;
 import behaviorTree.ifs.IBehaviourNode;
+import behaviorTree.treeEvent.ITreeEvent;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +27,11 @@ public class BehaviorTree<T extends IContext>
      * 当前运行节点 null 表示没有
      */
     private IBehaviourNode<T> runningNode;
+
+    public void accept(ITreeEvent treeEvent)
+    {
+        treeEvent.accpet(this);
+    }
 
     /**
      * tick

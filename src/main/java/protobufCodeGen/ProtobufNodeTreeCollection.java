@@ -1,5 +1,8 @@
 package protobufCodeGen;
 
+import protobufCodeGen.listener.EventHelper;
+import protobufCodeGen.listener.ICollectionNotify;
+import protobufCodeGen.listener.ICollectionParseEndListener;
 import protobufCodeGen.out.IOutPut;
 import protobufCodeGen.template.PrintEnum;
 
@@ -12,7 +15,7 @@ import java.util.Queue;
  * @Date 2020/8/31 15:14
  * @Version 1.0
  */
-public class ProtobufNodeTreeCollection
+public class ProtobufNodeTreeCollection implements ICollectionNotify
 {
 
     private ProtobufNodeTree[] protobufFiles;
@@ -21,6 +24,11 @@ public class ProtobufNodeTreeCollection
      * 用于 打印输出模板
      */
     private Queue<String> queue = new LinkedList<>();
+
+    /**
+     * 监听器链表
+     */
+    private EventHelper header;
 
     /**
      * 输入一段名称, 打印一段代码
@@ -60,6 +68,8 @@ public class ProtobufNodeTreeCollection
                 protobufFiles[i] = protobufFile;
             }
         }
+
+        EventHelper.notifyListener(header, this);
     }
 
     public ProtobufFileNodeTxt findNodeTxt(String className)
@@ -83,5 +93,17 @@ public class ProtobufNodeTreeCollection
     public String pop()
     {
         return queue.poll();
+    }
+
+    @Override
+    public void addListener(ICollectionParseEndListener listener)
+    {
+        header = EventHelper.addListener(header, this, listener);
+    }
+
+    @Override
+    public void removeListener(ICollectionParseEndListener listener)
+    {
+
     }
 }
