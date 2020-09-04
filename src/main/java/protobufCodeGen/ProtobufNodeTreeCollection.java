@@ -106,4 +106,22 @@ public class ProtobufNodeTreeCollection implements ICollectionNotify
     {
 
     }
+
+    public void initListeners(String[] listeners)
+    {
+        for (int i = 0; i < listeners.length; i++)
+        {
+            String listener = listeners[i];
+            try
+            {
+                Class<?> aClass = Class.forName(listener);
+                Object o = aClass.newInstance();
+                addListener(ICollectionParseEndListener.class.cast(o));
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
 }

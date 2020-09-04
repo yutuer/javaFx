@@ -99,7 +99,6 @@ public class ProtobufFileNodePropertyTxt
         StringBuilder genSB = getGenSB();
         clearSB(genSB);
 
-
         if (isRepeate())
         {
             if (isPrimary())

@@ -70,13 +70,13 @@ public class MessageKeywordHandler implements IKeywordParseHandler
     @Override
     public void onAdd(ProtobufNodeTree nodeTree)
     {
-        Log.logger.info("添加 [ MessageHandler ]");
+        Log.logger.info("添加 [ MessageHandler: {}]", nodeTree.prefix);
     }
 
     @Override
     public void onRemove(ProtobufNodeTree nodeTree)
     {
-        Log.logger.info("移除 [ MessageHandler ]");
+        Log.logger.info("移除 [ MessageHandler: {}]", nodeTree.prefix);
 
         // 添加关键词解析
         nodeTree.registerKeywordHandler(IKeywordParseHandler.Model, nodeTree.ModelParseHandler);

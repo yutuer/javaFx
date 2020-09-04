@@ -54,12 +54,12 @@ public class CommentKeywordHandler implements IKeywordParseHandler
     @Override
     public void onAdd(ProtobufNodeTree nodeTree)
     {
-        Log.logger.info("添加 [ CommentHandler ]");
+        Log.logger.info("添加 [ CommentHandler ]: {}", nodeTree.prefix);
     }
 
     @Override
     public void onRemove(ProtobufNodeTree nodeTree)
     {
-        Log.logger.info("移除 [ CommentHandler ]");
+        Log.logger.info("移除 [ CommentHandler ]: {}", nodeTree.prefix);
     }
 }

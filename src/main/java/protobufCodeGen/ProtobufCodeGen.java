@@ -1,6 +1,5 @@
 package protobufCodeGen;
 
-import protobufCodeGen.listener.PrintCodeListener;
 import protobufCodeGen.out.ConsoleOutput;
 import protobufCodeGen.out.IOutPut;
 import util.Log;
@@ -37,7 +36,7 @@ public class ProtobufCodeGen
             properties = PropertiesUtils.getProperties(propertiesName);
 
             ProtobufNodeTreeCollection protobufNodeTreeCollection = new ProtobufNodeTreeCollection();
-            protobufNodeTreeCollection.addListener(new PrintCodeListener());
+            protobufNodeTreeCollection.initListeners(PropertiesUtils.getString(properties, ProtobufCodeKey.listener, "").split(";"));
 
             protobufNodeTreeCollection.parse(PropertiesUtils.getString(properties, ProtobufCodeKey.protoFiles, "").split(";"));
         }

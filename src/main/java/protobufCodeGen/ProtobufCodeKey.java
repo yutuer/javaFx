@@ -15,4 +15,6 @@ public class ProtobufCodeKey
     public static final String protoName = "protoName";
 
     public static final String output = "output";
+
+    public static final String listener = "listener";
 }
