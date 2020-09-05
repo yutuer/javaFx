@@ -1,10 +1,12 @@
-package protobufCodeGen.listener;
+package protobufCodeGen.codegen;
 
 import protobufCodeGen.ProtobufCodeGen;
-import protobufCodeGen.ProtobufCodeKey;
-import protobufCodeGen.ProtobufNodeTreeCollection;
+import protobufCodeGen.listener.ICollectionParseEndListener;
+import protobufCodeGen.out.OutPutFactory;
+import protobufCodeGen.parse.ProtobufCodeKey;
+import protobufCodeGen.parse.ProtobufNodeTreeCollection;
 import protobufCodeGen.out.IOutPut;
-import protobufCodeGen.template.PrintEnum;
+import protobufCodeGen.codegen.template.PrintEnum;
 import util.PropertiesUtils;
 
 import java.util.Properties;
@@ -23,7 +25,7 @@ public class PrintCodeListener implements ICollectionParseEndListener
         Properties properties = ProtobufCodeGen.properties;
 
         protobufNodeTreeCollection.addTemplateString(PropertiesUtils.getString(properties, ProtobufCodeKey.protoName, ""));
-        IOutPut outPut = ProtobufCodeGen.getInstance(PropertiesUtils.getInt(properties, ProtobufCodeKey.output, 0));
+        IOutPut outPut = OutPutFactory.getInstance(PropertiesUtils.getInt(properties, ProtobufCodeKey.output, 0));
         protobufNodeTreeCollection.printCode(PrintEnum.values()[PropertiesUtils.getInt(properties, ProtobufCodeKey.printEnum, 0)], outPut);
     }
 }

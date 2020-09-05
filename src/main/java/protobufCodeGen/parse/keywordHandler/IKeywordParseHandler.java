@@ -1,6 +1,6 @@
-package protobufCodeGen.keywordHandler;
+package protobufCodeGen.parse.keywordHandler;
 
-import protobufCodeGen.ProtobufNodeTree;
+import protobufCodeGen.parse.ProtobufNodeTree;
 
 import java.nio.CharBuffer;
 

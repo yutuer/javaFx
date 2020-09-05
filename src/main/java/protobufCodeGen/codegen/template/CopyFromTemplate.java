@@ -1,4 +1,4 @@
-package protobufCodeGen.template;
+package protobufCodeGen.codegen.template;
 
 /**
  * @Description 模板类

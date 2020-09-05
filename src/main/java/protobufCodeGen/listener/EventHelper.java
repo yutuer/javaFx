@@ -1,6 +1,6 @@
 package protobufCodeGen.listener;
 
-import protobufCodeGen.ProtobufNodeTreeCollection;
+import protobufCodeGen.parse.ProtobufNodeTreeCollection;
 
 /**
  * @Description 一个辅助类, 用于封装所有类型的监听器,

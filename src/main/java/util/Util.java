@@ -34,4 +34,28 @@ public class Util
         return name.substring(0, upperIndex).toUpperCase() + name.substring(upperIndex);
     }
 
+    /**
+     * 得到>= x的2次幂
+     *
+     * @param x
+     * @return
+     */
+    public static int intToMaxTowPower(int x)
+    {
+        //第一种方法,  不停的向右移位. 直到==0为止
+        int y = x;
+        int count = 0;
+        while (y > 0)
+        {
+            count++;
+            y >>= 1;
+        }
+        return 1 << count;
+    }
+
+    public static void main(String[] args)
+    {
+        System.out.println(intToMaxTowPower(0b111));
+    }
+
 }

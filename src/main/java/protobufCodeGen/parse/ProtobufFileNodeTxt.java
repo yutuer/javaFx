@@ -1,7 +1,7 @@
-package protobufCodeGen;
+package protobufCodeGen.parse;
 
-import protobufCodeGen.template.CopyFromTemplate;
-import protobufCodeGen.template.WriteToTemplate;
+import protobufCodeGen.codegen.template.CopyFromTemplate;
+import protobufCodeGen.codegen.template.WriteToTemplate;
 import util.Util;
 
 import java.util.ArrayList;

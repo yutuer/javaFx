@@ -1,6 +1,6 @@
-package protobufCodeGen.keywordHandler.pipeline;
+package protobufCodeGen.parse.keywordHandler.pipeline;
 
-import protobufCodeGen.keywordHandler.IKeywordParseHandler;
+import protobufCodeGen.parse.keywordHandler.IKeywordParseHandler;
 
 /**
  * @Description 不用接口了, 优先实现功能

@@ -1,7 +1,7 @@
 package protobufCodeGen;
 
-import protobufCodeGen.out.ConsoleOutput;
-import protobufCodeGen.out.IOutPut;
+import protobufCodeGen.parse.ProtobufCodeKey;
+import protobufCodeGen.parse.ProtobufNodeTreeCollection;
 import util.Log;
 import util.PropertiesUtils;
 
@@ -42,12 +42,4 @@ public class ProtobufCodeGen
         }
     }
 
-    public static IOutPut getInstance(int output)
-    {
-        if (output == 0)
-        {
-            return new ConsoleOutput();
-        }
-        return null;
-    }
 }

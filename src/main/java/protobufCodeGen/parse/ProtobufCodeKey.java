@@ -1,4 +1,4 @@
-package protobufCodeGen;
+package protobufCodeGen.parse;
 
 /**
  * @Description TODO

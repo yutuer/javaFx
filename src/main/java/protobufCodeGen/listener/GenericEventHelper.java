@@ -1,6 +1,6 @@
 package protobufCodeGen.listener;
 
-import protobufCodeGen.ProtobufNodeTreeCollection;
+import protobufCodeGen.parse.ProtobufNodeTreeCollection;
 
 import java.util.LinkedList;
 import java.util.List;

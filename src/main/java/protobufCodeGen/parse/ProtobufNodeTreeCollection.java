@@ -1,10 +1,10 @@
-package protobufCodeGen;
+package protobufCodeGen.parse;
 
 import protobufCodeGen.listener.EventHelper;
 import protobufCodeGen.listener.ICollectionNotify;
 import protobufCodeGen.listener.ICollectionParseEndListener;
 import protobufCodeGen.out.IOutPut;
-import protobufCodeGen.template.PrintEnum;
+import protobufCodeGen.codegen.template.PrintEnum;
 
 import java.util.LinkedList;
 import java.util.Queue;

@@ -1,7 +1,7 @@
-package protobufCodeGen;
+package protobufCodeGen.parse;
 
-import protobufCodeGen.keywordHandler.*;
-import protobufCodeGen.keywordHandler.pipeline.HandlerPipeline;
+import protobufCodeGen.parse.keywordHandler.pipeline.HandlerPipeline;
+import protobufCodeGen.parse.keywordHandler.*;
 import util.Log;
 
 import java.io.*;

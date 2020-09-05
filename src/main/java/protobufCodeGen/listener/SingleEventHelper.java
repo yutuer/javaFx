@@ -1,6 +1,6 @@
 package protobufCodeGen.listener;
 
-import protobufCodeGen.ProtobufNodeTreeCollection;
+import protobufCodeGen.parse.ProtobufNodeTreeCollection;
 
 /**
  * @Description TODO

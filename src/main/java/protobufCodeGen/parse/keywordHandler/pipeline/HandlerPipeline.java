@@ -1,8 +1,8 @@
-package protobufCodeGen.keywordHandler.pipeline;
+package protobufCodeGen.parse.keywordHandler.pipeline;
 
-import protobufCodeGen.ProtobufNodeTree;
-import protobufCodeGen.keywordHandler.EmptyHandler;
-import protobufCodeGen.keywordHandler.IKeywordParseHandler;
+import protobufCodeGen.parse.ProtobufNodeTree;
+import protobufCodeGen.parse.keywordHandler.EmptyHandler;
+import protobufCodeGen.parse.keywordHandler.IKeywordParseHandler;
 
 import java.nio.CharBuffer;
 
