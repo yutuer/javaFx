@@ -42,20 +42,20 @@ public class Util
      */
     public static int intToMaxTowPower(int x)
     {
-        //第一种方法,  不停的向右移位. 直到==0为止
-        int y = x;
-        int count = 0;
-        while (y > 0)
+        if ((x & (x - 1)) == 0)
         {
-            count++;
-            y >>= 1;
+            return x;
         }
-        return 1 << count;
+
+        // 左边的0的个数
+        int leftZeroCount = Integer.numberOfLeadingZeros(x);
+        // 无符号右移
+        return Integer.MIN_VALUE >>> (leftZeroCount - 1);
     }
 
     public static void main(String[] args)
     {
-        System.out.println(intToMaxTowPower(0b111));
+        System.out.println(intToMaxTowPower(0b10011));
     }
 
 }

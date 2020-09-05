@@ -1,4 +1,4 @@
-package ioTest.write;
+package fasterLogger.write;
 
 import java.nio.charset.Charset;
 

@@ -1,4 +1,4 @@
-package ioTest.write;
+package fasterLogger.write;
 
 import java.io.IOException;
 import java.io.OutputStream;

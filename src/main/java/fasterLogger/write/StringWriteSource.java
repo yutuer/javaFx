@@ -1,4 +1,4 @@
-package ioTest.write;
+package fasterLogger.write;
 
 /**
  * @Description 写数据的源

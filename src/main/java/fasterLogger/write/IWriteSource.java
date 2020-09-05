@@ -1,4 +1,4 @@
-package ioTest.write;
+package fasterLogger.write;
 
 /**
  * @Description 写的数据 来源接口
