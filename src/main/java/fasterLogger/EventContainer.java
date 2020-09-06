@@ -1,7 +1,7 @@
 package fasterLogger;
 
 /**
- * @Description 事件容器
+ * @Description 事件容器(暂时先用 事件容器的方法. 不是RingBuffer的原本使用方法)
  * @Author zhangfan
  * @Date 2020/9/5 11:01
  * @Version 1.0

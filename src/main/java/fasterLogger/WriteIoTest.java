@@ -1,4 +1,4 @@
-package fasterLogger.write;
+package fasterLogger;
 
 /**
  * @Description 写io测试

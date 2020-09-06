@@ -1,5 +1,6 @@
 package fasterLogger.write;
 
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
@@ -12,20 +13,16 @@ import java.nio.ByteBuffer;
  */
 public class WriterBuffer
 {
-
-    /**
-     * 固定长度
-     */
-    private ByteBuffer byteBuffer;
-
     /**
      * 这里os是 volatile的
      */
     private volatile OutputStream os;
 
-    public WriterBuffer(ByteBuffer buffer)
+    private int size;
+
+    public WriterBuffer(int size)
     {
-        byteBuffer = buffer;
+        this.size = size;
     }
 
     /**
@@ -33,8 +30,24 @@ public class WriterBuffer
      */
     private boolean isExceedFull(int length)
     {
-        return byteBuffer.limit() + length > byteBuffer.capacity();
+//        return byteBuffer.limit() + length > byteBuffer.capacity();
+        return true;
     }
+
+    //    /**
+//     * 将缓存写入输出流
+//     *
+//     * @param buffer
+//     */
+//    private void writeBufferToOutputSteam(ByteBuffer buffer)
+//    {
+//        byteBuffer.flip();
+//        if (byteBuffer.limit() > 0)
+//        {
+//            writeToOutputStream(byteBuffer.array());
+//        }
+//        buffer.clear();
+//    }
 
     /**
      * 写数据
@@ -48,14 +61,14 @@ public class WriterBuffer
             return;
         }
 
-        if (isExceedFull(data.length))
+        try
         {
-            // 如果满了, 要首先flush
-            flush();
+            os.write(data);
         }
-
-        // 再写入
-        byteBuffer.put(data);
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -66,7 +79,7 @@ public class WriterBuffer
         final OutputStream outputStream = this.os;
         if (outputStream != null)
         {
-            writeBufferToOutputSteam(byteBuffer);
+//            writeBufferToOutputSteam(byteBuffer);
             flushDestination();
         }
     }
@@ -85,21 +98,6 @@ public class WriterBuffer
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * 将缓存写入输出流
-     *
-     * @param buffer
-     */
-    private void writeBufferToOutputSteam(ByteBuffer buffer)
-    {
-        byteBuffer.flip();
-        if (byteBuffer.limit() > 0)
-        {
-            writeToOutputStream(byteBuffer.array());
-        }
-        buffer.clear();
     }
 
     /**
@@ -125,6 +123,6 @@ public class WriterBuffer
 
     public void setOs(OutputStream os)
     {
-        this.os = os;
+        this.os = new BufferedOutputStream(os);
     }
 }

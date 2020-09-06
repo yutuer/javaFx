@@ -32,6 +32,7 @@ public class RingBuffer<T>
         capacity = Util.intToMaxTowPower(capacity);
         this.capacity = capacity;
         eventContainers = new EventContainer[capacity];
+
         fillEventContainers(capacity);
     }
 

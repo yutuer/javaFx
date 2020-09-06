@@ -8,4 +8,5 @@ package fasterLogger;
  */
 public class LogEvent
 {
+
 }
