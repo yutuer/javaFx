@@ -44,7 +44,7 @@ public class FastLogger
             InputOutputBinder.bind(tl);
             doubleCache = tl.get();
         }
-        doubleCache.write(new StringWriteSource(msg));
+        doubleCache.write(new StringWriteSource(msg, actorId));
     }
 
 }

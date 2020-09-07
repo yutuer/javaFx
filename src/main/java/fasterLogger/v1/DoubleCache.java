@@ -75,18 +75,31 @@ public class DoubleCache
         getDataAccept().add(writeDataSource);
     }
 
+    public void write(String msg, long actorId, String content)
+    {
+
+    }
+
     public void writeToBuffer(WriterBuffer writerBuffer)
     {
+        if (writerBuffer == null)
+        {
+            throw new RuntimeException("没有writerBuffer");
+        }
+
         exchange();
 
         final List<IWriteDataSource> bufferAccpet = getBufferAccpet();
-        for (int i = 0, size = bufferAccpet.size(); i < size; i++)
+        int size = bufferAccpet.size();
+        for (int i = 0; i < size; i++)
         {
             IWriteDataSource iWriteDataSource = bufferAccpet.get(i);
             byte[] data = iWriteDataSource.getData();
 
             writerBuffer.write(data);
         }
+
+        // 其实这里是有问题的. 其实应该删除 0-size长度的数据
         bufferAccpet.clear();
     }
 

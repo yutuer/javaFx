@@ -12,6 +12,8 @@ public class WriteThread extends Thread
 {
     private FastLogger fastLogger;
 
+    private int counter;
+
     public WriteThread(String name, FastLogger fastLogger)
     {
         super(name);
@@ -23,7 +25,7 @@ public class WriteThread extends Thread
     {
         while (true)
         {
-            fastLogger.log(getName(), 0, "");
+            fastLogger.log(getName(), counter++, "");
 
             try
             {

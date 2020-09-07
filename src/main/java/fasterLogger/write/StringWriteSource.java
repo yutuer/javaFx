@@ -11,10 +11,17 @@ public class StringWriteSource implements IWriteDataSource
     private StringBuilder sb = new StringBuilder();
 
     private String msg;
+    private long actorId;
 
     public StringWriteSource(String msg)
     {
         this.msg = msg;
+    }
+
+    public StringWriteSource(String msg, long actorId)
+    {
+        this(msg);
+        this.actorId = actorId;
     }
 
     @Override
@@ -23,7 +30,7 @@ public class StringWriteSource implements IWriteDataSource
         sb.delete(0, sb.length());
         sb.append(msg);
         sb.append(", 当前时间为:");
-        sb.append(System.currentTimeMillis());
+        sb.append(actorId);
         sb.append("\t");
         return sb.toString().getBytes(getCharset());
     }

@@ -22,9 +22,9 @@ public class WriteIoTest
     public static void main(String[] args) throws FileNotFoundException
     {
         final FastLogger fastLogger = FastLoggerFactory.getLogger("FastLogger Test1");
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 4; i++)
         {
-            new WriteThread("Thread-" + i, fastLogger).start();
+            new WriteThread("Thread" + i, fastLogger).start();
         }
 
         final String fileName = "c:/1.txt";
