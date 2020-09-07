@@ -3,7 +3,6 @@ package fasterLogger.write;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
 
 /**
  * @Description 写入缓冲区
@@ -18,36 +17,18 @@ public class WriterBuffer
      */
     private volatile OutputStream os;
 
-    private int size;
+    //4k page
+    private final int pageSize = 1 << 12;
 
-    public WriterBuffer(int size)
+    public WriterBuffer(OutputStream os, int pageSize)
     {
-        this.size = size;
+        this.setOs(os, pageSize);
     }
 
-    /**
-     * @return
-     */
-    private boolean isExceedFull(int length)
+    public WriterBuffer(OutputStream os)
     {
-//        return byteBuffer.limit() + length > byteBuffer.capacity();
-        return true;
+        this.setOs(os);
     }
-
-    //    /**
-//     * 将缓存写入输出流
-//     *
-//     * @param buffer
-//     */
-//    private void writeBufferToOutputSteam(ByteBuffer buffer)
-//    {
-//        byteBuffer.flip();
-//        if (byteBuffer.limit() > 0)
-//        {
-//            writeToOutputStream(byteBuffer.array());
-//        }
-//        buffer.clear();
-//    }
 
     /**
      * 写数据
@@ -100,29 +81,27 @@ public class WriterBuffer
         }
     }
 
-    /**
-     * 此方法 如果多线程环境下, 需要 加上synchronized
-     *
-     * @param array
-     */
-    private void writeToOutputStream(byte[] array)
+    public void setOs(OutputStream os, int size)
     {
-        final OutputStream outputStream = this.os;
-        if (outputStream != null)
+        if (!(os instanceof BufferedOutputStream))
         {
-            try
-            {
-                os.write(array, 0, array.length);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
+            this.os = new BufferedOutputStream(os, size);
+        }
+        else
+        {
+            this.os = os;
         }
     }
 
     public void setOs(OutputStream os)
     {
-        this.os = new BufferedOutputStream(os);
+        if (!(os instanceof BufferedOutputStream))
+        {
+            this.os = new BufferedOutputStream(os, pageSize);
+        }
+        else
+        {
+            this.os = os;
+        }
     }
 }

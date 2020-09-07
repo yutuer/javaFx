@@ -1,5 +1,6 @@
 package fasterLogger;
 
+import fasterLogger.v1.DoubleCache;
 import fasterLogger.write.StringWriteSource;
 
 /**
@@ -11,21 +12,39 @@ import fasterLogger.write.StringWriteSource;
  */
 public class FastLogger
 {
-    private ThreadLocal<RingBuffer<StringWriteSource>> tl = new ThreadLocal();
+    private ThreadLocal<DoubleCache> tl = new ThreadLocal();
+
+    /**
+     * 此log的标识
+     */
+    private String name;
+
+    public FastLogger(String name)
+    {
+        this.name = name;
+    }
 
     public void log(String msg, Object p0, Object p1)
     {
 
     }
 
-    private void log(String msg, long actorId, String content)
+    /**
+     * 特定字符的log
+     *
+     * @param msg
+     * @param actorId
+     * @param content
+     */
+    public void log(String msg, long actorId, String content)
     {
-        RingBuffer<StringWriteSource> ringBuffer = tl.get();
-        if(ringBuffer == null)
+        DoubleCache doubleCache = tl.get();
+        if (doubleCache == null)
         {
             InputOutputBinder.bind(tl);
+            doubleCache = tl.get();
         }
-        ringBuffer.add(new StringWriteSource());
+        doubleCache.write(new StringWriteSource(msg));
     }
 
 }

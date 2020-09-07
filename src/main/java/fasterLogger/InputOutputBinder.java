@@ -1,8 +1,10 @@
 package fasterLogger;
 
-import java.util.ArrayDeque;
+import fasterLogger.v1.DoubleCache;
+import fasterLogger.write.WriterBuffer;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * @Description 输入日志和某一个RingBuff绑定输出绑定
@@ -13,62 +15,68 @@ import java.util.Queue;
  */
 public class InputOutputBinder<T>
 {
-
     private static InputOutputBinder instance;
 
     static
     {
-        instance = create(16);
+        instance = create();
+    }
+
+    public static InputOutputBinder getInstance()
+    {
+        return instance;
     }
 
     /**
-     * ringBuffer库
+     * 加入管理的doubleCache类
      */
-    private Queue<RingBuffer<T>> backupRingBuffers;
+    private List<DoubleCache> doubleCaches;
 
-    /**
-     * 跟踪处理的RingBuffer
-     */
-    private List<RingBuffer<T>> tracedRingBuffer;
+    private volatile DoubleCache[] dcs;
 
-    private int capacity;
-
-    public static <T> InputOutputBinder<T> create(int capacity)
+    public static <T> InputOutputBinder<T> create()
     {
-        return new InputOutputBinder<>(capacity);
+        return new InputOutputBinder<>();
     }
 
-    private InputOutputBinder(int capacity)
+    private InputOutputBinder()
     {
-        this.capacity = capacity;
-        backupRingBuffers = new ArrayDeque<>(capacity * 2);
-        for (int i = 0; i < capacity; i++)
-        {
-            backupRingBuffers.add(new RingBuffer<>(1 << 12)); //4k page
-        }
-    }
-
-    private RingBuffer<T> poll()
-    {
-        RingBuffer poll = instance.poll();
-        if (poll == null)
-        {
-            for (int i = 0; i < capacity; i++)
-            {
-                backupRingBuffers.add(new RingBuffer<>(1 << 12)); //4k page
-            }
-        }
-        return instance.poll();
+        doubleCaches = new ArrayList<>();
     }
 
     public static void bind(ThreadLocal tl)
     {
-        synchronized (instance)
-        {
-            RingBuffer poll = instance.poll();
-            instance.tracedRingBuffer.add(poll);
+        DoubleCache doubleCache = new DoubleCache();
 
-            tl.set(poll);
+        InputOutputBinder instance = getInstance();
+        instance.add(doubleCache);
+
+        tl.set(doubleCache);
+    }
+
+    private void add(DoubleCache doubleCache)
+    {
+        synchronized (this)
+        {
+            doubleCaches.add(doubleCache);
+        }
+        dcs = doubleCaches.toArray(new DoubleCache[0]);
+    }
+
+    /**
+     * 给输出线程使用
+     *
+     * @param writerBuffer
+     */
+    public void writeToBufferAndFlush(WriterBuffer writerBuffer)
+    {
+        if (dcs != null)
+        {
+            for (int i = 0; i < dcs.length; i++)
+            {
+                dcs[i].writeToBuffer(writerBuffer);
+            }
+            writerBuffer.flush();
         }
     }
 }

@@ -1,7 +1,5 @@
 package fasterLogger.write;
 
-import java.nio.charset.Charset;
-
 /**
  * @Description TODO
  * @Author zhangfan
@@ -18,7 +16,7 @@ public class StringArrayWriteSource
         this.stringWriteSources = new StringWriteSource[len];
         for (int i = 0; i < len; i++)
         {
-            stringWriteSources[i] = new StringWriteSource();
+            stringWriteSources[i] = new StringWriteSource("");
         }
     }
 
@@ -27,7 +25,7 @@ public class StringArrayWriteSource
         for (int i = 0, len = stringWriteSources.length; i < len; i++)
         {
             StringWriteSource stringWriteSource = stringWriteSources[i];
-            writerBuffer.write(stringWriteSource.getSource().getBytes(Charset.forName("UTF8")));
+            writerBuffer.write(stringWriteSource.getData());
         }
     }
 }
