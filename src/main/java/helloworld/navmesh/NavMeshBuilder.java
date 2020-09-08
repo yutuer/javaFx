@@ -107,9 +107,8 @@ public class NavMeshBuilder
                 allNodes[i] = node;
             }
 
-            NavNodeRasterizer navNodeRasterizer = new NavNodeRasterizer();
-            navNodeRasterizer.setAllNodes(allNodes);
-
+            NavNodeRasterizer navNodeRasterizer = new NavNodeRasterizer(min, max, allNodes);
+            navNodeRasterizer.shangehua();
             return navNodeRasterizer;
         }
         catch (Exception e)
@@ -131,10 +130,10 @@ public class NavMeshBuilder
 
         int index = Integer.parseInt(split[0]);
         byte area = Byte.parseByte(split[1]);
-        VectorInt3 position = VectorInt3.parse(split[2]);
-        VectorInt3 vertex0 = VectorInt3.parse(split[3]);
-        VectorInt3 vertex1 = VectorInt3.parse(split[4]);
-        VectorInt3 vertex2 = VectorInt3.parse(split[5]);
+        VectorInt2 position = VectorInt3.parse(split[2]).toVectorInt2();
+        VectorInt2 vertex0 = VectorInt3.parse(split[3]).toVectorInt2();
+        VectorInt2 vertex1 = VectorInt3.parse(split[4]).toVectorInt2();
+        VectorInt2 vertex2 = VectorInt3.parse(split[5]).toVectorInt2();
 
         NavNode node = new NavNode(index, position, area, vertex0, vertex1, vertex2);
 

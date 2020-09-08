@@ -17,11 +17,16 @@ public class NavNode extends Polygon
     private Line[] lines;
 
     private int index;
-    private VectorInt3 position;
+
+    /**
+     * 重心
+     */
+    private VectorInt2 position;
+
     private byte area;
-    private VectorInt3 vertex0;
-    private VectorInt3 vertex1;
-    private VectorInt3 vertex2;
+    private VectorInt2 vertex0;
+    private VectorInt2 vertex1;
+    private VectorInt2 vertex2;
 
     public NavNode(double a0, double a1, double b0, double b1, double c0, double c1)
     {
@@ -33,7 +38,7 @@ public class NavNode extends Polygon
         lines[2] = new Line(c0, c1, a0, a1);
     }
 
-    public NavNode(int index, VectorInt3 position, byte area, VectorInt3 vertex0, VectorInt3 vertex1, VectorInt3 vertex2)
+    public NavNode(int index, VectorInt2 position, byte area, VectorInt2 vertex0, VectorInt2 vertex1, VectorInt2 vertex2)
     {
         super(vertex0.x, vertex0.z,
                 vertex1.x, vertex1.z,

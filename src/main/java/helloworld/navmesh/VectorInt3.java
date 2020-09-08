@@ -27,4 +27,9 @@ public class VectorInt3
         int z = Integer.parseInt(split[2]);
         return new VectorInt3(x, y, z);
     }
+
+    public VectorInt2 toVectorInt2()
+    {
+        return new VectorInt2(x, z);
+    }
 }

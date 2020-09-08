@@ -26,7 +26,7 @@ public class PolygonTest extends Application
     private void build()
     {
         NavMeshBuilder navMeshBuilder = new NavMeshBuilder();
-        String content = navMeshBuilder.parseFileInString("TestMap_001_nav.txt");
+        String content = navMeshBuilder.parseFileInString("maps/Ani_Test_nav.txt");
         this.navNodeRasterizer = navMeshBuilder.build(content);
     }
 

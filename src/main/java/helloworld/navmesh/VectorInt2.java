@@ -8,28 +8,28 @@ package helloworld.navmesh;
 public class VectorInt2
 {
 
-    public int x;
+    public double x;
 
-    public int y;
+    public double z;
 
     public static VectorInt2 zero = new VectorInt2(0, 0);
 
-    public VectorInt2(int x, int y)
+    public VectorInt2(double x, double z)
     {
         this.x = x;
-        this.y = y;
+        this.z = z;
     }
 
-    public long sqrMagnitudeLong()
+    public double sqrMagnitudeLong()
     {
-        long _x = x;
-        long _y = y;
-        return _x * _x + _y * _y;
+        double _x = x;
+        double _z = z;
+        return _x * _x + _z * _z;
     }
 
-    public static long dotLong(VectorInt2 a, VectorInt2 b)
+    public static double dotLong(VectorInt2 a, VectorInt2 b)
     {
-        return (long) a.x * (long) b.x + (long) a.y * (long) b.y;
+        return a.x * b.x + a.z * b.z;
     }
 
 
