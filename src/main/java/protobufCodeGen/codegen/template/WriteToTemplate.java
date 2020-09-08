@@ -25,16 +25,16 @@ public class WriteToTemplate
     public static final String Set = "%s.set%s(%s); \n";
     public static final String Add = "%s.add%s(%s); \n";
 
-    public static final String Tail = "%sBuilder.builder();\n\n\n";
+    public static final String Tail = "%sBuilder.build();\n\n\n";
 
 
     public static final String ForILine1 = "for(int i = 0, size = %s.size(); i < size; i++)\n{\n";
     // ParentBuilder.add(a[i])
     public static final String ForILine2 = "\t%s.add%s(%s[i]);\n}\n";
 
-    public static final String ForEachLine1 = "for(int i = 0, size = %s.size(); i < size; i++)\n{\n";
-    public static final String ForEachLine2 = "\titerator.advance(); \n ";
+    public static final String ForEachLine1 = "while(iterator.hasNext())\n{\n";
+    public static final String ForEachLine2 = "\titerator.advance(); \n \n";
     public static final String ForEachLine3 = "\t%s %s = iterator.value(); \n ";
-    // ParentBuilder.add(a[i])
-    public static final String ForEachAdd = "\t%s.add%s(%s[i].toPB());\n}\n";
+
+    public static final String ForEachAdd = "\t%s.add%s(%s.toDB());\n}\n";
 }

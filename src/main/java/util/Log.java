@@ -13,4 +13,6 @@ public class Log
 {
     // 不使用 slf4j的.  是因为它会使用对象数组, 会带来额外的gc
     public static final Logger logger = LogManager.getLogger(Log.class);
+
+    public static final Logger Nav_Logger = LogManager.getLogger("Navmesh");
 }

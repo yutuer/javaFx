@@ -114,7 +114,7 @@ public class ProtobufFileNodeTxt
             genSB.append(s);
         }
 
-        genSB.append(String.format(WriteToTemplate.Tail, nodeName));
+        genSB.append(String.format(WriteToTemplate.Tail, Util.firstLetterLower(nodeName, 1)));
 
         return genSB.toString();
     }

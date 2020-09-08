@@ -17,7 +17,8 @@ public class ProcessPool
     // 因为需要遍历. 使用队列
     public void addProcess(Process process)
     {
-
+        // 添加到尾部
+        processQueue.offer(process);
     }
 
 }
