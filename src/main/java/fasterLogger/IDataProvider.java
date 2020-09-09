@@ -1,4 +1,4 @@
-package fasterLogger.write;
+package fasterLogger;
 
 import java.nio.charset.Charset;
 
@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
  * @Date 2020/9/4 12:56
  * @Version 1.0
  */
-public interface IWriteDataSource
+public interface IDataProvider
 {
     /**
      * 获取数据

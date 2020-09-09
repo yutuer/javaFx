@@ -1,6 +1,8 @@
 package fasterLogger.v1;
 
-import fasterLogger.write.IWriteDataSource;
+import fasterLogger.IDataProvider;
+import fasterLogger.IFastLogger;
+import fasterLogger.write.StringWriteSource;
 import fasterLogger.write.WriterBuffer;
 
 import java.util.ArrayList;
@@ -12,9 +14,9 @@ import java.util.List;
  * @Date 2020/9/7 10:47
  * @Version 1.0
  */
-public class DoubleCache
+public class DoubleCache implements IFastLogger
 {
-    private List<IWriteDataSource>[] dataLists;
+    private List<IDataProvider>[] dataLists;
 
     private volatile int curIndex;
 
@@ -50,7 +52,7 @@ public class DoubleCache
      *
      * @return
      */
-    private List<IWriteDataSource> getDataAccept()
+    private List<IDataProvider> getDataAccept()
     {
         return dataLists[curIndex];
     }
@@ -60,7 +62,7 @@ public class DoubleCache
      *
      * @return
      */
-    private List<IWriteDataSource> getBufferAccpet()
+    private List<IDataProvider> getBufferAccpet()
     {
         return dataLists[nextIndex];
     }
@@ -70,14 +72,9 @@ public class DoubleCache
      *
      * @param writeDataSource
      */
-    public void write(IWriteDataSource writeDataSource)
+    public void write(IDataProvider writeDataSource)
     {
         getDataAccept().add(writeDataSource);
-    }
-
-    public void write(String msg, long actorId, String content)
-    {
-
     }
 
     public void writeToBuffer(WriterBuffer writerBuffer)
@@ -89,11 +86,11 @@ public class DoubleCache
 
         exchange();
 
-        final List<IWriteDataSource> bufferAccpet = getBufferAccpet();
+        final List<IDataProvider> bufferAccpet = getBufferAccpet();
         int size = bufferAccpet.size();
         for (int i = 0; i < size; i++)
         {
-            IWriteDataSource iWriteDataSource = bufferAccpet.get(i);
+            IDataProvider iWriteDataSource = bufferAccpet.get(i);
             byte[] data = iWriteDataSource.getData();
 
             writerBuffer.write(data);
@@ -103,4 +100,9 @@ public class DoubleCache
         bufferAccpet.clear();
     }
 
+    @Override
+    public void log(String msg, long actorId, String content)
+    {
+        write(new StringWriteSource(msg, actorId));
+    }
 }

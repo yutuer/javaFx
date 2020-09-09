@@ -9,7 +9,7 @@ package fasterLogger;
 public class FastLoggerFactory
 {
 
-    public static FastLogger getLogger(String name)
+    public static IFastLogger getLogger(String name)
     {
         return new FastLogger(name);
     }

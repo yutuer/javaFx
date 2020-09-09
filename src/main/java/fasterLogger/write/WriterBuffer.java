@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * @Description 写入缓冲区
+ * @Description 缓冲区  java的写入都是往 PageCache里面写.  没有fsync()那种绕过directIo的方式
  * @Author zhangfan
  * @Date 2020/9/4 13:00
  * @Version 1.0
@@ -31,7 +31,7 @@ public class WriterBuffer
     }
 
     /**
-     * 写数据
+     * 往硬盘 写数据
      *
      * @param data
      */

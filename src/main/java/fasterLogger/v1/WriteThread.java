@@ -1,6 +1,6 @@
 package fasterLogger.v1;
 
-import fasterLogger.FastLogger;
+import fasterLogger.IFastLogger;
 
 /**
  * @Description TODO
@@ -10,11 +10,11 @@ import fasterLogger.FastLogger;
  */
 public class WriteThread extends Thread
 {
-    private FastLogger fastLogger;
+    private IFastLogger fastLogger;
 
     private int counter;
 
-    public WriteThread(String name, FastLogger fastLogger)
+    public WriteThread(String name, IFastLogger fastLogger)
     {
         super(name);
         this.fastLogger = fastLogger;

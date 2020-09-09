@@ -21,7 +21,7 @@ public class WriteIoTest
 
     public static void main(String[] args) throws FileNotFoundException
     {
-        final FastLogger fastLogger = FastLoggerFactory.getLogger("FastLogger Test1");
+        final IFastLogger fastLogger = FastLoggerFactory.getLogger("FastLogger Test1");
         for (int i = 0; i < 4; i++)
         {
             new WriteThread("Thread" + i, fastLogger).start();

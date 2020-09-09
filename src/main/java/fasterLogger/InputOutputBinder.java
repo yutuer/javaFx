@@ -44,7 +44,7 @@ public class InputOutputBinder<T>
         doubleCaches = new ArrayList<>();
     }
 
-    public static void bind(ThreadLocal tl)
+    public static IFastLogger bind(ThreadLocal tl)
     {
         DoubleCache doubleCache = new DoubleCache();
 
@@ -52,6 +52,8 @@ public class InputOutputBinder<T>
         instance.add(doubleCache);
 
         tl.set(doubleCache);
+
+        return doubleCache;
     }
 
     private void add(DoubleCache doubleCache)

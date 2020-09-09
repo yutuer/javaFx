@@ -1,18 +1,15 @@
 package fasterLogger;
 
-import fasterLogger.v1.DoubleCache;
-import fasterLogger.write.StringWriteSource;
-
 /**
- * @Description 日志记录
+ * @Description 日志记录. 对应用程序的接口
  * 当输入过快的时候
  * @Author zhangfan
  * @Date 2020/9/5 15:58
  * @Version 1.0
  */
-public class FastLogger
+public class FastLogger implements IFastLogger
 {
-    private ThreadLocal<DoubleCache> tl = new ThreadLocal();
+    private ThreadLocal<IFastLogger> tl = new ThreadLocal();
 
     /**
      * 此log的标识
@@ -38,13 +35,14 @@ public class FastLogger
      */
     public void log(String msg, long actorId, String content)
     {
-        DoubleCache doubleCache = tl.get();
-        if (doubleCache == null)
+        IFastLogger fastLoggerProxy = tl.get();
+        if (fastLoggerProxy == null)
         {
-            InputOutputBinder.bind(tl);
-            doubleCache = tl.get();
+            fastLoggerProxy = InputOutputBinder.bind(tl);
         }
-        doubleCache.write(new StringWriteSource(msg, actorId));
+        fastLoggerProxy.log(msg, actorId, content);
+
+//        IFastLogger.write(new StringWriteSource(msg, actorId));
     }
 
 }

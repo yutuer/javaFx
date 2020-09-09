@@ -1,12 +1,14 @@
 package fasterLogger.write;
 
+import fasterLogger.IDataProvider;
+
 /**
  * @Description 写数据的源
  * @Author zhangfan
  * @Date 2020/9/4 12:56
  * @Version 1.0
  */
-public class StringWriteSource implements IWriteDataSource
+public class StringWriteSource implements IDataProvider
 {
     private StringBuilder sb = new StringBuilder();
 
