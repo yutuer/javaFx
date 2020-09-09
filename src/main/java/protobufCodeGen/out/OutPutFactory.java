@@ -1,5 +1,8 @@
 package protobufCodeGen.out;
 
+import protobufCodeGen.ProtobufCodeGen;
+import util.PropertiesUtils;
+
 /**
  * @Description 输出工厂类
  * @Author zhangfan
@@ -13,6 +16,10 @@ public class OutPutFactory
         if (output == 0)
         {
             return new ConsoleOutput();
+        }
+        else if (output == 1)
+        {
+            return new FileOutPut(PropertiesUtils.getString(ProtobufCodeGen.properties, "outputFile", "."));
         }
         return null;
     }
