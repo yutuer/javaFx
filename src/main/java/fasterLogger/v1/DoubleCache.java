@@ -1,8 +1,6 @@
 package fasterLogger.v1;
 
 import fasterLogger.IDataProvider;
-import fasterLogger.IFastLogger;
-import fasterLogger.write.StringWriteSource;
 import fasterLogger.write.WriterBuffer;
 
 import java.util.ArrayList;
@@ -14,7 +12,7 @@ import java.util.List;
  * @Date 2020/9/7 10:47
  * @Version 1.0
  */
-public class DoubleCache implements IFastLogger
+public class DoubleCache
 {
     private List<IDataProvider>[] dataLists;
 
@@ -91,7 +89,7 @@ public class DoubleCache implements IFastLogger
         for (int i = 0; i < size; i++)
         {
             IDataProvider iWriteDataSource = bufferAccpet.get(i);
-            byte[] data = iWriteDataSource.getData();
+            byte[] data = iWriteDataSource.provideData();
 
             writerBuffer.write(data);
         }
@@ -100,9 +98,4 @@ public class DoubleCache implements IFastLogger
         bufferAccpet.clear();
     }
 
-    @Override
-    public void log(String msg, long actorId, String content)
-    {
-        write(new StringWriteSource(msg, actorId));
-    }
 }

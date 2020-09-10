@@ -21,7 +21,10 @@ public class WriteIoTest
 
     public static void main(String[] args) throws FileNotFoundException
     {
-        final IFastLogger fastLogger = FastLoggerFactory.getLogger("FastLogger Test1");
+        final Binder binder = new Binder();
+        WriteBlackBox writeBlackBox = new WriteBlackBox(binder);
+
+        final IFastLogger fastLogger = new FastLogger("FastLogger Test1", writeBlackBox);
         for (int i = 0; i < 4; i++)
         {
             new WriteThread("Thread" + i, fastLogger).start();
@@ -35,7 +38,7 @@ public class WriteIoTest
         ScheduledExecutorService consumeEs = Executors.newScheduledThreadPool(1);
         consumeEs.scheduleAtFixedRate(() ->
                 {
-                    InputOutputBinder.getInstance().writeToBufferAndFlush(writerBuffer);
+                    binder.writeToBufferAndFlush(writerBuffer);
                 }
                 , 0, 1, TimeUnit.SECONDS);
 

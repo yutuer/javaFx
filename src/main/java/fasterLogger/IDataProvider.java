@@ -11,11 +11,11 @@ import java.nio.charset.Charset;
 public interface IDataProvider
 {
     /**
-     * 获取数据
+     * 提供数据
      *
      * @return
      */
-    byte[] getData();
+    byte[] provideData();
 
     default Charset getCharset()
     {

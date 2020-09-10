@@ -9,14 +9,14 @@ package fasterLogger.write;
 public class StringArrayWriteSource
 {
 
-    private StringWriteSource[] stringWriteSources;
+    private StringDataProvider[] stringWriteSources;
 
     public StringArrayWriteSource(int len)
     {
-        this.stringWriteSources = new StringWriteSource[len];
+        this.stringWriteSources = new StringDataProvider[len];
         for (int i = 0; i < len; i++)
         {
-            stringWriteSources[i] = new StringWriteSource("");
+            stringWriteSources[i] = new StringDataProvider("");
         }
     }
 
@@ -24,8 +24,8 @@ public class StringArrayWriteSource
     {
         for (int i = 0, len = stringWriteSources.length; i < len; i++)
         {
-            StringWriteSource stringWriteSource = stringWriteSources[i];
-            writerBuffer.write(stringWriteSource.getData());
+            StringDataProvider stringWriteSource = stringWriteSources[i];
+            writerBuffer.write(stringWriteSource.provideData());
         }
     }
 }

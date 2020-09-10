@@ -9,16 +9,22 @@ package fasterLogger;
  */
 public class FastLogger implements IFastLogger
 {
-    private ThreadLocal<IFastLogger> tl = new ThreadLocal();
 
+    private IWriteBlackBox writeBlackBox;
     /**
      * 此log的标识
      */
     private String name;
 
-    public FastLogger(String name)
+    public FastLogger(String name, IWriteBlackBox writeBlackBox)
     {
         this.name = name;
+        this.writeBlackBox = writeBlackBox;
+    }
+
+    public String getName()
+    {
+        return name;
     }
 
     public void log(String msg, Object p0, Object p1)
@@ -35,14 +41,7 @@ public class FastLogger implements IFastLogger
      */
     public void log(String msg, long actorId, String content)
     {
-        IFastLogger fastLoggerProxy = tl.get();
-        if (fastLoggerProxy == null)
-        {
-            fastLoggerProxy = InputOutputBinder.bind(tl);
-        }
-        fastLoggerProxy.log(msg, actorId, content);
-
-//        IFastLogger.write(new StringWriteSource(msg, actorId));
+        writeBlackBox.log(msg, actorId, content);
     }
 
 }

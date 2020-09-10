@@ -1,4 +1,4 @@
-package fasterLogger;
+package fasterLogger.v2;
 
 /**
  * @Description 事件容器(暂时先用 事件容器的方法. 不是RingBuffer的原本使用方法)

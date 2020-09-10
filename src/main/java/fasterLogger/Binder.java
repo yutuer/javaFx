@@ -13,56 +13,35 @@ import java.util.List;
  * @Date 2020/9/5 15:56
  * @Version 1.0
  */
-public class InputOutputBinder<T>
+public class Binder
 {
-    private static InputOutputBinder instance;
-
-    static
-    {
-        instance = create();
-    }
-
-    public static InputOutputBinder getInstance()
-    {
-        return instance;
-    }
 
     /**
      * 加入管理的doubleCache类
      */
     private List<DoubleCache> doubleCaches;
 
-    private volatile DoubleCache[] dcs;
+    private DoubleCache[] dcs;
 
-    public static <T> InputOutputBinder<T> create()
-    {
-        return new InputOutputBinder<>();
-    }
-
-    private InputOutputBinder()
+    public Binder()
     {
         doubleCaches = new ArrayList<>();
     }
 
-    public static IFastLogger bind(ThreadLocal tl)
-    {
-        DoubleCache doubleCache = new DoubleCache();
-
-        InputOutputBinder instance = getInstance();
-        instance.add(doubleCache);
-
-        tl.set(doubleCache);
-
-        return doubleCache;
-    }
-
-    private void add(DoubleCache doubleCache)
+    /**
+     * 注册,  之后会被数据读取到WriteBuffer中
+     *
+     * @param doubleCache
+     */
+    public void register(DoubleCache doubleCache)
     {
         synchronized (this)
         {
             doubleCaches.add(doubleCache);
+
+            // 防止指令重排序.  先add的后执行这行语句, 会导致结果数量不正确
+            dcs = doubleCaches.toArray(new DoubleCache[0]);
         }
-        dcs = doubleCaches.toArray(new DoubleCache[0]);
     }
 
     /**
@@ -78,6 +57,7 @@ public class InputOutputBinder<T>
             {
                 dcs[i].writeToBuffer(writerBuffer);
             }
+
             writerBuffer.flush();
         }
     }

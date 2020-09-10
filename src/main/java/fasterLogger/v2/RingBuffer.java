@@ -1,4 +1,4 @@
-package fasterLogger;
+package fasterLogger.v2;
 
 import sun.misc.Contended;
 import util.Util;

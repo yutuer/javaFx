@@ -8,26 +8,27 @@ import fasterLogger.IDataProvider;
  * @Date 2020/9/4 12:56
  * @Version 1.0
  */
-public class StringWriteSource implements IDataProvider
+public class StringDataProvider implements IDataProvider
 {
     private StringBuilder sb = new StringBuilder();
 
-    private String msg;
     private long actorId;
 
-    public StringWriteSource(String msg)
+    private String msg;
+
+    public StringDataProvider(String msg)
     {
         this.msg = msg;
     }
 
-    public StringWriteSource(String msg, long actorId)
+    public StringDataProvider(String msg, long actorId)
     {
         this(msg);
         this.actorId = actorId;
     }
 
     @Override
-    public byte[] getData()
+    public byte[] provideData()
     {
         sb.delete(0, sb.length());
         sb.append(msg);

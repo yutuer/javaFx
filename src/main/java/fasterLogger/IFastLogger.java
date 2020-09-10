@@ -9,5 +9,12 @@ package fasterLogger;
 public interface IFastLogger
 {
 
+    /**
+     * 记录聊天的日志
+     *
+     * @param msg
+     * @param actorId
+     * @param content
+     */
     void log(String msg, long actorId, String content);
 }
