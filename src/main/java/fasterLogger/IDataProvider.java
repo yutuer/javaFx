@@ -17,6 +17,8 @@ public interface IDataProvider
      */
     byte[] provideData();
 
+    IDataProvider wrap(String msg, long actorId, String content);
+
     default Charset getCharset()
     {
         return Charset.forName("UTF8");

@@ -26,7 +26,6 @@ public class WriteThread extends Thread
         while (true)
         {
             fastLogger.log(getName(), counter++, "");
-
             try
             {
                 Thread.sleep(10);

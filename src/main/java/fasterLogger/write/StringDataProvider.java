@@ -16,25 +16,24 @@ public class StringDataProvider implements IDataProvider
 
     private String msg;
 
-    public StringDataProvider(String msg)
-    {
-        this.msg = msg;
-    }
-
-    public StringDataProvider(String msg, long actorId)
-    {
-        this(msg);
-        this.actorId = actorId;
-    }
-
     @Override
     public byte[] provideData()
     {
-        sb.delete(0, sb.length());
         sb.append(msg);
-        sb.append(", 当前时间为:");
+        sb.append(", hello:");
         sb.append(actorId);
         sb.append("\t");
-        return sb.toString().getBytes(getCharset());
+
+        byte[] data = sb.toString().getBytes(getCharset());
+        sb.delete(0, sb.length());
+        return data;
+    }
+
+    @Override
+    public IDataProvider wrap(String msg, long actorId, String content)
+    {
+        this.msg = msg;
+        this.actorId = actorId;
+        return this;
     }
 }

@@ -16,7 +16,7 @@ public class StringArrayWriteSource
         this.stringWriteSources = new StringDataProvider[len];
         for (int i = 0; i < len; i++)
         {
-            stringWriteSources[i] = new StringDataProvider("");
+            stringWriteSources[i] = new StringDataProvider();
         }
     }
 

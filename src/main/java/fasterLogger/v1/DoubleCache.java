@@ -1,6 +1,8 @@
 package fasterLogger.v1;
 
 import fasterLogger.IDataProvider;
+import fasterLogger.IWriteTool;
+import fasterLogger.write.StringDataProvider;
 import fasterLogger.write.WriterBuffer;
 
 import java.util.ArrayList;
@@ -12,20 +14,31 @@ import java.util.List;
  * @Date 2020/9/7 10:47
  * @Version 1.0
  */
-public class DoubleCache
+public class DoubleCache implements IWriteTool
 {
-    private List<IDataProvider>[] dataLists;
+    private List<IDataProvider>[] datas;
 
+    /**
+     * 当前接受数据的数组索引
+     */
     private volatile int curIndex;
 
+    /**
+     * 交换后接受数据的数组索引
+     */
     private volatile int nextIndex;
+
+    /**
+     * 总的条数
+     */
+    private int total;
 
     public DoubleCache()
     {
-        dataLists = new List[2];
+        datas = new List[2];
         for (int i = 0; i < 2; i++)
         {
-            dataLists[i] = new ArrayList<>();
+            datas[i] = new ArrayList<>();
         }
         curIndex = 0;
         nextIndex = 1;
@@ -43,6 +56,8 @@ public class DoubleCache
         curIndex = nextIndex;
         // 2. 改变处理容器的索引. 因为是在同一个buff线程中的逻辑. 所以这里可以慢慢修改, 而不用担心导致并发
         nextIndex = cur;
+
+        total = 0;
     }
 
     /**
@@ -52,7 +67,7 @@ public class DoubleCache
      */
     private List<IDataProvider> getDataAccept()
     {
-        return dataLists[curIndex];
+        return datas[curIndex];
     }
 
     /**
@@ -62,25 +77,28 @@ public class DoubleCache
      */
     private List<IDataProvider> getBufferAccpet()
     {
-        return dataLists[nextIndex];
+        return datas[nextIndex];
     }
 
-    /**
-     * log 接口调用
-     *
-     * @param writeDataSource
-     */
-    public void write(IDataProvider writeDataSource)
+    @Override
+    public boolean write(String msg, long actorId, String content)
     {
-        getDataAccept().add(writeDataSource);
+        getDataAccept().add(new StringDataProvider().wrap(msg, actorId, content));
+
+        total++;
+
+        return false;
     }
 
+    @Override
     public void writeToBuffer(WriterBuffer writerBuffer)
     {
         if (writerBuffer == null)
         {
             throw new RuntimeException("没有writerBuffer");
         }
+
+        final int _total = total;
 
         exchange();
 
@@ -94,7 +112,8 @@ public class DoubleCache
             writerBuffer.write(data);
         }
 
-        // 其实这里是有问题的. 其实应该删除 0-size长度的数据
+        // 其实这里是有问题的.(如果这个list在交换索引之前被返回, 其实这里是可能会有并发写入的危险的)
+        // 应该删除 0-size长度的数据
         bufferAccpet.clear();
     }
 

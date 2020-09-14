@@ -1,22 +1,18 @@
 package fasterLogger;
 
-import fasterLogger.v1.DoubleCache;
+import fasterLogger.v2.IDataProviderFactory;
+import fasterLogger.v2.RingBuffer;
 import fasterLogger.write.StringDataProvider;
 
 /**
- * @Description TODO
+ * @Description 负责构造并转发给真正处理数据的类
  * @Author zhangfan
  * @Date 2020/9/10 14:35
  * @Version 1.0
  */
 public class WriteBlackBox implements IWriteBlackBox
 {
-    private ThreadLocal<DoubleCache> tl = new ThreadLocal();
-
-    /**
-     * 工厂
-     */
-    private IFastLoggerFactory fastLoggerFactory;
+    private ThreadLocal<IWriteTool> tl = new ThreadLocal();
 
     /**
      * 绑定器
@@ -31,16 +27,22 @@ public class WriteBlackBox implements IWriteBlackBox
     @Override
     public void log(String msg, long actorId, String content)
     {
-        DoubleCache doubleCache = tl.get();
+        IWriteTool doubleCache = tl.get();
         if (doubleCache == null)
         {
-//            fastLogger = fastLoggerFactory.getFastLogger();
-
-            doubleCache = new DoubleCache();
-
+            doubleCache = new RingBuffer(new IDataProviderFactory()
+            {
+                @Override
+                public IDataProvider createDataProvider()
+                {
+                    return new StringDataProvider();
+                }
+            }, 1 << 10);
             binder.register(doubleCache);
+
             tl.set(doubleCache);
         }
-        doubleCache.write(new StringDataProvider(msg, actorId));
+
+        doubleCache.write(msg, actorId, content);
     }
 }

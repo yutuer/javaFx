@@ -1,6 +1,5 @@
 package fasterLogger;
 
-import fasterLogger.v1.DoubleCache;
 import fasterLogger.write.WriterBuffer;
 
 import java.util.ArrayList;
@@ -19,9 +18,9 @@ public class Binder
     /**
      * 加入管理的doubleCache类
      */
-    private List<DoubleCache> doubleCaches;
+    private List<IWriteTool> doubleCaches;
 
-    private DoubleCache[] dcs;
+    private IWriteTool[] dcs;
 
     public Binder()
     {
@@ -33,14 +32,16 @@ public class Binder
      *
      * @param doubleCache
      */
-    public void register(DoubleCache doubleCache)
+    public void register(IWriteTool doubleCache)
     {
         synchronized (this)
         {
+            // A
             doubleCaches.add(doubleCache);
 
-            // 防止指令重排序.  先add的后执行这行语句, 会导致结果数量不正确
-            dcs = doubleCaches.toArray(new DoubleCache[0]);
+            // 防止指令重排序.
+            // 如果放在同步块外面, 如果先执行A 处的add, 但是后执行这行语句, 会导致dcs的结果数量不正确
+            dcs = doubleCaches.toArray(new IWriteTool[0]);
         }
     }
 
