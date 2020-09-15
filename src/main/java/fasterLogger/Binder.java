@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Description 输入日志和某一个RingBuff绑定输出绑定
+ * @Description 注册哪些事件输出到WriteBuffer
  * 支持扩容
  * @Author zhangfan
  * @Date 2020/9/5 15:56
@@ -18,9 +18,9 @@ public class Binder
     /**
      * 加入管理的doubleCache类
      */
-    private List<IWriteTool> doubleCaches;
+    private List<IWriteUnit> doubleCaches;
 
-    private IWriteTool[] dcs;
+    private IWriteUnit[] dcs;
 
     public Binder()
     {
@@ -32,7 +32,7 @@ public class Binder
      *
      * @param doubleCache
      */
-    public void register(IWriteTool doubleCache)
+    public void register(IWriteUnit doubleCache)
     {
         synchronized (this)
         {
@@ -41,7 +41,7 @@ public class Binder
 
             // 防止指令重排序.
             // 如果放在同步块外面, 如果先执行A 处的add, 但是后执行这行语句, 会导致dcs的结果数量不正确
-            dcs = doubleCaches.toArray(new IWriteTool[0]);
+            dcs = doubleCaches.toArray(new IWriteUnit[0]);
         }
     }
 

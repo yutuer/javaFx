@@ -12,7 +12,7 @@ import fasterLogger.write.StringDataProvider;
  */
 public class WriteBlackBox implements IWriteBlackBox
 {
-    private ThreadLocal<IWriteTool> tl = new ThreadLocal();
+    private ThreadLocal<IWriteUnit> tl = new ThreadLocal();
 
     /**
      * 绑定器
@@ -27,7 +27,7 @@ public class WriteBlackBox implements IWriteBlackBox
     @Override
     public void log(String msg, long actorId, String content)
     {
-        IWriteTool doubleCache = tl.get();
+        IWriteUnit doubleCache = tl.get();
         if (doubleCache == null)
         {
             doubleCache = new RingBuffer(new IDataProviderFactory()

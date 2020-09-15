@@ -1,7 +1,7 @@
 package fasterLogger.v1;
 
 import fasterLogger.IDataProvider;
-import fasterLogger.IWriteTool;
+import fasterLogger.IWriteUnit;
 import fasterLogger.write.StringDataProvider;
 import fasterLogger.write.WriterBuffer;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @Date 2020/9/7 10:47
  * @Version 1.0
  */
-public class DoubleCache implements IWriteTool
+public class DoubleCache implements IWriteUnit
 {
     private List<IDataProvider>[] datas;
 

@@ -8,7 +8,7 @@ import fasterLogger.write.WriterBuffer;
  * @Date 2020/9/10 18:57
  * @Version 1.0
  */
-public interface IWriteTool
+public interface IWriteUnit
 {
 
     /**

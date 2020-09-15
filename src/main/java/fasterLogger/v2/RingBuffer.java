@@ -1,7 +1,7 @@
 package fasterLogger.v2;
 
 import fasterLogger.IDataProvider;
-import fasterLogger.IWriteTool;
+import fasterLogger.IWriteUnit;
 import fasterLogger.write.WriterBuffer;
 import sun.misc.Contended;
 import util.Log;
@@ -13,7 +13,7 @@ import util.Util;
  * @Date 2020/9/5 11:00
  * @Version 1.0
  */
-public class RingBuffer<T extends IDataProvider> implements IWriteTool
+public class RingBuffer<T extends IDataProvider> implements IWriteUnit
 {
     @Contended
     private volatile long readIndex;
