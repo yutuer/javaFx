@@ -15,4 +15,6 @@ public class Log
     public static final Logger logger = LogManager.getLogger(Log.class);
 
     public static final Logger Nav_Logger = LogManager.getLogger("Navmesh");
+
+    public static final Logger CrossAOI_Logger = LogManager.getLogger("CrossAOI");
 }

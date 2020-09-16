@@ -14,7 +14,7 @@
     </Appenders>
 
     <Loggers>
-        <Root level="warn" additivity="true" includeLocation="true">
+        <Root level="info" additivity="true" includeLocation="true">
             <AppenderRef ref="Console" />
         </Root>
     </Loggers>
