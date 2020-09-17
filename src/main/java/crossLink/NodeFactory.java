@@ -1,5 +1,7 @@
 package crossLink;
 
+import crossLink.aoi.cross.CrossLinkNode;
+
 /**
  * @Description TODO
  * @Author zhangfan
@@ -9,8 +11,8 @@ package crossLink;
 public class NodeFactory
 {
 
-    public static BaseNode createInstance(int x, int y)
+    public static CrossLinkNode createInstance(long label, int x, int y)
     {
-        return new BaseNode(x, y);
+        return new CrossLinkNode(label, x, y);
     }
 }

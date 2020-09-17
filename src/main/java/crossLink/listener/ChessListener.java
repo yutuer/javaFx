@@ -1,6 +1,7 @@
 package crossLink.listener;
 
-import crossLink.BaseNode;
+import crossLink.IAoi;
+import crossLink.aoi.cross.CrossLinkNode;
 import crossLink.Binder;
 import crossLink.javaFx.Chessboard;
 import javafx.scene.paint.Color;
@@ -13,7 +14,7 @@ import util.Log;
  * @Date 2020/9/15 20:26
  * @Version 1.0
  */
-public class ChessListener implements AoiListener
+public class ChessListener implements AoiListener<CrossLinkNode>
 {
 
     private Chessboard chessboard;
@@ -24,14 +25,14 @@ public class ChessListener implements AoiListener
     }
 
     @Override
-    public void onAddNode(BaseNode node)
+    public void onAddNode(IAoi aoi, CrossLinkNode node)
     {
         Shape shape = chessboard.addChess(node.x, node.y, false);
         Binder.bind(shape, node);
     }
 
     @Override
-    public void onRemoveNode(BaseNode node)
+    public void onRemoveNode(IAoi aoi, CrossLinkNode node)
     {
         Log.CrossAOI_Logger.info("removeNode: [{} {}]", node.x, node.y);
 
@@ -46,7 +47,13 @@ public class ChessListener implements AoiListener
     }
 
     @Override
-    public void onTeleportMoveTo(BaseNode node, int x, int y)
+    public void beforeMoveTo(IAoi aoi, CrossLinkNode node, int x, int y)
+    {
+
+    }
+
+    @Override
+    public void afterMoveTo(IAoi aoi, CrossLinkNode node, int x, int y)
     {
 
     }

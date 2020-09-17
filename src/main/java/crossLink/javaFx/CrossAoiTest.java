@@ -1,8 +1,8 @@
 package crossLink.javaFx;
 
-import crossLink.BaseNode;
-import crossLink.CrossAoi;
-import crossLink.listener.BroadListener;
+import crossLink.aoi.cross.CrossLinkNode;
+import crossLink.aoi.cross.CrossAoi;
+import crossLink.listener.CrossLinkBroadListener;
 import crossLink.listener.ChessListener;
 import crossLink.listener.DebugListener;
 import javafx.application.Application;
@@ -63,12 +63,12 @@ public class CrossAoiTest extends Application
         ChessListener chessListener = new ChessListener(chessboard);
         crossAoi.addListener(chessListener);
 
-        BaseNode first = null;
+        CrossLinkNode first = null;
 
         Random random = new Random();
         for (int i = 1; i <= num; i++)
         {
-            BaseNode baseNode = new BaseNode((int) (random.nextDouble() * xRange), (int) (random.nextDouble() * yRange));
+            CrossLinkNode baseNode = new CrossLinkNode(i, (int) (random.nextDouble() * xRange), (int) (random.nextDouble() * yRange));
 //            BaseNode baseNode = new BaseNode((int) (1.0 * xRange / num * i), (int) (1.0 * yRange / num * i));
             if (first == null)
             {
@@ -77,7 +77,7 @@ public class CrossAoiTest extends Application
             crossAoi.addNode(baseNode);
         }
 
-        BroadListener broadListener = new BroadListener(debugWidth, debugHeight);
+        CrossLinkBroadListener broadListener = new CrossLinkBroadListener(debugWidth, debugHeight);
         crossAoi.addListener(broadListener);
         DebugListener debugListener = new DebugListener(chessboard, debugWidth, debugHeight);
         crossAoi.addListener(debugListener);
@@ -86,7 +86,13 @@ public class CrossAoiTest extends Application
 
 //        crossAoi.removeNode(first);
 
-        crossAoi.teleportMoveNode(first, 250, 500);
+        boolean isLeft = first.x > (xRange / 2);
+        boolean isUpper = first.y > (yRange / 2);
+
+        final int dis = 100;
+
+        final CrossLinkNode f = first;
+        crossAoi.moveNode(f, f.x + (isLeft ? -1 * dis : dis), f.y + (isUpper ? -1 * dis : dis));
 
         Scene scene = new Scene(root);
         stage.setScene(scene);

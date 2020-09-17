@@ -1,6 +1,7 @@
 package crossLink.listener;
 
-import crossLink.BaseNode;
+import crossLink.IAoi;
+import crossLink.aoi.cross.CrossLinkNode;
 import crossLink.javaFx.Chessboard;
 
 /**
@@ -9,7 +10,7 @@ import crossLink.javaFx.Chessboard;
  * @Date 2020/9/16 12:16
  * @Version 1.0
  */
-public class DebugListener implements AoiListener
+public class DebugListener implements AoiListener<CrossLinkNode>
 {
     private Chessboard chessboard;
 
@@ -24,20 +25,26 @@ public class DebugListener implements AoiListener
     }
 
     @Override
-    public void onAddNode(BaseNode node)
+    public void onAddNode(IAoi aoi, CrossLinkNode node)
     {
         chessboard.addDebugRec(node, this.debugWidth, this.debugHeight);
     }
 
     @Override
-    public void onRemoveNode(BaseNode node)
+    public void onRemoveNode(IAoi aoi, CrossLinkNode node)
     {
         chessboard.addDebugRec(node, this.debugWidth, this.debugHeight);
     }
 
     @Override
-    public void onTeleportMoveTo(BaseNode node, int x, int y)
+    public void beforeMoveTo(IAoi aoi, CrossLinkNode node, int x, int y)
     {
+        chessboard.addDebugRec(node, this.debugWidth, this.debugHeight);
+    }
 
+    @Override
+    public void afterMoveTo(IAoi aoi, CrossLinkNode node, int x, int y)
+    {
+        chessboard.addDebugRec(node, this.debugWidth, this.debugHeight);
     }
 }

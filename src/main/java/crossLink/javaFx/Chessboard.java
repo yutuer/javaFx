@@ -1,6 +1,6 @@
 package crossLink.javaFx;
 
-import crossLink.BaseNode;
+import crossLink.aoi.cross.CrossLinkNode;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -10,7 +10,7 @@ import javafx.scene.shape.*;
 import java.util.Random;
 
 /**
- * @Description 棋盘
+ * @Description 棋盘(用于辅助表现)
  * @Author zhangfan
  * @Date 2020/9/15 19:59
  * @Version 1.0
@@ -76,7 +76,7 @@ public class Chessboard
      * @param width
      * @param height
      */
-    public void addDebugRec(BaseNode node, int width, int height)
+    public void addDebugRec(CrossLinkNode node, int width, int height)
     {
         int x = node.x;
         int y = node.y;

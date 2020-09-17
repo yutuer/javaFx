@@ -1,6 +1,6 @@
 package crossLink.comparator;
 
-import crossLink.BaseNode;
+import crossLink.aoi.cross.CrossLinkNode;
 
 import java.util.Comparator;
 
@@ -10,7 +10,7 @@ import java.util.Comparator;
  * @Date 2020/9/15 17:38
  * @Version 1.0
  */
-public class XNodeComparator<T extends BaseNode> implements Comparator<T>
+public class XNodeComparator<T extends CrossLinkNode> implements Comparator<T>
 {
     @Override
     public int compare(T o1, T o2)

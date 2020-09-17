@@ -1,5 +1,6 @@
 package crossLink;
 
+import crossLink.aoi.cross.CrossLinkNode;
 import javafx.scene.shape.Shape;
 
 import java.util.HashMap;
@@ -14,19 +15,19 @@ import java.util.Map;
 public class Binder
 {
 
-    public static Map<BaseNode, Shape> relations = new HashMap<>();
+    public static Map<CrossLinkNode, Shape> relations = new HashMap<>();
 
-    public static void bind(Shape shape, BaseNode node)
+    public static void bind(Shape shape, CrossLinkNode node)
     {
         relations.put(node, shape);
     }
 
-    public static Shape removeBind(BaseNode node)
+    public static Shape removeBind(CrossLinkNode node)
     {
         return relations.remove(node);
     }
 
-    public static Shape get(BaseNode node)
+    public static Shape get(CrossLinkNode node)
     {
         return relations.get(node);
     }
