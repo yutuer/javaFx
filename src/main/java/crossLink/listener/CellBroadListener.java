@@ -147,25 +147,6 @@ public class CellBroadListener implements AoiListener<CellNode>
     @Override
     public void afterMoveTo(IAoi aoi, CellNode node, int fromX, int fromY)
     {
-        if (!(aoi instanceof CellAoi))
-        {
-            return;
-        }
-
-        CellAoi cellAoi = CellAoi.class.cast(aoi);
-
-        int xCell = fromX / cellAoi.cellSize;
-        int yCell = fromY / cellAoi.cellSize;
-        Tower tower = cellAoi.towers[xCell][yCell];
-
-        int newXCell = node.x / cellAoi.cellSize;
-        int newYCell = node.y / cellAoi.cellSize;
-        Tower _tower = cellAoi.towers[newXCell][newYCell];
-
-        if (tower == _tower)
-        {
-            // 广播移动
-
-        }
+        Log.CrossAOI_Logger.info("{} afterMoveTo {} {}", node.label, fromX, fromY);
     }
 }
