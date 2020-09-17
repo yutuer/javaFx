@@ -1,6 +1,6 @@
 package crossLink;
 
-import crossLink.aoi.BaseNode;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
 import java.util.HashMap;
@@ -15,20 +15,29 @@ import java.util.Map;
 public class Binder
 {
 
-    public static Map<BaseNode, Shape> relations = new HashMap<>();
+    public static Map<Long, Shape> relations = new HashMap<>();
 
-    public static void bind(Shape shape, BaseNode node)
+    public static void bind(Shape shape, long label)
     {
-        relations.put(node, shape);
+        relations.put(label, shape);
     }
 
-    public static Shape removeBind(BaseNode node)
+    public static Shape removeBind(long label)
     {
-        return relations.remove(node);
+        return relations.remove(label);
     }
 
-    public static Shape get(BaseNode node)
+    public static Shape get(long label)
     {
-        return relations.get(node);
+        return relations.get(label);
+    }
+
+    public static void changeColor(long label, Color color)
+    {
+        Shape shape = get(label);
+        if (shape != null)
+        {
+            shape.setFill(color);
+        }
     }
 }

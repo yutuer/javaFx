@@ -1,7 +1,9 @@
 package crossLink.aoi.cell;
 
+import crossLink.Binder;
 import crossLink.IAoi;
 import crossLink.aoi.BaseNode;
+import javafx.scene.shape.Shape;
 
 import java.util.Set;
 
@@ -169,6 +171,42 @@ public class CellNode extends BaseNode
                 }
             }
         }
+    }
 
+
+    @Override
+    public void moveTo(IAoi aoi, int newX, int newY)
+    {
+        super.moveTo(aoi, newX, newY);
+
+
+    }
+
+    @Override
+    public void addRelation(BaseNode otherNode)
+    {
+        super.addRelation(otherNode);
+
+        if (otherNode != null)
+        {
+            Shape shape = Binder.get(otherNode.label);
+            if (shape != null)
+            {
+                shape.setFill(addColor);
+            }
+        }
+    }
+
+    @Override
+    public void removeRelation(CellNode otherNode)
+    {
+        super.removeRelation(otherNode);
+
+        // 移除的时候, 是还存留在图上的做主语. 所以这里应该用label
+        Shape shape = Binder.get(label);
+        if (shape != null)
+        {
+            shape.setFill(removeColor);
+        }
     }
 }

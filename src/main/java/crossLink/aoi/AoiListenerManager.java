@@ -17,17 +17,31 @@ public class AoiListenerManager<T extends BaseNode>
     protected List<AoiListener<T>> aoiListeners = new ArrayList<>();
 
     /**
-     * 移除监听器
+     * 添加监听器到最后
      *
      * @param listener
      */
-    public void addListener(AoiListener<T> listener)
+    public void addListenerToLast(AoiListener<T> listener)
     {
         if (aoiListeners.contains(listener))
         {
             removeListener(listener);
         }
         aoiListeners.add(listener);
+    }
+
+    /**
+     * 添加监听器到最前面
+     *
+     * @param listener
+     */
+    public void addListenerToFirst(AoiListener<T> listener)
+    {
+        if (aoiListeners.contains(listener))
+        {
+            removeListener(listener);
+        }
+        aoiListeners.add(0, listener);
     }
 
     /**

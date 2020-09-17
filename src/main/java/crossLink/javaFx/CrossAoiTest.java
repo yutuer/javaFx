@@ -6,7 +6,7 @@ import crossLink.aoi.BaseNode;
 import crossLink.aoi.cell.CellAoi;
 import crossLink.aoi.cell.CellNode;
 import crossLink.listener.CellBroadListener;
-import crossLink.listener.ChessListener;
+import crossLink.listener.ChessBindListener;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -67,8 +67,8 @@ public class CrossAoiTest extends Application
         Chessboard chessboard = new Chessboard(root, scale, maxX, maxY, false);
         chessboard.draw();
 
-        ChessListener chessListener = new ChessListener(chessboard);
-        aoi.addListener(chessListener);
+        ChessBindListener chessListener = new ChessBindListener(chessboard);
+        aoi.addListenerToLast(chessListener);
 
         BaseNode first = null;
 
@@ -87,23 +87,28 @@ public class CrossAoiTest extends Application
 
 //        CrossLinkBroadListener broadListener = new CrossLinkBroadListener(debugWidth, debugHeight);
 //        aoi.addListener(broadListener);
+
 //        DrawRecListener debugListener = new DrawRecListener(chessboard, debugWidth, debugHeight);
 //        aoi.addListener(debugListener);
 
         CellBroadListener cellBroadListener = new CellBroadListener();
-        aoi.addListener(cellBroadListener);
+        aoi.addListenerToFirst(cellBroadListener);
 
-        iaoi.addNode(new CellNode(num + 1, (int) (random.nextDouble() * xRange), (int) (random.nextDouble() * yRange)));
+        // region 操作
 
-//        crossAoi.removeNode(first);
+//        iaoi.addNode(new CellNode(num + 1, (int) (random.nextDouble() * xRange), (int) (random.nextDouble() * yRange)));
 
-        boolean isLeft = first.x > (xRange / 2);
-        boolean isUpper = first.y > (yRange / 2);
+        iaoi.removeNode(first);
 
-        final int dis = 100;
+//        boolean isLeft = first.x > (xRange / 2);
+//        boolean isUpper = first.y > (yRange / 2);
+//
+//        final int dis = 100;
+//
+//        final BaseNode f = first;
+//        iaoi.moveNode(f, f.x + (isLeft ? -1 * dis : dis), f.y + (isUpper ? -1 * dis : dis));
 
-        final BaseNode f = first;
-        iaoi.moveNode(f, f.x + (isLeft ? -1 * dis : dis), f.y + (isUpper ? -1 * dis : dis));
+        // endRegion
 
         Scene scene = new Scene(root);
         stage.setScene(scene);

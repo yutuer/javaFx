@@ -2,6 +2,7 @@ package crossLink.aoi;
 
 import crossLink.IAoi;
 import crossLink.aoi.cell.CellNode;
+import javafx.scene.paint.Color;
 import util.Log;
 
 import java.util.Objects;
@@ -14,6 +15,12 @@ import java.util.Objects;
  */
 public class BaseNode
 {
+    // 添加时通知的颜色
+    public static Color addColor = Color.ORANGERED;
+
+    // 删除时通知的颜色
+    public static Color removeColor = Color.DARKRED;
+
     /**
      * 标识
      */
@@ -95,7 +102,7 @@ public class BaseNode
             return;
         }
 
-        Log.CrossAOI_Logger.info("{} 建立和 {} 的联系!", this.label, otherNode.label);
+        Log.CrossAOI_Logger.info("{} 解除和 {} 的联系!", this.label, otherNode.label);
     }
 
     public void onMoveBroad(BaseNode otherNode)

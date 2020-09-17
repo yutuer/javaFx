@@ -1,12 +1,11 @@
 package crossLink.listener;
 
 import com.google.common.collect.Sets;
-import crossLink.IAoi;
-import crossLink.aoi.cross.CrossLinkNode;
 import crossLink.Binder;
+import crossLink.IAoi;
 import crossLink.aoi.cross.CrossAoi;
+import crossLink.aoi.cross.CrossLinkNode;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -46,7 +45,7 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
     public void onAddNode(IAoi aoi, CrossLinkNode node)
     {
         // 自己变色
-        changeColor(node, Color.GOLD);
+        Binder.changeColor(node.label, Color.GOLD);
 
         final Set<CrossLinkNode> set = this.set;
 
@@ -57,7 +56,7 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
             for (Iterator<CrossLinkNode> iterator = set.iterator(); iterator.hasNext(); )
             {
                 CrossLinkNode baseNode = iterator.next();
-                changeColor(baseNode, addColor);
+                Binder.changeColor(baseNode.label, addColor);
             }
         }
 
@@ -129,15 +128,6 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
         }
     }
 
-    private void changeColor(CrossLinkNode node, Color color)
-    {
-        Shape shape = Binder.get(node);
-        if (shape != null)
-        {
-            shape.setFill(color);
-        }
-    }
-
     @Override
     public void onRemoveNode(IAoi aoi, CrossLinkNode node)
     {
@@ -148,7 +138,7 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
             for (Iterator<CrossLinkNode> iterator = set.iterator(); iterator.hasNext(); )
             {
                 CrossLinkNode baseNode = iterator.next();
-                changeColor(baseNode, removeColor);
+                Binder.changeColor(baseNode.label, removeColor);
             }
         }
 
@@ -170,14 +160,14 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
         Sets.SetView<CrossLinkNode> add = Sets.difference(setBack, set);
         for (CrossLinkNode baseNode : add)
         {
-            changeColor(baseNode, addColor);
+            Binder.changeColor(baseNode.label, addColor);
         }
 
         // set - setBack = remove
         Sets.SetView<CrossLinkNode> remove = Sets.difference(set, setBack);
         for (CrossLinkNode baseNode : remove)
         {
-            changeColor(baseNode, removeColor);
+            Binder.changeColor(baseNode.label, removeColor);
         }
 
         set.clear();

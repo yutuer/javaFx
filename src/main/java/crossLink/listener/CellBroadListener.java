@@ -1,9 +1,11 @@
 package crossLink.listener;
 
+import crossLink.Binder;
 import crossLink.IAoi;
 import crossLink.aoi.cell.CellAoi;
 import crossLink.aoi.cell.CellNode;
 import crossLink.aoi.cell.Tower;
+import javafx.scene.paint.Color;
 import util.Log;
 
 import java.util.Set;
@@ -19,6 +21,9 @@ public class CellBroadListener implements AoiListener<CellNode>
     @Override
     public void onAddNode(IAoi aoi, CellNode node)
     {
+        // 自己变色
+        Binder.changeColor(node.label, Color.GOLD);
+
         // 获取所有广播的对象
         if (aoi instanceof CellAoi)
         {
@@ -79,6 +84,9 @@ public class CellBroadListener implements AoiListener<CellNode>
     @Override
     public void onRemoveNode(IAoi aoi, CellNode node)
     {
+        // 自己变色
+        Binder.changeColor(node.label, Color.GOLD);
+
         if (aoi instanceof CellAoi)
         {
             CellAoi cellAoi = CellAoi.class.cast(aoi);
