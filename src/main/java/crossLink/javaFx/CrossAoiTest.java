@@ -55,12 +55,11 @@ public class CrossAoiTest extends Application
         int xRange = maxX * scale;
         int yRange = maxY * scale;
 
-//        AoiListenerManager aoi = new CrossAoi(xRange, yRange);
-        AoiListenerManager aoi = new CellAoi(maxX, maxY, scale);
+        AoiListenerManager aoi;
+//      aoi = new CrossAoi(xRange, yRange);
+        aoi = new CellAoi(maxX, maxY, scale);
 
         IAoi iaoi = IAoi.class.cast(aoi);
-
-        //CrossAoi crossAoi = new CrossAoi(xRange, yRange);
 
         Pane root = new Pane();
 
@@ -70,6 +69,7 @@ public class CrossAoiTest extends Application
         ChessBindListener chessListener = new ChessBindListener(chessboard);
         aoi.addListenerToLast(chessListener);
 
+        BaseNode[] baseNodes = new BaseNode[num];
         BaseNode first = null;
 
         Random random = new Random();
@@ -82,8 +82,9 @@ public class CrossAoiTest extends Application
             {
                 first = baseNode;
             }
-            iaoi.addNode(baseNode);
+            baseNodes[i - 1] = baseNode;
         }
+        iaoi.acceptDatas(baseNodes);
 
 //        CrossLinkBroadListener broadListener = new CrossLinkBroadListener(debugWidth, debugHeight);
 //        aoi.addListener(broadListener);
@@ -98,15 +99,15 @@ public class CrossAoiTest extends Application
 
 //        iaoi.addNode(new CellNode(num + 1, (int) (random.nextDouble() * xRange), (int) (random.nextDouble() * yRange)));
 
-        iaoi.removeNode(first);
+//        iaoi.removeNode(first);
 
-//        boolean isLeft = first.x > (xRange / 2);
-//        boolean isUpper = first.y > (yRange / 2);
-//
-//        final int dis = 100;
-//
-//        final BaseNode f = first;
-//        iaoi.moveNode(f, f.x + (isLeft ? -1 * dis : dis), f.y + (isUpper ? -1 * dis : dis));
+        boolean isLeft = first.x > (xRange / 2);
+        boolean isUpper = first.y > (yRange / 2);
+
+        final int dis = 100;
+
+        final BaseNode f = first;
+        iaoi.moveNode(f, f.x + (isLeft ? -1 * dis : dis), f.y + (isUpper ? -1 * dis : dis));
 
         // endRegion
 

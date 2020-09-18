@@ -34,8 +34,8 @@ public class CellNode extends BaseNode
         }
 
         CellAoi cellAoi = CellAoi.class.cast(aoi);
-        int xCell = newX / cellAoi.xCellNum;
-        int yCell = newY / cellAoi.yCellNum;
+        int xCell = newX / cellAoi.cellSize;
+        int yCell = newY / cellAoi.cellSize;
 
         int left = xCell - 1;
         if (left < 0)
@@ -61,6 +61,7 @@ public class CellNode extends BaseNode
             down = cellAoi.yCellNum - 1;
         }
 
+        // 先都设置为true
         for (int i = left; i <= right; i++)
         {
             for (int j = upper; j <= down; j++)
@@ -131,12 +132,16 @@ public class CellNode extends BaseNode
                         {
                             for (Long aid : set)
                             {
-                                // 告诉对方移除自己, 并删除双方联系
-                                CellNode cellNode = cellAoi.getCellNode(aid);
-                                if (cellNode != null)
+                                if (aid != label)
                                 {
-                                    cellNode.removeRelation(this);
+                                    // 告诉对方移除自己, 并删除双方联系
+                                    CellNode cellNode = cellAoi.getCellNode(aid);
+                                    if (cellNode != null)
+                                    {
+                                        cellNode.removeRelation(this);
+                                    }
                                 }
+
                             }
                         }
                     }
@@ -178,8 +183,6 @@ public class CellNode extends BaseNode
     public void moveTo(IAoi aoi, int newX, int newY)
     {
         super.moveTo(aoi, newX, newY);
-
-
     }
 
     @Override

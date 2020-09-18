@@ -32,4 +32,17 @@ public interface IAoi<T extends BaseNode>
      * @param y
      */
     void moveNode(T node, int x, int y);
+
+    /**
+     * 接受一组节点, 用来初始化
+     *
+     * @param nodes
+     */
+    default void acceptDatas(T[] nodes)
+    {
+        for (int i = 0, size = nodes.length; i < size; i++)
+        {
+            addNode(nodes[i]);
+        }
+    }
 }
