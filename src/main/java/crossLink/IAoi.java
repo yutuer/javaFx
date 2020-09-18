@@ -22,7 +22,7 @@ public interface IAoi<T extends BaseNode>
      *
      * @param node
      */
-    void removeNode(T node);
+    void removeNode(long node);
 
     /**
      * 节点移动到x, y

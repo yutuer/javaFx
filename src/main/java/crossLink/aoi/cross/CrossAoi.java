@@ -215,26 +215,19 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
 
     /**
      * 删除节点
-     *
-     * @param node
      */
     @Override
-    public void removeNode(CrossLinkNode node)
+    public void removeNode(long label)
     {
-        if (node == null)
-        {
-            return;
-        }
-
-        CrossLinkNode trueNode = nodes.get(node.label);
+        CrossLinkNode trueNode = nodes.get(label);
 
         makeDoubleLink(trueNode.xPrev, trueNode.xNext, true);
 
         makeDoubleLink(trueNode.yPrev, trueNode.yNext, false);
 
-        nodes.remove(node.label);
+        nodes.remove(label);
 
-        onTriggerRemoveListener(this, node);
+        onTriggerRemoveListener(this, trueNode);
     }
 
     /**

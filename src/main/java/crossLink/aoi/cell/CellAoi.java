@@ -57,8 +57,14 @@ public class CellAoi extends AoiListenerManager<CellNode> implements IAoi<CellNo
     }
 
     @Override
-    public void removeNode(CellNode node)
+    public void removeNode(long label)
     {
+        CellNode node = nodes.get(label);
+        if (node == null)
+        {
+            return;
+        }
+
         int xCell = node.x / cellSize;
         int yCell = node.y / cellSize;
 
