@@ -6,6 +6,7 @@ import crossLink.aoi.cell.CellAoi;
 import crossLink.aoi.cross.CrossAoi;
 import crossLink.listener.CellBroadListener;
 import crossLink.listener.CrossLinkBroadListener;
+import util.Log;
 import util.PropertiesUtils;
 
 import java.util.Properties;
@@ -55,8 +56,8 @@ public class AoiTest
         total += addNum;
         AddNodeTestUnit addNodeTestUnit = new AddNodeTestUnit(addNodes);
 
-        // 2. 删除的数据
-        RemoveNodeTestUnit removeNodeTestUnit = new RemoveNodeTestUnit(total / 2, total / 2 + 1);
+        // 2. 删除的数据 From - To
+        RemoveNodeTestUnit removeNodeTestUnit = new RemoveNodeTestUnit(1, total);
 
         // 3. 移动的数据
         MoveNodeTestUnit moveNodeTestUnit = new MoveNodeTestUnit(total, 5);
@@ -73,10 +74,13 @@ public class AoiTest
         CellBroadListener cellBroadListener = new CellBroadListener();
         listenerManager.addListenerToFirst(cellBroadListener);
 
+        long now = System.currentTimeMillis();
+
         //cell 添加
         addNodeTestUnit.accpetInput(iaoi);
 //        // cell 删除
-//        removeNodeTestUnit.accpetInput(iaoi);
+        removeNodeTestUnit.accpetInput(iaoi);
+        Log.CrossAOI_Logger.warn("Cell addTest costTime:{}", System.currentTimeMillis() - now);
 //        // cell 移动
 //        moveNodeTestUnit.accpetInput(iaoi);
 
@@ -88,10 +92,13 @@ public class AoiTest
         CrossLinkBroadListener crossLinkBroadListener = new CrossLinkBroadListener(scale * 3 / 2, scale * 3 / 2);
         listenerManager.addListenerToLast(crossLinkBroadListener);
 
+        now = System.currentTimeMillis();
+
         // crossLink 添加
         addNodeTestUnit.accpetInput(iaoi);
-//        // crossLink 删除
-//        removeNodeTestUnit.accpetInput(iaoi);
+//        // crossLink 删除 From - To
+        removeNodeTestUnit.accpetInput(iaoi);
+        Log.CrossAOI_Logger.warn("CrossLink addTest costTime:{}", System.currentTimeMillis() - now);
 //        // crossLink 移动
 //        moveNodeTestUnit.accpetInput(iaoi);
 

@@ -5,6 +5,7 @@ import crossLink.NodeFactory;
 import crossLink.aoi.AoiListenerManager;
 import crossLink.test.CrossNodeFactory;
 import crossLink.test.INodeFactory;
+import util.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,11 +47,11 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
 
         nodeFactory = new CrossNodeFactory(0);
 
-        xHead = NodeFactory.createInstance(0, 0, 0);
+        xHead = NodeFactory.createInstance(0, -1, 0);
         xTail = NodeFactory.createInstance(0, maxX, 0);
         makeDoubleLink(xHead, xTail, true);
 
-        yHead = NodeFactory.createInstance(0, 0, 0);
+        yHead = NodeFactory.createInstance(0, 0, -1);
         yTail = NodeFactory.createInstance(0, 0, maxY);
         makeDoubleLink(yHead, yTail, false);
     }
@@ -231,6 +232,10 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
     public void removeNode(long label)
     {
         CrossLinkNode trueNode = nodes.get(label);
+        if (trueNode == null)
+        {
+            Log.CrossAOI_Logger.error("label:{} 没有找到", label);
+        }
 
         makeDoubleLink(trueNode.xPrev, trueNode.xNext, true);
 
@@ -283,7 +288,7 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
     {
         for (int i = 0, size = nodePos.length; i < size; i += 2)
         {
-            addNode(nodeFactory.create(nodePos[i], nodePos[i+1]));
+            addNode(nodeFactory.create(nodePos[i], nodePos[i + 1]));
         }
     }
 }
