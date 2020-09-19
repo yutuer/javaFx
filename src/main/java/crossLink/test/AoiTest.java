@@ -1,5 +1,6 @@
 package crossLink.test;
 
+import util.Log;
 import util.PropertiesUtils;
 
 import java.util.Properties;
@@ -20,6 +21,10 @@ public class AoiTest
         Random random = new Random();
 
         Properties properties = PropertiesUtils.getProperties("crossLink.properties");
+
+        int testType = PropertiesUtils.getInt(properties, "testType", 1);
+        int testNum = PropertiesUtils.getInt(properties, "testNum", 1);
+
         int defaultNodeNum = PropertiesUtils.getInt(properties, "defaultNodeNum", 200);
         int maxX = PropertiesUtils.getInt(properties, "maxX", 20);
         int maxY = PropertiesUtils.getInt(properties, "maxY", 20);
@@ -28,13 +33,27 @@ public class AoiTest
 
         AoiTestUnit aoiTestUnit = new AoiTestUnit(defaultNodeNum, maxX, maxY, scale);
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 1; i <= testNum; i++)
         {
-            aoiTestUnit.initNodes();
-            aoiTestUnit.makeTestAddNodeData(addNum);
+            if (testType == 1)
+            {
+                Log.CrossAOI_Logger.warn("TestAdd 第{}次 [{} {} {} {} {}]",
+                        i, defaultNodeNum, addNum, maxX, maxY, scale);
 
-            aoiTestUnit.loadAoi("Cell").testAdd();
-            aoiTestUnit.loadAoi("CrossLink").testAdd();
+                aoiTestUnit.initNodes();
+                aoiTestUnit.makeTestAddNodeData(addNum);
+
+                aoiTestUnit.loadAoi("Cell").testAdd();
+                aoiTestUnit.loadAoi("CrossLink").testAdd();
+            }
+            else if (testType == 2)
+            {
+
+            }
+            else
+            {
+
+            }
         }
 
 //        {
