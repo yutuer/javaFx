@@ -34,9 +34,6 @@ public class AoiTest
         int scale = PropertiesUtils.getInt(properties, "scale", 50);
         SCALE = scale;
 
-        final int debugWidth = PropertiesUtils.getInt(properties, "xRange", 100);
-        final int debugHeight = PropertiesUtils.getInt(properties, "yRange", 100);
-
         int xRange = maxX * scale;
         int yRange = maxY * scale;
 
@@ -48,7 +45,7 @@ public class AoiTest
         }
 
         // 1. 添加的数据
-        int addNum = 1;
+        int addNum = PropertiesUtils.getInt(properties, "addNum", 1);
         int[] addNodes = new int[addNum * 2];
         for (int i = 0; i < addNum; i++)
         {
