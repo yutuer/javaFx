@@ -1,6 +1,5 @@
 package crossLink.test;
 
-import crossLink.aoi.BaseNode;
 import crossLink.aoi.cell.CellNode;
 
 /**
@@ -9,7 +8,7 @@ import crossLink.aoi.cell.CellNode;
  * @Date 2020/9/18 11:34
  * @Version 1.0
  */
-public class CellNodeFactory implements INodeFactory
+public class CellNodeFactory implements INodeFactory<CellNode>
 {
     private long startLabel;
 
@@ -19,7 +18,7 @@ public class CellNodeFactory implements INodeFactory
     }
 
     @Override
-    public BaseNode create(int x, int y)
+    public CellNode create(int x, int y)
     {
         return new CellNode(++startLabel, x, y);
     }

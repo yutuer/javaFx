@@ -4,6 +4,7 @@ import crossLink.Binder;
 import crossLink.IAoi;
 import crossLink.aoi.BaseNode;
 import crossLink.javaFx.Chessboard;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import util.Log;
 
@@ -18,15 +19,28 @@ public class ChessBindListener implements AoiListener<BaseNode>
 
     private Chessboard chessboard;
 
+    private boolean isRandomColor;
+
     public ChessBindListener(Chessboard chessboard)
     {
+        this(chessboard, false);
+    }
+
+    public ChessBindListener(Chessboard chessboard, boolean isRandomColor)
+    {
         this.chessboard = chessboard;
+        this.isRandomColor = isRandomColor;
     }
 
     @Override
     public void onAddNode(IAoi aoi, BaseNode node)
     {
-        Shape shape = chessboard.addChess(node.x, node.y, false);
+        Shape shape = chessboard.addChess(node.x, node.y, isRandomColor);
+        if (!isRandomColor)
+        {
+            // 自己变色
+            Binder.changeColor(node.label, Color.GOLD);
+        }
 
         Binder.bind(shape, node.label);
     }
@@ -41,6 +55,12 @@ public class ChessBindListener implements AoiListener<BaseNode>
         {
             // 调试, 所以先注释掉了
 //            chessboard.removeChess(shape);
+
+            if (!isRandomColor)
+            {
+                // 自己变色
+                Binder.changeColor(node.label, Color.GOLD);
+            }
         }
     }
 

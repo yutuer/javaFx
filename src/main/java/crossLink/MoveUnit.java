@@ -1,6 +1,8 @@
 package crossLink;
 
 import crossLink.aoi.BaseNode;
+import crossLink.aoi.IPos;
+import util.Log;
 
 /**
  * @Description 一次移动目标的抽象
@@ -10,6 +12,9 @@ import crossLink.aoi.BaseNode;
  */
 public class MoveUnit
 {
+    private IAoi iaoi;
+    private IPos iPos;
+
     // 当前点
     private int curX;
     private int curY;
@@ -27,12 +32,17 @@ public class MoveUnit
     private double vy;
 
     // 预期这次移动时间
-    private int expireEndTime;
+    private int expectEndTime;
+
+    /**
+     * 超过时间
+     */
+    private int expireTime;
 
     /**
      * 移动速度
      */
-    private int v;
+    private double v;
 
     /**
      * 当前经过的总时间
@@ -44,10 +54,13 @@ public class MoveUnit
      */
     private boolean isRunning;
 
-    public MoveUnit(int startX, int startY, int v)
+    public MoveUnit(IAoi iaoi, IPos iPos, int v)
     {
-        this.startX = startX;
-        this.startY = startY;
+        this.iaoi = iaoi;
+        this.iPos = iPos;
+
+        this.startX = iPos.getX();
+        this.startY = iPos.getY();
 
         this.curX = startX;
         this.curY = startY;
@@ -68,7 +81,10 @@ public class MoveUnit
 
         isRunning = true;
 
-        expireEndTime = calExpireEndTime();
+        expectEndTime = calExpireEndTime();
+
+        Log.CrossAOI_Logger.info("moveStart, startX:{}, startY:{}, targetX:{},  targetY:{}, expireTime:{} ",
+                startX, startY, targetX, targetY, expectEndTime);
     }
 
     private int calExpireEndTime()
@@ -79,10 +95,10 @@ public class MoveUnit
         int diffSqr = diffX * diffX + diffY * diffY;
         double diff = Math.sqrt(diffSqr);
 
-        vx = diff / v * diffX;
-        vy = diff / v * diffY;
+        vx = diffX / diff * v;
+        vy = diffY / diff * v;
 
-        return (int) ((diff + v - 1) / v);
+        return (int) (Math.ceil(diff / v * 1000));
     }
 
     public void tickMove(int interval)
@@ -93,34 +109,53 @@ public class MoveUnit
         }
 
         moveTime += interval;
-        if (moveTime > expireEndTime)
+        if (moveTime > expectEndTime)
         {
+            expireTime = moveTime - expectEndTime;
+            moveTime = expectEndTime;
+
             isRunning = false;
         }
 
-        curX = (int) (startX + vx * interval);
-        curY = (int) (startY + vy * interval);
+        curX = (int) Math.round(startX + vx * moveTime / 1000);
+        curY = (int) Math.round(startY + vy * moveTime / 1000);
+
+
+
+        Log.CrossAOI_Logger.warn("curX:{}, curY:{}, vx:{}, vy:{}, moveTime:{}, expireTime:{}",
+                curX, curY, vx, vy, moveTime, expireTime);
+
+        if (curX <= 0 || curX >= iaoi.getXRange())
+        {
+            isRunning = false;
+
+            if (curX < 0) curX = 0;
+            if (curX > iaoi.getXRange()) curX = iaoi.getXRange();
+        }
+        if (curY <= 0 || curY >= iaoi.getYRange())
+        {
+            isRunning = false;
+
+            if (curY < 0) curY = 0;
+            if (curY > iaoi.getYRange()) curY = iaoi.getYRange();
+        }
+
+        syncPos();
     }
 
     /**
      * 同步位置
-     *
-     * @param baseNode
      */
-    public void syncPos(BaseNode baseNode)
+    private void syncPos()
     {
-        baseNode.x = curX;
-        baseNode.y = curY;
+        if (iPos instanceof BaseNode)
+        {
+            iaoi.moveNode(BaseNode.class.cast(iPos), curX, curY);
+        }
     }
 
-    public int getCurX()
+    public int getExpireTime()
     {
-        return curX;
+        return expireTime;
     }
-
-    public int getCurY()
-    {
-        return curY;
-    }
-
 }

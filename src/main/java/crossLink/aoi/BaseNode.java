@@ -1,7 +1,6 @@
 package crossLink.aoi;
 
 import crossLink.IAoi;
-import crossLink.aoi.cell.CellNode;
 import javafx.scene.paint.Color;
 import util.Log;
 
@@ -13,7 +12,7 @@ import java.util.Objects;
  * @Date 2020/9/17 10:59
  * @Version 1.0
  */
-public class BaseNode
+public class BaseNode implements IPos
 {
     // 添加时通知的颜色
     public static Color addColor = Color.ORANGERED;
@@ -87,7 +86,8 @@ public class BaseNode
             return;
         }
 
-        Log.CrossAOI_Logger.info("{} 和 {} 建立联系!", this.label, otherNode.label);
+        Log.CrossAOI_Logger.info("{}  {}[x:{} y:{}] 和 {}[x:{} y:{}] 建立联系!, reason:{}",
+                getTag(), this.label, x, y, otherNode.label, otherNode.x, otherNode.y, getReason(otherNode));
     }
 
     /**
@@ -95,14 +95,15 @@ public class BaseNode
      *
      * @param
      */
-    public void removeRelation(CellNode otherNode)
+    public void removeRelation(BaseNode otherNode)
     {
         if (otherNode == null)
         {
             return;
         }
 
-        Log.CrossAOI_Logger.info("{} 解除和 {} 的联系!", this.label, otherNode.label);
+        Log.CrossAOI_Logger.info("{}  {}[x:{} y:{}] 解除和 {}[x:{} y:{}] 的联系!, reason:{}",
+                getTag(), this.label, x, y, otherNode.label, otherNode.x, otherNode.y, getReason(otherNode));
     }
 
     public void onMoveBroad(BaseNode otherNode)
@@ -112,6 +113,42 @@ public class BaseNode
             return;
         }
 
-        Log.CrossAOI_Logger.info("{} 移动广播给 {} ", this.label, otherNode.label);
+        Log.CrossAOI_Logger.info("{}  {}[x:{} y:{}] 移动广播给 {}[x:{} y:{}], reason:{}",
+                getTag(), this.label, x, y, otherNode.label, otherNode.x, otherNode.y, getReason(otherNode));
     }
+
+    @Override
+    public int getX()
+    {
+        return x;
+    }
+
+    @Override
+    public int getY()
+    {
+        return y;
+    }
+
+    @Override
+    public void setX(int x)
+    {
+        this.x = x;
+    }
+
+    @Override
+    public void setY(int y)
+    {
+        this.y = y;
+    }
+
+    protected String getTag()
+    {
+        return "";
+    }
+
+    protected String getReason(BaseNode otherNode)
+    {
+        return "";
+    }
+
 }

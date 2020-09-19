@@ -34,8 +34,8 @@ public class CellNode extends BaseNode
         }
 
         CellAoi cellAoi = CellAoi.class.cast(aoi);
-        int xCell = newX / cellAoi.cellSize;
-        int yCell = newY / cellAoi.cellSize;
+        final int xCell = newX / cellAoi.cellSize;
+        final int yCell = newY / cellAoi.cellSize;
 
         int left = xCell - 1;
         if (left < 0)
@@ -70,8 +70,11 @@ public class CellNode extends BaseNode
             }
         }
 
-        int _xCell = towerX;
-        int _yCell = towerY;
+        final int _xCell = towerX;
+        final int _yCell = towerY;
+
+        towerX = xCell;
+        towerY = yCell;
 
         int _left = _xCell - 1;
         if (_left < 0)
@@ -178,13 +181,6 @@ public class CellNode extends BaseNode
         }
     }
 
-
-    @Override
-    public void moveTo(IAoi aoi, int newX, int newY)
-    {
-        super.moveTo(aoi, newX, newY);
-    }
-
     @Override
     public void addRelation(BaseNode otherNode)
     {
@@ -201,7 +197,7 @@ public class CellNode extends BaseNode
     }
 
     @Override
-    public void removeRelation(CellNode otherNode)
+    public void removeRelation(BaseNode otherNode)
     {
         super.removeRelation(otherNode);
 
@@ -211,5 +207,22 @@ public class CellNode extends BaseNode
         {
             shape.setFill(removeColor);
         }
+    }
+
+    protected String getTag()
+    {
+        return "Cell";
+    }
+
+    protected String getReason(BaseNode otherNode)
+    {
+        if (otherNode instanceof CellNode)
+        {
+            CellNode other = CellNode.class.cast(otherNode);
+            return String.format("[diffTowerX:%d diffTowerY:%d]   [DiffX:%d DiffY:%d]",
+                    Math.abs(towerX - other.towerX), Math.abs(towerY - other.towerY),
+                    Math.abs(x - other.x), Math.abs(y - other.y));
+        }
+        return "";
     }
 }

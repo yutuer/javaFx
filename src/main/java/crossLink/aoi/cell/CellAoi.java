@@ -2,6 +2,8 @@ package crossLink.aoi.cell;
 
 import crossLink.IAoi;
 import crossLink.aoi.AoiListenerManager;
+import crossLink.test.CellNodeFactory;
+import crossLink.test.INodeFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,11 +26,15 @@ public class CellAoi extends AoiListenerManager<CellNode> implements IAoi<CellNo
 
     public boolean[][] marks;
 
+    private INodeFactory<CellNode> nodeFactory;
+
     public CellAoi(int xCellNum, int yCellNum, int cellSize)
     {
         this.xCellNum = xCellNum;
         this.yCellNum = yCellNum;
         this.cellSize = cellSize;
+
+        nodeFactory = new CellNodeFactory(0);
 
         towers = new Tower[xCellNum][yCellNum];
         marks = new boolean[xCellNum][yCellNum];
@@ -54,6 +60,12 @@ public class CellAoi extends AoiListenerManager<CellNode> implements IAoi<CellNo
         nodes.put(node.label, node);
 
         onTriggerAddListener(this, node);
+    }
+
+    @Override
+    public void addNode(int x, int y)
+    {
+        addNode(nodeFactory.create(x, y));
     }
 
     @Override
@@ -93,6 +105,32 @@ public class CellAoi extends AoiListenerManager<CellNode> implements IAoi<CellNo
         node.moveTo(this, x, y);
 
         onTriggerAfterMoveToListener(this, node, _x, _y);
+    }
+
+    public void acceptDatas(int[] nodePos)
+    {
+        for (int i = 0, size = nodePos.length; i < size; i += 2)
+        {
+            addNode(nodeFactory.create(nodePos[i], nodePos[i + 1]));
+        }
+    }
+
+    @Override
+    public CellNode getNode(long label)
+    {
+        return nodes.get(label);
+    }
+
+    @Override
+    public int getXRange()
+    {
+        return xCellNum * cellSize;
+    }
+
+    @Override
+    public int getYRange()
+    {
+        return yCellNum * cellSize;
     }
 
     public CellNode getCellNode(long label)

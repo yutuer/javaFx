@@ -18,11 +18,17 @@ public interface IAoi<T extends BaseNode>
     void addNode(T node);
 
     /**
+     * 加入一个节点
+     *
+     */
+    void addNode(int x, int y);
+
+    /**
      * 删除一个节点
      *
-     * @param node
+     * @param label
      */
-    void removeNode(long node);
+    void removeNode(long label);
 
     /**
      * 节点移动到x, y
@@ -36,13 +42,13 @@ public interface IAoi<T extends BaseNode>
     /**
      * 接受一组节点, 用来初始化
      *
-     * @param nodes
+     * @param nodePos
      */
-    default void acceptDatas(T[] nodes)
-    {
-        for (int i = 0, size = nodes.length; i < size; i++)
-        {
-            addNode(nodes[i]);
-        }
-    }
+    void acceptDatas(int[] nodePos);
+
+    T getNode(long label);
+
+    int getXRange();
+
+    int getYRange();
 }

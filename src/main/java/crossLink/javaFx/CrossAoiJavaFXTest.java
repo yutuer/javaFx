@@ -4,7 +4,6 @@ import crossLink.IAoi;
 import crossLink.aoi.AoiListenerManager;
 import crossLink.aoi.BaseNode;
 import crossLink.aoi.cell.CellAoi;
-import crossLink.aoi.cell.CellNode;
 import crossLink.listener.CellBroadListener;
 import crossLink.listener.ChessBindListener;
 import javafx.application.Application;
@@ -22,7 +21,7 @@ import java.util.Random;
  * @Date 2020/9/15 18:53
  * @Version 1.0
  */
-public class CrossAoiTest extends Application
+public class CrossAoiJavaFXTest extends Application
 {
     public static void main(String[] args)
     {
@@ -55,11 +54,11 @@ public class CrossAoiTest extends Application
         int xRange = maxX * scale;
         int yRange = maxY * scale;
 
-        AoiListenerManager aoi;
-//      aoi = new CrossAoi(xRange, yRange);
-        aoi = new CellAoi(maxX, maxY, scale);
+        AoiListenerManager listenerManager;
+//      listenerManager = new CrossAoi(xRange, yRange);
+        listenerManager = new CellAoi(maxX, maxY, scale);
 
-        IAoi iaoi = IAoi.class.cast(aoi);
+        IAoi iaoi = IAoi.class.cast(listenerManager);
 
         Pane root = new Pane();
 
@@ -67,33 +66,28 @@ public class CrossAoiTest extends Application
         chessboard.draw();
 
         ChessBindListener chessListener = new ChessBindListener(chessboard);
-        aoi.addListenerToLast(chessListener);
+        listenerManager.addListenerToLast(chessListener);
 
-        BaseNode[] baseNodes = new BaseNode[num];
-        BaseNode first = null;
+        int[] baseNodes = new int[num * 2];
 
         Random random = new Random();
         for (int i = 1; i <= num; i++)
         {
 //            BaseNode baseNode = new CrossLinkNode(i, (int) (random.nextDouble() * xRange), (int) (random.nextDouble() * yRange));
-            BaseNode baseNode = new CellNode(i, (int) (random.nextDouble() * xRange), (int) (random.nextDouble() * yRange));
-//            BaseNode baseNode = new BaseNode((int) (1.0 * xRange / num * i), (int) (1.0 * yRange / num * i));
-            if (first == null)
-            {
-                first = baseNode;
-            }
-            baseNodes[i - 1] = baseNode;
+
+            baseNodes[i * 2] = (int) (random.nextDouble() * xRange);
+            baseNodes[i * 2 + 1] = (int) (random.nextDouble() * yRange);
         }
         iaoi.acceptDatas(baseNodes);
 
 //        CrossLinkBroadListener broadListener = new CrossLinkBroadListener(debugWidth, debugHeight);
-//        aoi.addListener(broadListener);
+//        listenerManager.addListener(broadListener);
 
 //        DrawRecListener debugListener = new DrawRecListener(chessboard, debugWidth, debugHeight);
-//        aoi.addListener(debugListener);
+//        listenerManager.addListener(debugListener);
 
         CellBroadListener cellBroadListener = new CellBroadListener();
-        aoi.addListenerToFirst(cellBroadListener);
+        listenerManager.addListenerToFirst(cellBroadListener);
 
         // region 操作
 
@@ -101,6 +95,7 @@ public class CrossAoiTest extends Application
 
 //        iaoi.removeNode(first);
 
+        BaseNode first = iaoi.getNode(1);
         boolean isLeft = first.x > (xRange / 2);
         boolean isUpper = first.y > (yRange / 2);
 

@@ -1,11 +1,9 @@
 package crossLink.listener;
 
-import crossLink.Binder;
 import crossLink.IAoi;
 import crossLink.aoi.cell.CellAoi;
 import crossLink.aoi.cell.CellNode;
 import crossLink.aoi.cell.Tower;
-import javafx.scene.paint.Color;
 import util.Log;
 
 import java.util.Set;
@@ -21,9 +19,6 @@ public class CellBroadListener implements AoiListener<CellNode>
     @Override
     public void onAddNode(IAoi aoi, CellNode node)
     {
-        // 自己变色
-        Binder.changeColor(node.label, Color.GOLD);
-
         // 获取所有广播的对象
         if (aoi instanceof CellAoi)
         {
@@ -84,9 +79,6 @@ public class CellBroadListener implements AoiListener<CellNode>
     @Override
     public void onRemoveNode(IAoi aoi, CellNode node)
     {
-        // 自己变色
-        Binder.changeColor(node.label, Color.GOLD);
-
         if (aoi instanceof CellAoi)
         {
             CellAoi cellAoi = CellAoi.class.cast(aoi);
@@ -149,12 +141,12 @@ public class CellBroadListener implements AoiListener<CellNode>
     @Override
     public void beforeMoveTo(IAoi aoi, CellNode node, int x, int y)
     {
-        Log.CrossAOI_Logger.info("{} beforeMoveTo {} {}", node.label, x, y);
+        Log.CrossAOI_Logger.debug("{} [beforeMoveTo] toX:{}, toY:{}", node.label, x, y);
     }
 
     @Override
     public void afterMoveTo(IAoi aoi, CellNode node, int fromX, int fromY)
     {
-        Log.CrossAOI_Logger.info("{} afterMoveTo {} {}", node.label, fromX, fromY);
+        Log.CrossAOI_Logger.debug("{}  [afterMoveTo] fromX:{}, fromY:{}", node.label, fromX, fromY);
     }
 }

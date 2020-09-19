@@ -1,7 +1,6 @@
 package crossLink.listener;
 
 import com.google.common.collect.Sets;
-import crossLink.Binder;
 import crossLink.IAoi;
 import crossLink.aoi.cross.CrossAoi;
 import crossLink.aoi.cross.CrossLinkNode;
@@ -44,9 +43,6 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
     @Override
     public void onAddNode(IAoi aoi, CrossLinkNode node)
     {
-        // 自己变色
-        Binder.changeColor(node.label, Color.GOLD);
-
         final Set<CrossLinkNode> set = this.set;
 
         chooseBroadSet(node, set);
@@ -56,7 +52,7 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
             for (Iterator<CrossLinkNode> iterator = set.iterator(); iterator.hasNext(); )
             {
                 CrossLinkNode baseNode = iterator.next();
-                Binder.changeColor(baseNode.label, addColor);
+                node.addRelation(baseNode);
             }
         }
 
@@ -79,7 +75,6 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
                 if (Math.abs(node.y - cur.y) <= yRange)
                 {
                     set.add(cur);
-//                    changeColor(cur, color);
                 }
             }
             else
@@ -96,7 +91,6 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
                 if (Math.abs(node.y - cur.y) <= yRange)
                 {
                     set.add(cur);
-//                    changeColor(cur, color);
                 }
             }
         }
@@ -109,7 +103,6 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
                 if (Math.abs(node.x - cur.x) <= xRange)
                 {
                     set.add(cur);
-//                    changeColor(cur, color);
                 }
             }
         }
@@ -122,7 +115,6 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
                 if (Math.abs(node.x - cur.x) <= xRange)
                 {
                     set.add(cur);
-//                    changeColor(cur, color);
                 }
             }
         }
@@ -138,7 +130,9 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
             for (Iterator<CrossLinkNode> iterator = set.iterator(); iterator.hasNext(); )
             {
                 CrossLinkNode baseNode = iterator.next();
-                Binder.changeColor(baseNode.label, removeColor);
+                baseNode.removeRelation(node);
+
+//                Binder.changeColor(baseNode.label, removeColor);
             }
         }
 
@@ -156,19 +150,30 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
     {
         chooseBroadSet(node, setBack);
 
-        // setBack - set = add
-        Sets.SetView<CrossLinkNode> add = Sets.difference(setBack, set);
-        for (CrossLinkNode baseNode : add)
+        // move = (setBack && set) = move broadcast
+        Sets.SetView<CrossLinkNode> move = Sets.intersection(setBack, set);
+        for (CrossLinkNode baseNode : move)
         {
-            Binder.changeColor(baseNode.label, addColor);
+            node.onMoveBroad(baseNode);
         }
 
-        // set - setBack = remove
-        Sets.SetView<CrossLinkNode> remove = Sets.difference(set, setBack);
+        // setBack - move = add
+        Sets.SetView<CrossLinkNode> add = Sets.difference(setBack, move);
+        for (CrossLinkNode baseNode : add)
+        {
+            node.addRelation(baseNode);
+//            Binder.changeColor(baseNode.label, addColor);
+        }
+
+        // set - move = remove
+        Sets.SetView<CrossLinkNode> remove = Sets.difference(set, move);
         for (CrossLinkNode baseNode : remove)
         {
-            Binder.changeColor(baseNode.label, removeColor);
+            baseNode.removeRelation(node);
+//            Binder.changeColor(baseNode.label, removeColor);
         }
+
+
 
         set.clear();
         setBack.clear();

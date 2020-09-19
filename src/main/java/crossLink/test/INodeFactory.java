@@ -8,7 +8,7 @@ import crossLink.aoi.BaseNode;
  * @Date 2020/9/18 11:29
  * @Version 1.0
  */
-public interface INodeFactory
+public interface INodeFactory<T extends BaseNode>
 {
     /**
      * 创建节点
@@ -17,5 +17,5 @@ public interface INodeFactory
      * @param y
      * @return
      */
-    BaseNode create(int x, int y);
+    T create(int x, int y);
 }

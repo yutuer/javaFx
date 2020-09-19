@@ -3,6 +3,8 @@ package crossLink.aoi.cross;
 import crossLink.IAoi;
 import crossLink.NodeFactory;
 import crossLink.aoi.AoiListenerManager;
+import crossLink.test.CrossNodeFactory;
+import crossLink.test.INodeFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,18 +30,21 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
 
     private Map<Long, CrossLinkNode> nodes = new HashMap<>();
 
-
     // 可以假定 玩家在位置上对半分. TODO 循环方向优化
-    private int halfX;
-    private int halfY;
+    private int maxX;
+    private int maxY;
+
+    private INodeFactory<CrossLinkNode> nodeFactory;
 
     /**
      * 初始化
      */
     public CrossAoi(int maxX, int maxY)
     {
-        this.halfX = maxX;
-        this.halfY = maxY;
+        this.maxX = maxX;
+        this.maxY = maxY;
+
+        nodeFactory = new CrossNodeFactory(0);
 
         xHead = NodeFactory.createInstance(0, 0, 0);
         xTail = NodeFactory.createInstance(0, maxX, 0);
@@ -213,6 +218,12 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
         onTriggerAddListener(this, node);
     }
 
+    @Override
+    public void addNode(int x, int y)
+    {
+        addNode(nodeFactory.create(x, y));
+    }
+
     /**
      * 删除节点
      */
@@ -250,4 +261,29 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
         onTriggerAfterMoveToListener(this, node, _x, _y);
     }
 
+    @Override
+    public CrossLinkNode getNode(long label)
+    {
+        return nodes.get(label);
+    }
+
+    @Override
+    public int getXRange()
+    {
+        return maxX;
+    }
+
+    @Override
+    public int getYRange()
+    {
+        return maxY;
+    }
+
+    public void acceptDatas(int[] nodePos)
+    {
+        for (int i = 0, size = nodePos.length; i < size; i += 2)
+        {
+            addNode(nodeFactory.create(nodePos[i], nodePos[i+1]));
+        }
+    }
 }
