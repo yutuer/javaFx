@@ -3,7 +3,6 @@ package crossLink.javaFx;
 import crossLink.IAoi;
 import crossLink.aoi.AoiListenerManager;
 import crossLink.aoi.BaseNode;
-import crossLink.aoi.cell.CellAoi;
 import crossLink.listener.CellBroadListener;
 import crossLink.listener.ChessBindListener;
 import javafx.application.Application;
@@ -54,9 +53,9 @@ public class CrossAoiJavaFXTest extends Application
         int xRange = maxX * scale;
         int yRange = maxY * scale;
 
-        AoiListenerManager listenerManager;
+        AoiListenerManager listenerManager = null;
 //      listenerManager = new CrossAoi(xRange, yRange);
-        listenerManager = new CellAoi(maxX, maxY, scale);
+//        listenerManager = new CellAoi(maxX, maxY, scale);
 
         IAoi iaoi = IAoi.class.cast(listenerManager);
 

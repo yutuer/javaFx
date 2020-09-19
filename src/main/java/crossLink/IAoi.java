@@ -19,7 +19,6 @@ public interface IAoi<T extends BaseNode>
 
     /**
      * 加入一个节点
-     *
      */
     void addNode(int x, int y);
 
@@ -51,4 +50,5 @@ public interface IAoi<T extends BaseNode>
     int getXRange();
 
     int getYRange();
+
 }

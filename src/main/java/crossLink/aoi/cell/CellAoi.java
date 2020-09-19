@@ -28,13 +28,13 @@ public class CellAoi extends AoiListenerManager<CellNode> implements IAoi<CellNo
 
     private INodeFactory<CellNode> nodeFactory;
 
-    public CellAoi(int xCellNum, int yCellNum, int cellSize)
+    public CellAoi(int labelBegin, int xCellNum, int yCellNum, int cellSize)
     {
         this.xCellNum = xCellNum;
         this.yCellNum = yCellNum;
         this.cellSize = cellSize;
 
-        nodeFactory = new CellNodeFactory(0);
+        nodeFactory = new CellNodeFactory(labelBegin);
 
         towers = new Tower[xCellNum][yCellNum];
         marks = new boolean[xCellNum][yCellNum];

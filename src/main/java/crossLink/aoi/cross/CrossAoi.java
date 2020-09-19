@@ -40,12 +40,12 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
     /**
      * 初始化
      */
-    public CrossAoi(int maxX, int maxY)
+    public CrossAoi(int labelBegin, int maxX, int maxY)
     {
         this.maxX = maxX;
         this.maxY = maxY;
 
-        nodeFactory = new CrossNodeFactory(0);
+        nodeFactory = new CrossNodeFactory(labelBegin);
 
         xHead = NodeFactory.createInstance(0, -1, 0);
         xTail = NodeFactory.createInstance(0, maxX, 0);
