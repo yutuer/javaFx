@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * @Description
+ * @Description CompletableFuture测试
  * @Author zhangfan
  * @Date 2020/8/3 17:22
  * @Version 1.0

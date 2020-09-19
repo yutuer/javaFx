@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Description TODO
+ * @Description 弱引用测试
  * @Author zhangfan
  * @Date 2020/9/3 18:35
  * @Version 1.0
