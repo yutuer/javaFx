@@ -4,6 +4,7 @@ import crossLink.IAoi;
 import crossLink.MoveUnit;
 
 import java.util.Random;
+import java.util.concurrent.*;
 
 /**
  * @Description
@@ -11,7 +12,7 @@ import java.util.Random;
  * @Date 2020/9/18 14:51
  * @Version 1.0
  */
-public class MoveNodeTestUnit implements ITestAoi, Runnable
+public class MoveNodeTestUnit implements ITestAoi, Callable<Boolean>
 {
 
     private Random random = new Random();
@@ -26,6 +27,9 @@ public class MoveNodeTestUnit implements ITestAoi, Runnable
      */
     private int v;
 
+    private int targetX;
+    private int targetY;
+
     private MoveUnit moveUnit;
 
     /**
@@ -33,14 +37,22 @@ public class MoveNodeTestUnit implements ITestAoi, Runnable
      */
     private long lastMoveTime;
 
-    public MoveNodeTestUnit(long label, int v)
+    /**
+     * 移动间隔
+     */
+    private int moveInterval;
+
+    public MoveNodeTestUnit(long label, int v, int targetX, int targetY, int moveInterval)
     {
         this.label = label;
         this.v = v;
+        this.targetX = targetX;
+        this.targetY = targetY;
+        this.moveInterval = moveInterval;
     }
 
     @Override
-    public void run()
+    public Boolean call() throws Exception
     {
         if (moveUnit != null)
         {
@@ -48,8 +60,32 @@ public class MoveNodeTestUnit implements ITestAoi, Runnable
             long interval = now - lastMoveTime;
             lastMoveTime = now;
 
-            moveUnit.tickMove((int) interval);
+//            boolean isRunning = moveUnit.tickMove((int) interval);
+            // 测试的话, 不等待, 直接传入时间间隔
+            boolean isRunning = moveUnit.tickMove(moveInterval);
+            return isRunning;
+        }
+        return false;
+    }
 
+    public void startMoveTick(ScheduledExecutorService ses)
+    {
+        ScheduledFuture<Boolean> schedule = ses.schedule(this, 0, TimeUnit.MILLISECONDS);
+        try
+        {
+            Boolean isRunning = schedule.get();
+            if (isRunning)
+            {
+                startMoveTick(ses);
+            }
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ExecutionException e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -59,7 +95,7 @@ public class MoveNodeTestUnit implements ITestAoi, Runnable
         moveUnit = new MoveUnit(iaoi, iaoi.getNode(label), v);
 
         // 先指定一个随机的位置
-        moveUnit.moveStart((int) (random.nextDouble() * iaoi.getXRange()), (int) (random.nextDouble() * iaoi.getYRange()));
+        moveUnit.moveStart(targetX, targetY);
 
         lastMoveTime = System.currentTimeMillis();
     }

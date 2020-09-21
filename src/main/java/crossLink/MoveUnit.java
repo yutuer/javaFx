@@ -83,16 +83,18 @@ public class MoveUnit
 
         expectEndTime = calExpireEndTime();
 
-        Log.CrossAOI_Logger.info("moveStart, startX:{}, startY:{}, targetX:{},  targetY:{}, expireTime:{} ",
+        expectEndTime = calExpireEndTime();
+
+        Log.CrossAOI_Logger.warn("moveStart, startX:{}, startY:{}, targetX:{},  targetY:{}, expectEndTime:{} ",
                 startX, startY, targetX, targetY, expectEndTime);
     }
 
     private int calExpireEndTime()
     {
-        int diffY = targetY - startY;
-        int diffX = targetX - startX;
+        long diffY = targetY - startY;
+        long diffX = targetX - startX;
 
-        int diffSqr = diffX * diffX + diffY * diffY;
+        long diffSqr = diffX * diffX + diffY * diffY;
         double diff = Math.sqrt(diffSqr);
 
         vx = diffX / diff * v;
@@ -101,11 +103,11 @@ public class MoveUnit
         return (int) (Math.ceil(diff / v * 1000));
     }
 
-    public void tickMove(int interval)
+    public boolean tickMove(int interval)
     {
         if (!isRunning)
         {
-            return;
+            return isRunning;
         }
 
         moveTime += interval;
@@ -120,9 +122,7 @@ public class MoveUnit
         curX = (int) Math.round(startX + vx * moveTime / 1000);
         curY = (int) Math.round(startY + vy * moveTime / 1000);
 
-
-
-        Log.CrossAOI_Logger.warn("curX:{}, curY:{}, vx:{}, vy:{}, moveTime:{}, expireTime:{}",
+        Log.CrossAOI_Logger.info("curX:{}, curY:{}, vx:{}, vy:{}, moveTime:{}, expireTime:{}",
                 curX, curY, vx, vy, moveTime, expireTime);
 
         if (curX <= 0 || curX >= iaoi.getXRange())
@@ -141,6 +141,8 @@ public class MoveUnit
         }
 
         syncPos();
+
+        return isRunning;
     }
 
     /**

@@ -21,8 +21,8 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
     /**
      * 影响范围
      */
-    private int xRange;
-    private int yRange;
+    private int searchXRange;
+    private int searchYRange;
 
     // 添加时通知的颜色
     private Color addColor = Color.ORANGERED;
@@ -34,10 +34,10 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
 
     private Set<CrossLinkNode> setBack = new HashSet<>();
 
-    public CrossLinkBroadListener(int xRange, int yRange)
+    public CrossLinkBroadListener(int searchXRange, int searchYRange)
     {
-        this.xRange = xRange;
-        this.yRange = yRange;
+        this.searchXRange = searchXRange;
+        this.searchYRange = searchYRange;
     }
 
     @Override
@@ -70,9 +70,9 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
         //x 轴 往前
         for (CrossLinkNode cur = node.xPrev; cur != CrossAoi.xHead; cur = cur.xPrev)
         {
-            if (Math.abs(node.x - cur.x) <= xRange)
+            if (Math.abs(node.x - cur.x) <= searchXRange)
             {
-                if (Math.abs(node.y - cur.y) <= yRange)
+                if (Math.abs(node.y - cur.y) <= searchYRange)
                 {
                     set.add(cur);
                 }
@@ -86,9 +86,9 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
         // x 轴 往后
         for (CrossLinkNode cur = node.xNext; cur != CrossAoi.xTail; cur = cur.xNext)
         {
-            if (Math.abs(node.x - cur.x) <= xRange)
+            if (Math.abs(node.x - cur.x) <= searchXRange)
             {
-                if (Math.abs(node.y - cur.y) <= yRange)
+                if (Math.abs(node.y - cur.y) <= searchYRange)
                 {
                     set.add(cur);
                 }
@@ -98,9 +98,9 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
         // y 轴 往上
         for (CrossLinkNode cur = node.yNext; cur != CrossAoi.yTail; cur = cur.yNext)
         {
-            if (Math.abs(node.y - cur.y) <= yRange)
+            if (Math.abs(node.y - cur.y) <= searchYRange)
             {
-                if (Math.abs(node.x - cur.x) <= xRange)
+                if (Math.abs(node.x - cur.x) <= searchXRange)
                 {
                     set.add(cur);
                 }
@@ -110,9 +110,9 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
         //y 轴 往下
         for (CrossLinkNode cur = node.yPrev; cur != CrossAoi.yHead; cur = cur.yPrev)
         {
-            if (Math.abs(node.y - cur.y) <= yRange)
+            if (Math.abs(node.y - cur.y) <= searchYRange)
             {
-                if (Math.abs(node.x - cur.x) <= xRange)
+                if (Math.abs(node.x - cur.x) <= searchXRange)
                 {
                     set.add(cur);
                 }

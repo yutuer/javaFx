@@ -88,4 +88,22 @@ public class PropertiesUtils
         }
         return result.split(StrSplit);
     }
+
+    public static int[] getIntArray(Properties properties, String key, int[] defaultValue)
+    {
+        String result = properties.getProperty(key);
+        if (result == null)
+        {
+            Log.logger.error("properties key:{} is null", key);
+
+            return defaultValue;
+        }
+        String[] split = result.split(StrSplit);
+        int[] ret = new int[split.length];
+        for (int i = 0; i < split.length; i++)
+        {
+            ret[i] = Integer.parseInt(split[i]);
+        }
+        return ret;
+    }
 }

@@ -9,6 +9,7 @@ import crossLink.listener.CrossLinkBroadListener;
 import util.Log;
 
 import java.util.Random;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * @Description aoi测试单元
@@ -33,8 +34,9 @@ public class AoiTestUnit
 
     private AddNodeTestUnit addNodeTestUnit;
     private RemoveNodeTestUnit removeNodeTestUnit;
+    private MoveNodeTestUnit moveNodeTestUnit;
 
-    private int[] baseNodes;
+    private int[] initNodes;
 
     AoiListenerManager listenerManager;
     IAoi iaoi;
@@ -56,11 +58,11 @@ public class AoiTestUnit
 
     public void initNodes()
     {
-        this.baseNodes = new int[defaultNodeNum * 2];
+        this.initNodes = new int[defaultNodeNum * 2];
         for (int i = 0; i < defaultNodeNum; i++)
         {
-            baseNodes[i * 2] = (int) (random.nextDouble() * xRange);
-            baseNodes[i * 2 + 1] = (int) (random.nextDouble() * yRange);
+            initNodes[i * 2] = (int) (random.nextDouble() * xRange);
+            initNodes[i * 2 + 1] = (int) (random.nextDouble() * yRange);
         }
         total = defaultNodeNum;
     }
@@ -113,12 +115,17 @@ public class AoiTestUnit
     /**
      * 移动测试
      *
-     * @param v 节点速度v
+     * @param v            节点速度v
+     * @param moveInterval
      * @return
      */
-    public AoiTestUnit makeTestMoveData(int label, int v)
+    public AoiTestUnit makeTestMoveData(int label, int v, int moveInterval)
     {
-        MoveNodeTestUnit moveNodeTestUnit = new MoveNodeTestUnit(label, v);
+        // 随机一个移动点
+        int targetX = (int) (random.nextDouble() * xRange);
+        int targetY = (int) (random.nextDouble() * yRange);
+
+        this.moveNodeTestUnit = new MoveNodeTestUnit(label, v, targetX, targetY, moveInterval);
         return this;
     }
 
@@ -135,7 +142,7 @@ public class AoiTestUnit
             //Cell
             listenerManager = new CellAoi(0, maxX, maxY, scale);
             iaoi = IAoi.class.cast(listenerManager);
-            iaoi.acceptDatas(baseNodes);
+            iaoi.acceptDatas(initNodes);
 
             CellBroadListener cellBroadListener = new CellBroadListener();
             listenerManager.addListenerToFirst(cellBroadListener);
@@ -144,7 +151,7 @@ public class AoiTestUnit
         {
             listenerManager = new CrossAoi(0, xRange, yRange);
             iaoi = IAoi.class.cast(listenerManager);
-            iaoi.acceptDatas(baseNodes);
+            iaoi.acceptDatas(initNodes);
 
             CrossLinkBroadListener crossLinkBroadListener = new CrossLinkBroadListener(scale * 3 / 2, scale * 3 / 2);
             listenerManager.addListenerToLast(crossLinkBroadListener);
@@ -176,4 +183,20 @@ public class AoiTestUnit
         removeNodeTestUnit.accpetInput(iaoi);
         Log.CrossAOI_Logger.warn("{} removeTest costTime:{}", iaoi.getClass().getSimpleName(), System.currentTimeMillis() - now);
     }
+
+    public void testMove(ScheduledExecutorService ses)
+    {
+        if (moveNodeTestUnit == null)
+        {
+            return;
+        }
+
+        long now = System.currentTimeMillis();
+        moveNodeTestUnit.accpetInput(iaoi);
+
+        moveNodeTestUnit.startMoveTick(ses);
+
+        Log.CrossAOI_Logger.warn("{} moveTest costTime:{}", iaoi.getClass().getSimpleName(), System.currentTimeMillis() - now);
+    }
+
 }
