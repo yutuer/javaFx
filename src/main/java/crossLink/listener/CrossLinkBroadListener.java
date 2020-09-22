@@ -93,31 +93,45 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
                     set.add(cur);
                 }
             }
+            else
+            {
+                break;
+            }
         }
+
+        // 可以只搜索x轴
 
         // y 轴 往上
-        for (CrossLinkNode cur = node.yNext; cur != CrossAoi.yTail; cur = cur.yNext)
-        {
-            if (Math.abs(node.y - cur.y) <= searchYRange)
-            {
-                if (Math.abs(node.x - cur.x) <= searchXRange)
-                {
-                    set.add(cur);
-                }
-            }
-        }
-
-        //y 轴 往下
-        for (CrossLinkNode cur = node.yPrev; cur != CrossAoi.yHead; cur = cur.yPrev)
-        {
-            if (Math.abs(node.y - cur.y) <= searchYRange)
-            {
-                if (Math.abs(node.x - cur.x) <= searchXRange)
-                {
-                    set.add(cur);
-                }
-            }
-        }
+//        for (CrossLinkNode cur = node.yNext; cur != CrossAoi.yTail; cur = cur.yNext)
+//        {
+//            if (Math.abs(node.y - cur.y) <= searchYRange)
+//            {
+//                if (Math.abs(node.x - cur.x) <= searchXRange)
+//                {
+//                    set.add(cur);
+//                }
+//            }
+//            else
+//            {
+//                break;
+//            }
+//        }
+//
+//        //y 轴 往下
+//        for (CrossLinkNode cur = node.yPrev; cur != CrossAoi.yHead; cur = cur.yPrev)
+//        {
+//            if (Math.abs(node.y - cur.y) <= searchYRange)
+//            {
+//                if (Math.abs(node.x - cur.x) <= searchXRange)
+//                {
+//                    set.add(cur);
+//                }
+//            }
+//            else
+//            {
+//                break;
+//            }
+//        }
     }
 
     @Override
