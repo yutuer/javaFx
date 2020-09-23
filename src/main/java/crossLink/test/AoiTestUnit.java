@@ -155,6 +155,8 @@ public class AoiTestUnit
 
             CrossLinkBroadListener crossLinkBroadListener = new CrossLinkBroadListener(scale * 3 / 2, scale * 3 / 2);
             listenerManager.addListenerToLast(crossLinkBroadListener);
+
+
         }
 
         return this;

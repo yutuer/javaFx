@@ -11,6 +11,8 @@ import crossLink.aoi.BaseNode;
  */
 public class UpdateMoveListener implements AoiListener<BaseNode>
 {
+
+
     @Override
     public void onAddNode(IAoi aoi, BaseNode node)
     {

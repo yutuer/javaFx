@@ -62,7 +62,7 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
      * @param prev
      * @param next
      */
-    private void makeDoubleLink(CrossLinkNode prev, CrossLinkNode next, boolean isX)
+    public void makeDoubleLink(CrossLinkNode prev, CrossLinkNode next, boolean isX)
     {
         if (isX)
         {
@@ -178,7 +178,6 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
         }
 
         nodes.put(node.label, node);
-
     }
 
     /**

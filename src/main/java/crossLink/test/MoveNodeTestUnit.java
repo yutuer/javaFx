@@ -60,9 +60,9 @@ public class MoveNodeTestUnit implements ITestAoi, Callable<Boolean>
             long interval = now - lastMoveTime;
             lastMoveTime = now;
 
-//            boolean isRunning = moveUnit.tickMove((int) interval);
+            boolean isRunning = moveUnit.tickMove((int) interval);
             // 测试的话, 不等待, 直接传入时间间隔
-            boolean isRunning = moveUnit.tickMove(moveInterval);
+//            boolean isRunning = moveUnit.tickMove(moveInterval);
             return isRunning;
         }
         return false;
@@ -70,7 +70,8 @@ public class MoveNodeTestUnit implements ITestAoi, Callable<Boolean>
 
     public void startMoveTick(ScheduledExecutorService ses)
     {
-        ScheduledFuture<Boolean> schedule = ses.schedule(this, 0, TimeUnit.MILLISECONDS);
+        ScheduledFuture<Boolean> schedule = ses.schedule(this, moveInterval, TimeUnit.MILLISECONDS);
+//        ScheduledFuture<Boolean> schedule = ses.schedule(this, 0, TimeUnit.MILLISECONDS);
         try
         {
             Boolean isRunning = schedule.get();
