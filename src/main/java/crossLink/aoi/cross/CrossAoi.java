@@ -157,7 +157,7 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
                     CrossLinkNode yPrev = cur.yPrev;
                     if (y < cur.y && y >= yPrev.y)
                     {
-                        insertDoubleLink(cur, node, true);
+                        insertDoubleLink(cur, node, false);
                         break;
                     }
                 }

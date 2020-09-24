@@ -145,8 +145,6 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
             {
                 CrossLinkNode baseNode = iterator.next();
                 baseNode.removeRelation(node);
-
-//                Binder.changeColor(baseNode.label, removeColor);
             }
         }
 
@@ -176,7 +174,6 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
         for (CrossLinkNode baseNode : add)
         {
             node.addRelation(baseNode);
-//            Binder.changeColor(baseNode.label, addColor);
         }
 
         // set - move = remove
@@ -184,10 +181,7 @@ public class CrossLinkBroadListener implements AoiListener<CrossLinkNode>
         for (CrossLinkNode baseNode : remove)
         {
             baseNode.removeRelation(node);
-//            Binder.changeColor(baseNode.label, removeColor);
         }
-
-
 
         set.clear();
         setBack.clear();

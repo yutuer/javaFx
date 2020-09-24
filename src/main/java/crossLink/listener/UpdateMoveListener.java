@@ -34,6 +34,5 @@ public class UpdateMoveListener implements AoiListener<BaseNode>
     @Override
     public void afterMoveTo(IAoi aoi, BaseNode node, int fromX, int fromY)
     {
-
     }
 }

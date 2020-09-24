@@ -1,7 +1,9 @@
 package crossLink.aoi;
 
+import crossLink.Binder;
 import crossLink.IAoi;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 import util.Log;
 
 import java.util.Objects;
@@ -15,10 +17,13 @@ import java.util.Objects;
 public class BaseNode implements IPos
 {
     // 添加时通知的颜色
-    public static Color addColor = Color.ORANGERED;
+    public static Color AddColor = Color.ORANGERED;
 
     // 删除时通知的颜色
-    public static Color removeColor = Color.DARKRED;
+    public static Color RemoveColor = Color.DARKRED;
+
+    // 移动时通知的颜色
+    public static Color MoveColor = Color.GREENYELLOW;
 
     /**
      * 标识
@@ -65,6 +70,15 @@ public class BaseNode implements IPos
 
         x = newX;
         y = newY;
+
+        Shape shape = Binder.get(label);
+        if (shape != null)
+        {
+            shape.setFill(MoveColor);
+
+            shape.setTranslateX(newX - _x);
+            shape.setTranslateY(newY - _y);
+        }
 
         onMoveTo(aoi, _x, _y, newX, newY);
     }

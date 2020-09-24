@@ -70,7 +70,7 @@ public class AoiTest
                     aoiTestUnit.makeTestMoveData(1, v, moveInterval);
 
                     aoiTestUnit.loadAoi("Cell").testMove(ses);
-//                    aoiTestUnit.loadAoi("CrossLink").testMove(ses);
+                    aoiTestUnit.loadAoi("CrossLink").testMove(ses);
                 }
                 ses.shutdown();
             }

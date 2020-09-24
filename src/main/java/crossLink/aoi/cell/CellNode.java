@@ -191,7 +191,7 @@ public class CellNode extends BaseNode
             Shape shape = Binder.get(otherNode.label);
             if (shape != null)
             {
-                shape.setFill(addColor);
+                shape.setFill(AddColor);
             }
         }
     }
@@ -205,7 +205,7 @@ public class CellNode extends BaseNode
         Shape shape = Binder.get(label);
         if (shape != null)
         {
-            shape.setFill(removeColor);
+            shape.setFill(RemoveColor);
         }
     }
 

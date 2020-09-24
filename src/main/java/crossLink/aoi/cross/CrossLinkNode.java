@@ -50,14 +50,14 @@ public class CrossLinkNode extends BaseNode
         super.onMoveTo(aoi, x, y, newX, newY);
 
         //移动连接
-
-        // 移除
         if (aoi instanceof CrossAoi)
         {
+            // 移除
             CrossAoi crossAoi = CrossAoi.class.cast(aoi);
             crossAoi.makeDoubleLink(xPrev, xNext, true);
             crossAoi.makeDoubleLink(yPrev, yNext, false);
 
+            // 添加
             crossAoi.addNode(this, newX - x, newY - y);
         }
     }
@@ -72,7 +72,7 @@ public class CrossLinkNode extends BaseNode
             Shape shape = Binder.get(otherNode.label);
             if (shape != null)
             {
-                shape.setFill(addColor);
+                shape.setFill(AddColor);
             }
         }
     }
@@ -86,7 +86,7 @@ public class CrossLinkNode extends BaseNode
         Shape shape = Binder.get(label);
         if (shape != null)
         {
-            shape.setFill(removeColor);
+            shape.setFill(RemoveColor);
         }
     }
 }
