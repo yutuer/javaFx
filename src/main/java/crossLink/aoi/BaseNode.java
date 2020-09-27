@@ -25,6 +25,8 @@ public class BaseNode implements IPos
     // 移动时通知的颜色
     public static Color MoveColor = Color.GREENYELLOW;
 
+    // 移动时通知的颜色
+    public static Color MoveBroadColor = Color.DEEPSKYBLUE;
     /**
      * 标识
      */
@@ -100,8 +102,10 @@ public class BaseNode implements IPos
             return;
         }
 
-        Log.CrossAOI_Logger.info("{}  {}[x:{} y:{}] 和 {}[x:{} y:{}] 建立联系!, reason:{}",
-                getTag(), this.label, x, y, otherNode.label, otherNode.x, otherNode.y, getReason(otherNode));
+        Log.CrossAOI_Logger.info("{} 和 {} 建立联系!"
+//                        +
+//                ", reason:{}"
+                , this, otherNode, getReason(otherNode));
     }
 
     /**
@@ -116,8 +120,10 @@ public class BaseNode implements IPos
             return;
         }
 
-        Log.CrossAOI_Logger.info("{}  {}[x:{} y:{}] 解除和 {}[x:{} y:{}] 的联系!, reason:{}",
-                getTag(), this.label, x, y, otherNode.label, otherNode.x, otherNode.y, getReason(otherNode));
+        Log.CrossAOI_Logger.info("{} 解除和 {} 的联系!"
+//                +
+//                ", reason:{}"
+                , this, otherNode, getReason(otherNode));
     }
 
     public void onMoveBroad(BaseNode otherNode)
@@ -127,8 +133,10 @@ public class BaseNode implements IPos
             return;
         }
 
-        Log.CrossAOI_Logger.info("{}  {}[x:{} y:{}] 移动广播给 {}[x:{} y:{}], reason:{}",
-                getTag(), this.label, x, y, otherNode.label, otherNode.x, otherNode.y, getReason(otherNode));
+        Log.CrossAOI_Logger.info("{}  移动广播给 {}"
+//                        +
+//                ", reason:{}"
+                , this, otherNode, getReason(otherNode));
     }
 
     @Override

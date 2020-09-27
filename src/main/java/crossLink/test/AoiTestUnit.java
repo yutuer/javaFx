@@ -149,7 +149,7 @@ public class AoiTestUnit
         }
         else
         {
-            listenerManager = new CrossAoi(0, xRange, yRange);
+            listenerManager = new CrossAoi(0, xRange, yRange, scale);
             iaoi = IAoi.class.cast(listenerManager);
             iaoi.acceptDatas(initNodes);
 

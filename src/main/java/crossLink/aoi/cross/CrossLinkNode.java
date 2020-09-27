@@ -22,6 +22,10 @@ public class CrossLinkNode extends BaseNode
     public CrossLinkNode yPrev;
     public CrossLinkNode yNext;
 
+    // 2个方向上的索引节点指针
+    public NormalIndexDoubleLinkNode xIndexDoubleLinkNode;
+    public NormalIndexDoubleLinkNode yIndexDoubleLinkNode;
+
     public CrossLinkNode(long label, int x, int y)
     {
         super(label, x, y);
@@ -54,8 +58,8 @@ public class CrossLinkNode extends BaseNode
         {
             // 移除
             CrossAoi crossAoi = CrossAoi.class.cast(aoi);
-            crossAoi.makeDoubleLink(xPrev, xNext, true);
-            crossAoi.makeDoubleLink(yPrev, yNext, false);
+            crossAoi.makeDoubleLink(this, xPrev, xNext, true);
+            crossAoi.makeDoubleLink(this, yPrev, yNext, false);
 
             // 添加
             crossAoi.addNode(this, newX - x, newY - y);
@@ -88,5 +92,30 @@ public class CrossLinkNode extends BaseNode
         {
             shape.setFill(RemoveColor);
         }
+    }
+
+    @Override
+    public void onMoveBroad(BaseNode otherNode)
+    {
+        super.onMoveBroad(otherNode);
+
+        if (otherNode != null)
+        {
+            Shape shape = Binder.get(otherNode.label);
+            if (shape != null)
+            {
+                shape.setFill(MoveBroadColor);
+            }
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        return "CrossLinkNode{" +
+                "label=" + label +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

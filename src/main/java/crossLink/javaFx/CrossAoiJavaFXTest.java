@@ -2,8 +2,8 @@ package crossLink.javaFx;
 
 import crossLink.IAoi;
 import crossLink.aoi.AoiListenerManager;
+import crossLink.aoi.BaseNode;
 import crossLink.aoi.cross.CrossAoi;
-import crossLink.aoi.cross.CrossLinkNode;
 import crossLink.listener.ChessBindListener;
 import crossLink.listener.CrossLinkBroadListener;
 import crossLink.listener.DrawRecListener;
@@ -56,7 +56,7 @@ public class CrossAoiJavaFXTest extends Application
         int yRange = maxY * scale;
 
         AoiListenerManager listenerManager = null;
-      listenerManager = new CrossAoi(0, xRange, yRange);
+      listenerManager = new CrossAoi(0, xRange, yRange, scale);
 //        listenerManager = new CellAoi(0, maxX, maxY, scale);
         IAoi iaoi = IAoi.class.cast(listenerManager);
 
@@ -91,18 +91,18 @@ public class CrossAoiJavaFXTest extends Application
 
         // region 操作
 
-        iaoi.addNode(new CrossLinkNode(num + 1, (int) (random.nextDouble() * xRange), (int) (random.nextDouble() * yRange)));
+//        iaoi.addNode(new CrossLinkNode(num + 1, (int) (random.nextDouble() * xRange), (int) (random.nextDouble() * yRange)));
 
 //        iaoi.removeNode(first);
 
-//        BaseNode first = iaoi.getNode(1);
-//        boolean isLeft = first.x > (xRange / 2);
-//        boolean isUpper = first.y > (yRange / 2);
-//
-//        final int dis = 100;
-//
-//        final BaseNode f = first;
-//        iaoi.moveNode(f, f.x + (isLeft ? -1 * dis : dis), f.y + (isUpper ? -1 * dis : dis));
+        BaseNode first = iaoi.getNode(1);
+        boolean isLeft = first.x > (xRange / 2);
+        boolean isUpper = first.y > (yRange / 2);
+
+        final int dis = 250;
+
+        final BaseNode f = first;
+        iaoi.moveNode(f, f.x + (isLeft ? -1 * dis : dis), f.y + (isUpper ? -1 * dis : dis));
 
         // endRegion
 
