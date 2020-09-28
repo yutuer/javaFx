@@ -13,7 +13,7 @@ import util.Util;
  * @Date 2020/9/5 11:00
  * @Version 1.0
  */
-public class RingBuffer<T extends IDataProvider> implements IWriteUnit
+public class LoggerRingBuffer<T extends IDataProvider> implements IWriteUnit
 {
     @Contended
     private volatile long readIndex;
@@ -31,7 +31,7 @@ public class RingBuffer<T extends IDataProvider> implements IWriteUnit
      */
     private Object[] logEvents;
 
-    public RingBuffer(IDataProviderFactory factory, int capacity)
+    public LoggerRingBuffer(IDataProviderFactory factory, int capacity)
     {
         capacity = Util.intToMaxTowPower(capacity);
         this.capacity = capacity;

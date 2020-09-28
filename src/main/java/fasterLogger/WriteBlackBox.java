@@ -1,7 +1,7 @@
 package fasterLogger;
 
 import fasterLogger.v2.IDataProviderFactory;
-import fasterLogger.v2.RingBuffer;
+import fasterLogger.v2.LoggerRingBuffer;
 import fasterLogger.write.StringDataProvider;
 
 /**
@@ -30,7 +30,7 @@ public class WriteBlackBox implements IWriteBlackBox
         IWriteUnit doubleCache = tl.get();
         if (doubleCache == null)
         {
-            doubleCache = new RingBuffer(new IDataProviderFactory()
+            doubleCache = new LoggerRingBuffer(new IDataProviderFactory()
             {
                 @Override
                 public IDataProvider createDataProvider()

@@ -1,5 +1,7 @@
 package disruptorTest.dis.consume;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @Description 等待策略
  * @Author zhangfan
@@ -9,6 +11,13 @@ package disruptorTest.dis.consume;
 public interface WaitStrategy
 {
 
-    void waitFor();
+    /**
+     * 等待策略
+     *
+     * @param expect
+     * @param timeout
+     * @param timeUnit
+     */
+    void waitFor(long expect, long timeout, TimeUnit timeUnit);
 
 }
