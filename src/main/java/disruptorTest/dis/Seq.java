@@ -6,10 +6,9 @@ package disruptorTest.dis;
  * @Date 2020/9/27 23:26
  * @Version 1.0
  */
-public interface Seq
+public interface Seq extends Cursor
 {
     /**
-     *
      * @return
      */
     long next();
