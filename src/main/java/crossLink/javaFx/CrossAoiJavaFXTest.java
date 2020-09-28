@@ -120,7 +120,7 @@ public class CrossAoiJavaFXTest extends Application
 //            iaoi.addNode(new CrossLinkNode(num + 1, (int) (random.nextDouble() * xRange), (int) (random.nextDouble() * yRange)));
 //        }
 
-//        iaoi.removeNode(first);
+//        iaoi.removeNode(1);
 
         BaseNode first = iaoi.getNode(1);
         boolean isLeft = first.x > (xRange / 2);

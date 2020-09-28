@@ -82,14 +82,7 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
                 return;
             }
 
-            NormalIndexSkipNode xIndexDoubleLinkNode = crossLinkNode.xIndexSkipNode;
-            if (xIndexDoubleLinkNode != null)
-            {
-                crossLinkNode.xIndexSkipNode = null;
-
-                xIndexDoubleLinkNode.first = next;
-                next.xIndexSkipNode = xIndexDoubleLinkNode;
-            }
+            createLink(NormalIndexSkipNode.X, crossLinkNode, next);
         }
         else
         {
@@ -100,15 +93,8 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
             {
                 return;
             }
-
-            NormalIndexSkipNode yIndexDoubleLinkNode = crossLinkNode.yIndexSkipNode;
-            if (yIndexDoubleLinkNode != null)
-            {
-                crossLinkNode.yIndexSkipNode = null;
-
-                yIndexDoubleLinkNode.first = next;
-                next.yIndexSkipNode = yIndexDoubleLinkNode;
-            }
+            
+            createLink(NormalIndexSkipNode.Y, crossLinkNode, next);
         }
     }
 
@@ -307,6 +293,83 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
     }
 
 
+    private void createLink(int direction, CrossLinkNode crossLinkNode, CrossLinkNode next)
+    {
+        if (direction == NormalIndexSkipNode.X)
+        {
+            NormalIndexSkipNode xIndexDoubleLinkNode = crossLinkNode.xIndexSkipNode;
+            if (xIndexDoubleLinkNode != null)
+            {
+                crossLinkNode.xIndexSkipNode = null;
+
+                xIndexDoubleLinkNode.first = next;
+                next.xIndexSkipNode = xIndexDoubleLinkNode;
+
+                createLink(NormalIndexSkipNode.X, xIndexDoubleLinkNode, crossLinkNode);
+            }
+        }
+        else
+        {
+            NormalIndexSkipNode yIndexDoubleLinkNode = crossLinkNode.yIndexSkipNode;
+            if (yIndexDoubleLinkNode != null)
+            {
+                crossLinkNode.yIndexSkipNode = null;
+
+                yIndexDoubleLinkNode.first = next;
+                next.yIndexSkipNode = yIndexDoubleLinkNode;
+            }
+        }
+    }
+
+    /**
+     * 在 跳点和node之间建立关系
+     *
+     * @param direction
+     * @param skipNode
+     * @param node
+     */
+    private void createLink(int direction, NormalIndexSkipNode skipNode, CrossLinkNode node)
+    {
+        if (skipNode.first == null)
+        {
+            skipNode.first = node;
+            if (direction == NormalIndexSkipNode.X)
+            {
+                node.xIndexSkipNode = skipNode;
+            }
+            else
+            {
+                node.yIndexSkipNode = skipNode;
+            }
+        }
+        else
+        {
+            if (direction == NormalIndexSkipNode.X)
+            {
+                if (node.x < skipNode.first.x)
+                {
+                    // 注意移除掉原来跳点引用节点上面的跳点引用
+                    skipNode.first.xIndexSkipNode = null;
+
+                    // 对新引用建立关系
+                    skipNode.first = node;
+                    node.xIndexSkipNode = skipNode;
+                }
+            }
+            else
+            {
+                if (node.y < skipNode.first.y)
+                {
+                    // 注意移除掉原来跳点引用节点上面的跳点引用
+                    skipNode.first.yIndexSkipNode = null;
+
+                    skipNode.first = node;
+                    node.yIndexSkipNode = skipNode;
+                }
+            }
+        }
+    }
+
     /**
      * @Description 十字链表快查模块
      * 还是使用 双向链表.  这个里面的节点起着承上启下的作用. 用来连接左边阶段的最后一个节点和当前开始的最前面的一个节点
@@ -356,54 +419,6 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
             return normalIndexDoubleLinkNode;
         }
 
-        /**
-         * 在 跳点和node之间建立关系
-         *
-         * @param direction
-         * @param skipNode
-         * @param node
-         */
-        private void createLink(int direction, NormalIndexSkipNode skipNode, CrossLinkNode node)
-        {
-            if (skipNode.first == null)
-            {
-                skipNode.first = node;
-                if (direction == NormalIndexSkipNode.X)
-                {
-                    node.xIndexSkipNode = skipNode;
-                }
-                else
-                {
-                    node.yIndexSkipNode = skipNode;
-                }
-            }
-            else
-            {
-                if (direction == NormalIndexSkipNode.X)
-                {
-                    if (node.x < skipNode.first.x)
-                    {
-                        // 注意移除掉原来跳点引用节点上面的跳点引用
-                        skipNode.first.xIndexSkipNode = null;
-
-                        // 对新引用建立关系
-                        skipNode.first = node;
-                        node.xIndexSkipNode = skipNode;
-                    }
-                }
-                else
-                {
-                    if (node.y < skipNode.first.y)
-                    {
-                        // 注意移除掉原来跳点引用节点上面的跳点引用
-                        skipNode.first.yIndexSkipNode = null;
-
-                        skipNode.first = node;
-                        node.yIndexSkipNode = skipNode;
-                    }
-                }
-            }
-        }
 
         /**
          * @param node
