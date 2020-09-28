@@ -33,4 +33,10 @@ public class Sequence implements Seq
     {
         return value;
     }
+
+    @Override
+    public int bufferSize()
+    {
+        return 0;
+    }
 }

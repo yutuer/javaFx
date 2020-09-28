@@ -43,6 +43,9 @@ public class CrossAoiJavaFXTest extends Application
          move 是先删除, 然后添加
          */
         Properties properties = PropertiesUtils.getProperties("crossLink.properties");
+        int isDebug = PropertiesUtils.getInt(properties, "isDebug", 1);
+        int isX = PropertiesUtils.getInt(properties, "isX", 1);
+
         int num = PropertiesUtils.getInt(properties, "defaultNodeNum", 200);
 
         int maxX = PropertiesUtils.getInt(properties, "maxX", 20);
@@ -56,7 +59,7 @@ public class CrossAoiJavaFXTest extends Application
         int yRange = maxY * scale;
 
         AoiListenerManager listenerManager = null;
-      listenerManager = new CrossAoi(0, xRange, yRange, scale);
+        listenerManager = new CrossAoi(0, xRange, yRange, scale);
 //        listenerManager = new CellAoi(0, maxX, maxY, scale);
         IAoi iaoi = IAoi.class.cast(listenerManager);
 
@@ -73,10 +76,25 @@ public class CrossAoiJavaFXTest extends Application
         Random random = new Random();
         for (int i = 0; i < num; i++)
         {
-//            BaseNode baseNode = new CrossLinkNode(i, (int) (random.nextDouble() * xRange), (int) (random.nextDouble() * yRange));
-
-            baseNodes[i * 2] = (int) (random.nextDouble() * xRange);
-            baseNodes[i * 2 + 1] = (int) (random.nextDouble() * yRange);
+            // for debug
+            if (isDebug == 1)
+            {
+                if (isX == 1)
+                {
+                    baseNodes[i * 2] = (int) (40);
+                    baseNodes[i * 2 + 1] = (int) (random.nextDouble() * yRange);
+                }
+                else
+                {
+                    baseNodes[i * 2] = (int) (random.nextDouble() * xRange);
+                    baseNodes[i * 2 + 1] = (int) (80);
+                }
+            }
+            else
+            {
+                baseNodes[i * 2] = (int) (random.nextDouble() * xRange);
+                baseNodes[i * 2 + 1] = (int) (random.nextDouble() * yRange);
+            }
         }
         iaoi.acceptDatas(baseNodes);
 
@@ -91,7 +109,16 @@ public class CrossAoiJavaFXTest extends Application
 
         // region 操作
 
-//        iaoi.addNode(new CrossLinkNode(num + 1, (int) (random.nextDouble() * xRange), (int) (random.nextDouble() * yRange)));
+        //for debug
+//        if (isDebug == 1)
+//        {
+//            iaoi.addNode(new CrossLinkNode(num + 1, (int) (40), (int) (random.nextDouble() * yRange)));
+//        }
+//        else
+//        {
+//            //for Test
+//            iaoi.addNode(new CrossLinkNode(num + 1, (int) (random.nextDouble() * xRange), (int) (random.nextDouble() * yRange)));
+//        }
 
 //        iaoi.removeNode(first);
 
@@ -99,10 +126,24 @@ public class CrossAoiJavaFXTest extends Application
         boolean isLeft = first.x > (xRange / 2);
         boolean isUpper = first.y > (yRange / 2);
 
-        final int dis = 250;
+        final int dis = 75;
 
         final BaseNode f = first;
-        iaoi.moveNode(f, f.x + (isLeft ? -1 * dis : dis), f.y + (isUpper ? -1 * dis : dis));
+        if (isDebug == 1)
+        {
+            if (isX == 1)
+            {
+                iaoi.moveNode(f, f.x, f.y + (isUpper ? -1 * dis : dis));
+            }
+            else
+            {
+                iaoi.moveNode(f, f.x + (isLeft ? -1 * dis : dis), f.y);
+            }
+        }
+        else
+        {
+            iaoi.moveNode(f, f.x + (isLeft ? -1 * dis : dis), f.y + (isUpper ? -1 * dis : dis));
+        }
 
         // endRegion
 

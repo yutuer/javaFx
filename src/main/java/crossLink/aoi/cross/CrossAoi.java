@@ -82,13 +82,13 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
                 return;
             }
 
-            NormalIndexDoubleLinkNode xIndexDoubleLinkNode = crossLinkNode.xIndexDoubleLinkNode;
+            NormalIndexSkipNode xIndexDoubleLinkNode = crossLinkNode.xIndexSkipNode;
             if (xIndexDoubleLinkNode != null)
             {
-                crossLinkNode.xIndexDoubleLinkNode = null;
+                crossLinkNode.xIndexSkipNode = null;
 
                 xIndexDoubleLinkNode.first = next;
-                next.xIndexDoubleLinkNode = xIndexDoubleLinkNode;
+                next.xIndexSkipNode = xIndexDoubleLinkNode;
             }
         }
         else
@@ -101,19 +101,19 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
                 return;
             }
 
-            NormalIndexDoubleLinkNode yIndexDoubleLinkNode = crossLinkNode.yIndexDoubleLinkNode;
+            NormalIndexSkipNode yIndexDoubleLinkNode = crossLinkNode.yIndexSkipNode;
             if (yIndexDoubleLinkNode != null)
             {
-                crossLinkNode.yIndexDoubleLinkNode = null;
+                crossLinkNode.yIndexSkipNode = null;
 
                 yIndexDoubleLinkNode.first = next;
-                next.yIndexDoubleLinkNode = yIndexDoubleLinkNode;
+                next.yIndexSkipNode = yIndexDoubleLinkNode;
             }
         }
     }
 
     /**
-     * 插入node
+     * 插入node到prev之后
      *
      * @param prev
      * @param insert
@@ -150,7 +150,7 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
      * @param upper 向上的差值
      * @param node
      */
-    public void addNode(CrossLinkNode node, int left, int upper)
+    public void addNodeRelative(CrossLinkNode node, int left, int upper)
     {
         // 插入x,y
         int x = node.x;
@@ -215,7 +215,7 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
 
         nodes.put(node.label, node);
 
-        crossQuickSearch.onAddNode(node);
+        crossQuickSearch.addNodeRelative(node);
     }
 
     /**
@@ -321,8 +321,8 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
          */
         private int scale;
 
-        private NormalIndexDoubleLinkNode[] xQuickSearchNodes;
-        private NormalIndexDoubleLinkNode[] yQuickSearchNodes;
+        private NormalIndexSkipNode[] xQuickSearchNodes;
+        private NormalIndexSkipNode[] yQuickSearchNodes;
 
         public CrossQuickSearch(int scale)
         {
@@ -334,26 +334,74 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
             int xnum = xRange / scale + 1;
             int ynum = yRange / scale + 1;
 
-            xQuickSearchNodes = new NormalIndexDoubleLinkNode[xnum];
-            yQuickSearchNodes = new NormalIndexDoubleLinkNode[ynum];
+            xQuickSearchNodes = new NormalIndexSkipNode[xnum];
+            yQuickSearchNodes = new NormalIndexSkipNode[ynum];
 
             for (int i = 0; i < xnum; i++)
             {
-                NormalIndexDoubleLinkNode normalIndexDoubleLinkNode = new NormalIndexDoubleLinkNode();
-                normalIndexDoubleLinkNode.direction = NormalIndexDoubleLinkNode.X;
-                normalIndexDoubleLinkNode.index = i;
-                normalIndexDoubleLinkNode.pos = i * scale;
-
-                xQuickSearchNodes[i] = normalIndexDoubleLinkNode;
+                xQuickSearchNodes[i] = createNormalIndexSkipNode(NormalIndexSkipNode.X, i, i * scale);
             }
             for (int i = 0; i < ynum; i++)
             {
-                NormalIndexDoubleLinkNode normalIndexDoubleLinkNode = new NormalIndexDoubleLinkNode();
-                normalIndexDoubleLinkNode.direction = NormalIndexDoubleLinkNode.Y;
-                normalIndexDoubleLinkNode.index = i;
-                normalIndexDoubleLinkNode.pos = i * scale;
+                yQuickSearchNodes[i] = createNormalIndexSkipNode(NormalIndexSkipNode.Y, i, i * scale);
+            }
+        }
 
-                yQuickSearchNodes[i] = normalIndexDoubleLinkNode;
+        public NormalIndexSkipNode createNormalIndexSkipNode(int direction, int index, int pos)
+        {
+            NormalIndexSkipNode normalIndexDoubleLinkNode = new NormalIndexSkipNode();
+            normalIndexDoubleLinkNode.direction = direction;
+            normalIndexDoubleLinkNode.index = index;
+            normalIndexDoubleLinkNode.pos = pos;
+            return normalIndexDoubleLinkNode;
+        }
+
+        /**
+         * 在 跳点和node之间建立关系
+         *
+         * @param direction
+         * @param skipNode
+         * @param node
+         */
+        private void createLink(int direction, NormalIndexSkipNode skipNode, CrossLinkNode node)
+        {
+            if (skipNode.first == null)
+            {
+                skipNode.first = node;
+                if (direction == NormalIndexSkipNode.X)
+                {
+                    node.xIndexSkipNode = skipNode;
+                }
+                else
+                {
+                    node.yIndexSkipNode = skipNode;
+                }
+            }
+            else
+            {
+                if (direction == NormalIndexSkipNode.X)
+                {
+                    if (node.x < skipNode.first.x)
+                    {
+                        // 注意移除掉原来跳点引用节点上面的跳点引用
+                        skipNode.first.xIndexSkipNode = null;
+
+                        // 对新引用建立关系
+                        skipNode.first = node;
+                        node.xIndexSkipNode = skipNode;
+                    }
+                }
+                else
+                {
+                    if (node.y < skipNode.first.y)
+                    {
+                        // 注意移除掉原来跳点引用节点上面的跳点引用
+                        skipNode.first.yIndexSkipNode = null;
+
+                        skipNode.first = node;
+                        node.yIndexSkipNode = skipNode;
+                    }
+                }
             }
         }
 
@@ -370,14 +418,12 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
             int indexY = y / scale;
 
             {
-                NormalIndexDoubleLinkNode xQuickSearchNodeLeft = xQuickSearchNodes[indexX];
+                NormalIndexSkipNode xQuickSearchNodeLeft = xQuickSearchNodes[indexX];
                 if (xQuickSearchNodeLeft.first == null)
                 {
-                    // 修改当前
-                    xQuickSearchNodeLeft.first = node;
-                    node.xIndexDoubleLinkNode = xQuickSearchNodeLeft;
+                    createLink(NormalIndexSkipNode.X, xQuickSearchNodeLeft, node);
 
-                    //  插入真正的链表
+                    //  插入链表, 需要向前找到之前的一个下面有节点的 有效跳点
                     CrossLinkNode crossLinkNode = xHead;
                     for (int i = indexX - 1; i >= 0; i--)
                     {
@@ -391,7 +437,7 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
                     for (CrossLinkNode cur = crossLinkNode; cur != xTail; cur = cur.xNext)
                     {
                         CrossLinkNode xNext = cur.xNext;
-                        if (x > cur.x && x <= xNext.x)
+                        if (x >= cur.x && x <= xNext.x)
                         {
                             insertDoubleLink(cur, node, true);
                             break;
@@ -404,16 +450,17 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
                     {
                         insertDoubleLink(xQuickSearchNodeLeft.first.xPrev, node, true);
 
-                        // 修改当前
-                        xQuickSearchNodeLeft.first = node;
-                        node.xIndexDoubleLinkNode = xQuickSearchNodeLeft;
+                        createLink(NormalIndexSkipNode.X, xQuickSearchNodeLeft, node);
                     }
                     else
                     {
+                        // 使用这个跳点快速查找插入位置
                         for (CrossLinkNode cur = xQuickSearchNodeLeft.first; cur != xTail; cur = cur.xNext)
                         {
                             CrossLinkNode xNext = cur.xNext;
-                            if (x > cur.x && x <= xNext.x)
+
+                            // 此处要使用>=, 这样可以保证插入到第二个位置
+                            if (x >= cur.x && x <= xNext.x)
                             {
                                 insertDoubleLink(cur, node, true);
                                 break;
@@ -424,11 +471,10 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
             }
 
             {
-                NormalIndexDoubleLinkNode yQuickSearchNodeUpper = yQuickSearchNodes[indexY];
+                NormalIndexSkipNode yQuickSearchNodeUpper = yQuickSearchNodes[indexY];
                 if (yQuickSearchNodeUpper.first == null)
                 {
-                    yQuickSearchNodeUpper.first = node;
-                    node.yIndexDoubleLinkNode = yQuickSearchNodeUpper;
+                    createLink(NormalIndexSkipNode.Y, yQuickSearchNodeUpper, node);
 
                     //  插入真正的链表
                     CrossLinkNode crossLinkNode = yHead;
@@ -444,7 +490,9 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
                     for (CrossLinkNode cur = crossLinkNode; cur != yTail; cur = cur.yNext)
                     {
                         CrossLinkNode yNext = cur.yNext;
-                        if (y > cur.y && y <= yNext.y)
+
+                        // 此处要使用>=, 这样可以保证插入到第二个位置
+                        if (y >= cur.y && y <= yNext.y)
                         {
                             insertDoubleLink(cur, node, false);
                             break;
@@ -457,16 +505,15 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
                     {
                         insertDoubleLink(yQuickSearchNodeUpper.first.yPrev, node, false);
 
-                        // 修改当前
-                        yQuickSearchNodeUpper.first = node;
-                        node.yIndexDoubleLinkNode = yQuickSearchNodeUpper;
+                        createLink(NormalIndexSkipNode.Y, yQuickSearchNodeUpper, node);
                     }
                     else
                     {
+                        // 使用这个跳点快速查找插入位置
                         for (CrossLinkNode cur = yQuickSearchNodeUpper.first; cur != yTail; cur = cur.yNext)
                         {
                             CrossLinkNode yNext = cur.yNext;
-                            if (y > cur.y && y <= yNext.y)
+                            if (y >= cur.y && y <= yNext.y)
                             {
                                 insertDoubleLink(cur, node, false);
                                 break;
@@ -498,7 +545,7 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
 //            }
         }
 
-        public void onAddNode(CrossLinkNode node)
+        public void addNodeRelative(CrossLinkNode node)
         {
             // 插入x,y
             int x = node.x;
@@ -507,45 +554,12 @@ public class CrossAoi extends AoiListenerManager<CrossLinkNode> implements IAoi<
             int indexX = x / scale;
             int indexY = y / scale;
 
-            {
-                NormalIndexDoubleLinkNode xQuickSearchNodeLeft = xQuickSearchNodes[indexX];
-                if (xQuickSearchNodeLeft.first == null)
-                {
-                    // 修改当前
-                    xQuickSearchNodeLeft.first = node;
-                    node.xIndexDoubleLinkNode = xQuickSearchNodeLeft;
-                }
-                else
-                {
-                    if (x < xQuickSearchNodeLeft.first.x)
-                    {
-                        xQuickSearchNodeLeft.first.xIndexDoubleLinkNode = null;
+            NormalIndexSkipNode xQuickSearchNodeLeft = xQuickSearchNodes[indexX];
+            createLink(NormalIndexSkipNode.X, xQuickSearchNodeLeft, node);
 
-                        xQuickSearchNodeLeft.first = node;
-                        node.xIndexDoubleLinkNode = xQuickSearchNodeLeft;
-                    }
-                }
-            }
+            NormalIndexSkipNode yQuickSearchNodeUpper = yQuickSearchNodes[indexY];
 
-            {
-                NormalIndexDoubleLinkNode yQuickSearchNodeUpper = yQuickSearchNodes[indexY];
-                if (yQuickSearchNodeUpper.first == null)
-                {
-                    // 修改当前
-                    yQuickSearchNodeUpper.first = node;
-                    node.yIndexDoubleLinkNode = yQuickSearchNodeUpper;
-                }
-                else
-                {
-                    if(y < yQuickSearchNodeUpper.first.y)
-                    {
-                        yQuickSearchNodeUpper.first.yIndexDoubleLinkNode = null;
-
-                        yQuickSearchNodeUpper.first = node;
-                        node.yIndexDoubleLinkNode = yQuickSearchNodeUpper;
-                    }
-                }
-            }
+            createLink(NormalIndexSkipNode.Y, yQuickSearchNodeUpper, node);
         }
     }
 }

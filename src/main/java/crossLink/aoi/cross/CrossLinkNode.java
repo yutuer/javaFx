@@ -22,9 +22,9 @@ public class CrossLinkNode extends BaseNode
     public CrossLinkNode yPrev;
     public CrossLinkNode yNext;
 
-    // 2个方向上的索引节点指针
-    public NormalIndexDoubleLinkNode xIndexDoubleLinkNode;
-    public NormalIndexDoubleLinkNode yIndexDoubleLinkNode;
+    // 2个方向上的跳点指针
+    public NormalIndexSkipNode xIndexSkipNode;
+    public NormalIndexSkipNode yIndexSkipNode;
 
     public CrossLinkNode(long label, int x, int y)
     {
@@ -62,7 +62,7 @@ public class CrossLinkNode extends BaseNode
             crossAoi.makeDoubleLink(this, yPrev, yNext, false);
 
             // 添加
-            crossAoi.addNode(this, newX - x, newY - y);
+            crossAoi.addNodeRelative(this, newX - x, newY - y);
         }
     }
 
