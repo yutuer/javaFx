@@ -8,10 +8,10 @@ import sun.misc.Contended;
  * @Date 2020/9/27 23:28
  * @Version 1.0
  */
-public class Sequence implements Seq
+public abstract class Sequence implements Seq
 {
     @Contended
-    private long value;
+    protected long value;
 
     public Sequence()
     {
@@ -23,20 +23,9 @@ public class Sequence implements Seq
     }
 
     @Override
-    public long next()
-    {
-        return 0;
-    }
-
-    @Override
     public long getCursor()
     {
         return value;
     }
 
-    @Override
-    public int bufferSize()
-    {
-        return 0;
-    }
 }
