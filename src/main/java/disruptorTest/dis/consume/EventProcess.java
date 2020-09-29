@@ -1,6 +1,6 @@
 package disruptorTest.dis.consume;
 
-import disruptorTest.dis.Seq;
+import disruptorTest.dis.Seqer;
 
 /**
  * @Description 事件处理, 放在线程中
@@ -8,7 +8,7 @@ import disruptorTest.dis.Seq;
  * @Date 2020/9/28 9:51
  * @Version 1.0
  */
-public interface EventProcess extends Seq
+public interface EventProcess extends Seqer
 {
 
     /**
