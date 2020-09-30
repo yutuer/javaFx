@@ -30,7 +30,7 @@ public class ServiceScheduler
     {
         ses.scheduleAtFixedRate(() ->
         {
-            System.out.println(111);
+
         }, initialDelay, period, unit);
     }
 

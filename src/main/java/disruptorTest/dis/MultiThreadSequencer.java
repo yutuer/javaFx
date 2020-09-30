@@ -1,5 +1,7 @@
 package disruptorTest.dis;
 
+import disruptorTest.dis.consume.WaitStrategy;
+
 /**
  * @Description TODO
  * @Author zhangfan
@@ -23,9 +25,9 @@ public class MultiThreadSequencer extends Sequencer
      */
     protected Seq gatingValue;
 
-    public MultiThreadSequencer(int buffSize)
+    public MultiThreadSequencer(int buffSize, WaitStrategy waitStrategy)
     {
-        super(buffSize);
+        super(buffSize, waitStrategy);
     }
 
     @Override

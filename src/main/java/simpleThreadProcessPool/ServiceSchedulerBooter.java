@@ -10,12 +10,13 @@ import java.util.concurrent.TimeUnit;
  */
 public class ServiceSchedulerBooter
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws InterruptedException
     {
         ServiceScheduler serviceScheduler = new ServiceScheduler(Runtime.getRuntime().availableProcessors() + 1, 0, 1, TimeUnit.MILLISECONDS);
         serviceScheduler.start();
 
-        
+        Thread.sleep(10 * 1000L);
+
         serviceScheduler.shutDown();
     }
 }
