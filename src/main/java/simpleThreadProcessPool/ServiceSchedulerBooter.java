@@ -1,6 +1,6 @@
 package simpleThreadProcessPool;
 
-import java.util.concurrent.TimeUnit;
+import simpleThreadProcessPool.service.TestService;
 
 /**
  * @Description 程序启动入口
@@ -12,11 +12,13 @@ public class ServiceSchedulerBooter
 {
     public static void main(String[] args) throws InterruptedException
     {
-        ServiceScheduler serviceScheduler = new ServiceScheduler(Runtime.getRuntime().availableProcessors() + 1, 0, 1, TimeUnit.MILLISECONDS);
-        serviceScheduler.start();
+        SimpleProcessPool SimpleProcessPool = new SimpleProcessPool(Runtime.getRuntime().availableProcessors());
+        MainCircle mainCircle = new MainCircle(SimpleProcessPool);
+        mainCircle.start();
 
-        Thread.sleep(10 * 1000L);
-
-        serviceScheduler.shutDown();
+        for (int i = 0; i < 10; i++)
+        {
+            SimpleProcessPool.addService(new TestService(i), (i + 1) * 1000);
+        }
     }
 }
