@@ -1,6 +1,6 @@
 package behaviorTree;
 
-import behaviorTree.Nodes.NodeUtil;
+import behaviorTree.nodes.NodeUtil;
 
 public class Test
 {
@@ -10,6 +10,6 @@ public class Test
 		BehaviorTree behaviorTree = new BehaviorTree();
 		behaviorTree.setRootNode(NodeUtil.AttackPlayer);
 
-		behaviorTree.tick();
+		behaviorTree.tick(0);
 	}
 }

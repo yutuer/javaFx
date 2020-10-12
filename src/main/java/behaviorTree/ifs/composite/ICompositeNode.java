@@ -1,7 +1,7 @@
 package behaviorTree.ifs.composite;
 
 import behaviorTree.context.IContext;
-import behaviorTree.core.ILinkLine;
+import behaviorTree.core.IEdge;
 import behaviorTree.ifs.IBehaviourNode;
 
 public interface ICompositeNode<T extends IContext> extends IBehaviourNode<T>
@@ -22,13 +22,13 @@ public interface ICompositeNode<T extends IContext> extends IBehaviourNode<T>
     int size();
 
     /**
-     * 增减出去的linkline
+     * 增减出去的edge
      *
-     * @param linkLine
+     * @param edge
      */
-    void addOuterLinkLine(ILinkLine linkLine);
+    void addOuterEdge(IEdge edge);
 
-    void removeOuterLinkLine(ILinkLine linkLine);
+    void removeOuterEdge(IEdge edge);
 
     @Override
     default boolean isLeaf()

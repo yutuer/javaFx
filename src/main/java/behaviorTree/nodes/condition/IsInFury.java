@@ -1,4 +1,4 @@
-package behaviorTree.Nodes.condition;
+package behaviorTree.nodes.condition;
 
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.impl.ConditionNode;

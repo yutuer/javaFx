@@ -6,11 +6,8 @@ import behaviorTree.core.*;
 
 /**
  * 行为树节点抽象
- * <p>
  * 为了复用逻辑, 不和行为树绑定. 而是和上下文绑定,让其能操作一类对象
- * <p>
  * BehaviourTree <-> BehaviourNode <-> IContext
- * <p>
  * 上下文应该之和节点之间有关系, 和行为树之间要通过behaviourNode来连接
  */
 public interface IBehaviourNode<T extends IContext> extends IActive
@@ -27,7 +24,7 @@ public interface IBehaviourNode<T extends IContext> extends IActive
      *
      * @return
      */
-    NodeStatusEnum doLogic();
+    NodeStatusEnum doLogic(int inteval);
 
     /**
      * 返回自己节点状态(不需要知道父子关系, 由树来控制)
@@ -59,11 +56,11 @@ public interface IBehaviourNode<T extends IContext> extends IActive
     BehaviorTree<T> getBehaviourTree();
 
     /**
-     * 设置进入的linkline
+     * 设置进入的Edge
      *
-     * @param linkLine
+     * @param edge
      */
-    void setEnterLinkLine(ILinkLine linkLine);
+    void setEnterEgde(IEdge edge);
 
     /**
      * 是否是叶子节点

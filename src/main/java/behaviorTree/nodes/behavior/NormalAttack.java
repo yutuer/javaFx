@@ -1,4 +1,4 @@
-package behaviorTree.Nodes.behavior;
+package behaviorTree.nodes.behavior;
 
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.impl.ActionNode;

@@ -2,7 +2,7 @@ package behaviorTree.impl;
 
 import behaviorTree.BehaviorTree;
 import behaviorTree.context.IContext;
-import behaviorTree.core.ILinkLine;
+import behaviorTree.core.IEdge;
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.ifs.IBehaviourNode;
 
@@ -50,7 +50,7 @@ public abstract class BaseNode<T extends IContext> implements IBehaviourNode<T>
     }
 
     @Override
-    public void setEnterLinkLine(ILinkLine linkLine)
+    public void setEnterEgde(IEdge edge)
     {
 
     }

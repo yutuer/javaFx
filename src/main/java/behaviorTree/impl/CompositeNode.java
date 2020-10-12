@@ -1,7 +1,7 @@
 package behaviorTree.impl;
 
 import behaviorTree.context.IContext;
-import behaviorTree.core.ILinkLine;
+import behaviorTree.core.IEdge;
 import behaviorTree.ifs.IBehaviourNode;
 import behaviorTree.ifs.composite.ICompositeNode;
 
@@ -29,13 +29,13 @@ public abstract class CompositeNode<T extends IContext> extends BaseNode<T> impl
     }
 
     @Override
-    public void addOuterLinkLine(ILinkLine linkLine)
+    public void addOuterLinkLine(IEdge linkLine)
     {
 
     }
 
     @Override
-    public void removeOuterLinkLine(ILinkLine linkLine)
+    public void removeOuterLinkLine(IEdge linkLine)
     {
 
     }

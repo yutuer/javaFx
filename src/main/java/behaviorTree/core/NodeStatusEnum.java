@@ -7,5 +7,5 @@ public enum NodeStatusEnum
 {
     Failure,
     Success,
-    Running;
+    Running,
 }

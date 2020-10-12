@@ -1,11 +1,11 @@
-package behaviorTree.Nodes;
+package behaviorTree.nodes;
 
-import behaviorTree.Nodes.behavior.FuryAttack;
-import behaviorTree.Nodes.behavior.NormalAttack;
-import behaviorTree.Nodes.condition.IsInFury;
-import behaviorTree.Nodes.condition.RangeFindPlayer;
-import behaviorTree.Nodes.condition.TargetIsPlayer;
-import behaviorTree.Nodes.decorate.InvertNode;
+import behaviorTree.nodes.behavior.FuryAttack;
+import behaviorTree.nodes.behavior.NormalAttack;
+import behaviorTree.nodes.condition.IsInFury;
+import behaviorTree.nodes.condition.RangeFindPlayer;
+import behaviorTree.nodes.condition.TargetIsPlayer;
+import behaviorTree.nodes.decorate.InvertNode;
 import behaviorTree.impl.ActionNode;
 import behaviorTree.impl.ConditionNode;
 import behaviorTree.impl.DecoratorNode;

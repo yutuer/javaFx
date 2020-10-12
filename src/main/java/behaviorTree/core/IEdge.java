@@ -8,7 +8,7 @@ import behaviorTree.ifs.IBehaviourNode;
  * @Date 2020/8/28 10:29
  * @Version 1.0
  */
-public interface ILinkLine extends IActive
+public interface IEdge extends IActive
 {
     /**
      * 连接线起点

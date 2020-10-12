@@ -8,8 +8,6 @@ package simpleThreadProcessPool.service;
  */
 public abstract class AbstractService
 {
-    private boolean isInit;
-
     /**
      * 初始化
      */
