@@ -2,6 +2,7 @@ package behaviorTree;
 
 import behaviorTree.context.IContext;
 import behaviorTree.ifs.IBehaviourNode;
+import behaviorTree.ifs.single.ILeafNode;
 import behaviorTree.treeEvent.ITreeEvent;
 import simpleThreadProcessPool.service.AbstractService;
 
@@ -26,7 +27,7 @@ public class BehaviorTree<T extends IContext> extends AbstractService
      * <p>
      * 运行的节点的条件, 要么自己慢慢终止, 要么由外部事件触发终止
      */
-    private IBehaviourNode<T> runningNode;
+    private ILeafNode<T> runningNode;
 
     /**
      * 行为树需要有个能接受外部事件的接口
@@ -53,7 +54,7 @@ public class BehaviorTree<T extends IContext> extends AbstractService
         return runningNode;
     }
 
-    public void setRunningNode(IBehaviourNode<T> runningNode)
+    public void setRunningNode(ILeafNode<T> runningNode)
     {
         this.runningNode = runningNode;
     }

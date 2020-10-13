@@ -41,6 +41,13 @@ public interface IBehaviourNode<T extends IContext> extends IActive
     BehaviorTree<T> getBehaviourTree();
 
     /**
+     * 得到父节点
+     *
+     * @return
+     */
+    IBehaviourNode<T> getParentNode();
+
+    /**
      * 是否是叶子节点
      *
      * @return

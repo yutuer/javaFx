@@ -12,6 +12,17 @@ public abstract class BaseNode<T extends IContext> implements IBehaviourNode<T>
      */
     protected NodeStatusEnum nodeStatusEnum;
 
+    /**
+     * 父节点
+     */
+    private IBehaviourNode<T> parentNode;
+
+    @Override
+    public IBehaviourNode<T> getParentNode()
+    {
+        return parentNode;
+    }
+
     @Override
     public NodeStatusEnum getStatus()
     {
@@ -28,18 +39,6 @@ public abstract class BaseNode<T extends IContext> implements IBehaviourNode<T>
     public BehaviorTree<T> getBehaviourTree()
     {
         return null;
-    }
-
-    @Override
-    public NodeStatusEnum tick(int inteval)
-    {
-        return null;
-    }
-
-    @Override
-    public boolean isLeaf()
-    {
-        return false;
     }
 
     @Override
