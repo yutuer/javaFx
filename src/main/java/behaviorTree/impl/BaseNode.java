@@ -10,12 +10,17 @@ public abstract class BaseNode<T extends IContext> implements IBehaviourNode<T>
     /**
      * 节点当前状态
      */
-    protected NodeStatusEnum nodeStatusEnum;
+    protected NodeStatusEnum nodeStatusEnum = NodeStatusEnum.Running;
 
     /**
      * 父节点
      */
     private IBehaviourNode<T> parentNode;
+
+    /**
+     * 提示信息
+     */
+    private String tip;
 
     @Override
     public IBehaviourNode<T> getParentNode()
@@ -23,10 +28,15 @@ public abstract class BaseNode<T extends IContext> implements IBehaviourNode<T>
         return parentNode;
     }
 
+    public void setParentNode(IBehaviourNode<T> parentNode)
+    {
+        this.parentNode = parentNode;
+    }
+
     @Override
     public NodeStatusEnum getStatus()
     {
-        return null;
+        return nodeStatusEnum;
     }
 
     @Override
@@ -51,5 +61,17 @@ public abstract class BaseNode<T extends IContext> implements IBehaviourNode<T>
     public void onLeave()
     {
 
+    }
+
+    @Override
+    public String getTip()
+    {
+        return tip;
+    }
+
+    @Override
+    public void setTip(String tip)
+    {
+        this.tip = tip;
     }
 }

@@ -53,4 +53,18 @@ public interface IBehaviourNode<T extends IContext> extends IActive
      * @return
      */
     boolean isLeaf();
+
+    /**
+     * 获得节点提示说明
+     *
+     * @return
+     */
+    String getTip();
+
+    /**
+     * 设置节点提示说明
+     *
+     * @param tip
+     */
+    void setTip(String tip);
 }

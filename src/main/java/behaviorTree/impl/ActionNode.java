@@ -2,9 +2,10 @@ package behaviorTree.impl;
 
 import behaviorTree.context.IContext;
 import behaviorTree.core.NodeStatusEnum;
-import behaviorTree.ifs.single.ILeafNode;
+import behaviorTree.ifs.single.IActionNode;
+import behaviorTree.treeEvent.ITreeEvent;
 
-public abstract class ActionNode<T extends IContext> extends BaseNode<T> implements ILeafNode<T>
+public abstract class ActionNode<T extends IContext> extends LeafNode<T> implements IActionNode<T>
 {
 
     @Override
@@ -25,5 +26,9 @@ public abstract class ActionNode<T extends IContext> extends BaseNode<T> impleme
 
     protected abstract NodeStatusEnum tick0(int interval);
 
+    @Override
+    public void accept(ITreeEvent treeEvent)
+    {
 
+    }
 }

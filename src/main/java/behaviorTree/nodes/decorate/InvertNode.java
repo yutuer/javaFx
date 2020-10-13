@@ -1,16 +1,22 @@
 package behaviorTree.nodes.decorate;
 
 import behaviorTree.core.NodeStatusEnum;
-import behaviorTree.ifs.IBehaviourNode;
 import behaviorTree.impl.DecoratorNode;
 
 public class InvertNode extends DecoratorNode
 {
     @Override
-    protected NodeStatusEnum decoratorNode(IBehaviourNode node, int interval)
+    protected NodeStatusEnum decoratorNode(NodeStatusEnum resultEnum)
     {
-        NodeStatusEnum resultEnum = node.tick(interval);
         System.out.println("将结果反转后返回");
-        return resultEnum;
+        if (resultEnum == NodeStatusEnum.Success)
+        {
+            return NodeStatusEnum.Failure;
+        }
+        else if (resultEnum == NodeStatusEnum.Failure)
+        {
+            return NodeStatusEnum.Success;
+        }
+        throw new RuntimeException("错误的状态: " + resultEnum);
     }
 }

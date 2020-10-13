@@ -32,6 +32,20 @@ public interface ICompositeNode<T extends IContext> extends IBehaviourNode<T>
 
     void removeChild(IBehaviourNode<T> node);
 
+    /**
+     * 下一个要执行的节点
+     *
+     * @return
+     */
+    IBehaviourNode<T> next();
+
+    /**
+     * 是否还有下一个
+     *
+     * @return
+     */
+    boolean hasNext();
+
     @Override
     default boolean isLeaf()
     {

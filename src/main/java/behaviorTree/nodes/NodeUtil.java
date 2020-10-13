@@ -18,16 +18,12 @@ public class NodeUtil
     /**
      * 攻击玩家
      */
-    public static final SelectorNode AttackPlayer = new SelectorNode()
-    {
-    };
+    public static final SelectorNode AttackPlayer = new SelectorNode();
 
     /**
      * 常规攻击
      */
-    public static final SequenceNode NormalAttackPlayer = new SequenceNode()
-    {
-    };
+    public static final SequenceNode NormalAttackPlayer = new SequenceNode();
 
     /**
      * 视野内发现玩家
@@ -47,9 +43,7 @@ public class NodeUtil
     /**
      * 报复攻击
      */
-    public static final SequenceNode BAOFUAttack = new SequenceNode()
-    {
-    };
+    public static final SequenceNode BAOFUAttack = new SequenceNode();
 
     /**
      * 发狂状态
@@ -75,24 +69,24 @@ public class NodeUtil
 
         {
             // 普通攻击
-            AttackPlayer.addNode(NormalAttackPlayer);
+            AttackPlayer.addChild(NormalAttackPlayer);
 
-            NormalAttackPlayer.addNode(RangeFindPlayer);
-            NormalAttackPlayer.addNode(TargetIsPlayer);
+            NormalAttackPlayer.addChild(RangeFindPlayer);
+            NormalAttackPlayer.addChild(TargetIsPlayer);
 
             InvertNode.wrapNode(IsInFury);
-            NormalAttackPlayer.addNode(InvertNode);
-            NormalAttackPlayer.addNode(NormalAttack);
+            NormalAttackPlayer.addChild(InvertNode);
+            NormalAttackPlayer.addChild(NormalAttack);
         }
 
         {
             // 狂暴攻击
-            AttackPlayer.addNode(BAOFUAttack);
+            AttackPlayer.addChild(BAOFUAttack);
 
-            BAOFUAttack.addNode(RangeFindPlayer);
-            BAOFUAttack.addNode(TargetIsPlayer);
-            BAOFUAttack.addNode(IsInFury);
-            BAOFUAttack.addNode(FuryAttack);
+            BAOFUAttack.addChild(RangeFindPlayer);
+            BAOFUAttack.addChild(TargetIsPlayer);
+            BAOFUAttack.addChild(IsInFury);
+            BAOFUAttack.addChild(FuryAttack);
         }
 
     }

@@ -18,6 +18,11 @@ public abstract class CompositeNode<T extends IContext> extends BaseNode<T> impl
 
     private List<IBehaviourNode<T>> childrens = new ArrayList<>();
 
+    /**
+     * 当前索引
+     */
+    private int currentIndex = 0;
+
     @Override
     public IBehaviourNode<T> get(int index)
     {
@@ -40,5 +45,40 @@ public abstract class CompositeNode<T extends IContext> extends BaseNode<T> impl
     public void removeChild(IBehaviourNode<T> node)
     {
         childrens.remove(node);
+    }
+
+    /**
+     * 重置 迭代索引
+     */
+    public final void resetIndex()
+    {
+        currentIndex = 0;
+    }
+
+    @Override
+    public IBehaviourNode<T> next()
+    {
+        return get(currentIndex++);
+    }
+
+    @Override
+    public boolean hasNext()
+    {
+        return currentIndex < size();
+    }
+
+    @Override
+    public void onEnter()
+    {
+        super.onEnter();
+
+        // 重置循环索引
+        resetIndex();
+    }
+
+    @Override
+    public void onLeave()
+    {
+        super.onLeave();
     }
 }

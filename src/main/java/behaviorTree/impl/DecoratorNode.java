@@ -14,10 +14,15 @@ public abstract class DecoratorNode<T extends IContext> extends CompositeNode<T>
     public NodeStatusEnum tick(int interval)
     {
         // 处理之后返回状态
-        return decoratorNode(node, interval);
+        NodeStatusEnum resultEnum = node.tick(interval);
+        if (resultEnum != NodeStatusEnum.Running)
+        {
+            return decoratorNode(resultEnum);
+        }
+        return resultEnum;
     }
 
-    protected abstract NodeStatusEnum decoratorNode(IBehaviourNode<T> node, int interval);
+    protected abstract NodeStatusEnum decoratorNode(NodeStatusEnum resultEnum);
 
     @Override
     public void wrapNode(IBehaviourNode node)
@@ -25,4 +30,15 @@ public abstract class DecoratorNode<T extends IContext> extends CompositeNode<T>
         this.node = node;
     }
 
+    @Override
+    public IBehaviourNode<T> next()
+    {
+        return null;
+    }
+
+    @Override
+    public boolean hasNext()
+    {
+        return false;
+    }
 }
