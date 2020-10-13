@@ -24,22 +24,7 @@ public interface IBehaviourNode<T extends IContext> extends IActive
      *
      * @return
      */
-    NodeStatusEnum doLogic(int inteval);
-
-    /**
-     * 返回自己节点状态(不需要知道父子关系, 由树来控制)
-     *
-     * @param nodeEnum
-     */
-    void returnStatus(NodeStatusEnum nodeEnum);
-
-    /**
-     * 合并其他节点的返回结果状态
-     *
-     * @param statusEnum
-     * @return
-     */
-    void mergeNodeStatuEnum(NodeStatusEnum statusEnum);
+    NodeStatusEnum tick(int interval);
 
     /**
      * 获取上下文对象
@@ -49,18 +34,11 @@ public interface IBehaviourNode<T extends IContext> extends IActive
     T getContext();
 
     /**
-     * 行为树
+     * 获取节点所在的行为树
      *
      * @return
      */
     BehaviorTree<T> getBehaviourTree();
-
-    /**
-     * 设置进入的Edge
-     *
-     * @param edge
-     */
-    void setEnterEgde(IEdge edge);
 
     /**
      * 是否是叶子节点

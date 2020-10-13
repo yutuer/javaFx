@@ -7,7 +7,7 @@ public class FuryAttack extends ActionNode
 {
 
     @Override
-    public NodeStatusEnum doLogic()
+    public NodeStatusEnum tick(int interval)
     {
         System.out.println("疯狂攻击玩家");
         return NodeStatusEnum.Success;

@@ -11,16 +11,16 @@ public abstract class DecoratorNode<T extends IContext> extends CompositeNode<T>
     private IBehaviourNode<T> node;
 
     @Override
-    public NodeStatusEnum doLogic()
+    public NodeStatusEnum tick(int interval)
     {
         // 处理之后返回状态
-        return decoratorNode(node);
+        return decoratorNode(node, interval);
     }
 
-    protected abstract NodeStatusEnum decoratorNode(IBehaviourNode<T> node);
+    protected abstract NodeStatusEnum decoratorNode(IBehaviourNode<T> node, int interval);
 
     @Override
-    public void setDecoratorNode(IBehaviourNode node)
+    public void wrapNode(IBehaviourNode node)
     {
         this.node = node;
     }

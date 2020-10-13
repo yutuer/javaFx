@@ -80,7 +80,7 @@ public class NodeUtil
             NormalAttackPlayer.addNode(RangeFindPlayer);
             NormalAttackPlayer.addNode(TargetIsPlayer);
 
-            InvertNode.setDecoratorNode(IsInFury);
+            InvertNode.wrapNode(IsInFury);
             NormalAttackPlayer.addNode(InvertNode);
             NormalAttackPlayer.addNode(NormalAttack);
         }

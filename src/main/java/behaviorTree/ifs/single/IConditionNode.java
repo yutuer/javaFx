@@ -6,5 +6,5 @@ import behaviorTree.core.NodeStatusEnum;
 public interface IConditionNode<T extends IContext> extends ILeafNode<T>
 {
 
-    NodeStatusEnum isOk();
+    NodeStatusEnum isOk(int interval);
 }

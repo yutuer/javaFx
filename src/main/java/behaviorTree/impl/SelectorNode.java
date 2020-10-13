@@ -24,24 +24,7 @@ public abstract class SelectorNode<T extends IContext> extends CompositeNode<T> 
     }
 
     @Override
-    public void mergeNodeStatuEnum(NodeStatusEnum statusEnum)
-    {
-        if (nodeStatusEnum == NodeStatusEnum.Running)
-        {
-            return;
-        }
-
-        if (statusEnum == NodeStatusEnum.Running)
-        {
-            nodeStatusEnum = NodeStatusEnum.Running;
-            return;
-        }
-
-        nodeStatusEnum = NodeStatusEnum.values()[statusEnum.ordinal() | nodeStatusEnum.ordinal()];
-    }
-
-    @Override
-    public NodeStatusEnum doLogic()
+    public NodeStatusEnum tick(int interval)
     {
         if (getStatus() == NodeStatusEnum.Running)
         {

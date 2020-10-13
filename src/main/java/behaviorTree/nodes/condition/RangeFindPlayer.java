@@ -8,7 +8,7 @@ public class RangeFindPlayer extends ConditionNode
 {
 
     @Override
-    public NodeStatusEnum isOk()
+    public NodeStatusEnum isOk(int interval)
     {
         boolean nextBoolean = RandomUtils.nextBoolean();
         if (nextBoolean)

@@ -5,8 +5,6 @@ import behaviorTree.ifs.IBehaviourNode;
 import behaviorTree.treeEvent.ITreeEvent;
 import simpleThreadProcessPool.service.AbstractService;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * TODO 行为树可以连接一个新的行为树
  * 行为树 门面类 (一颗树下面仅允许有一个运行节点)
@@ -24,13 +22,20 @@ public class BehaviorTree<T extends IContext> extends AbstractService
     private IBehaviourNode<T> rootNode;
 
     /**
-     * 当前运行节点 null表示没有
+     * 当前运行节点 null表示没有. 只有leaf节点 才能有运行状态
+     * <p>
+     * 运行的节点的条件, 要么自己慢慢终止, 要么由外部事件触发终止
      */
     private IBehaviourNode<T> runningNode;
 
+    /**
+     * 行为树需要有个能接受外部事件的接口
+     *
+     * @param treeEvent
+     */
     public void accept(ITreeEvent treeEvent)
     {
-        treeEvent.accpet(this);
+        treeEvent.accept(this);
     }
 
     public void setRootNode(IBehaviourNode<T> rootNode)
@@ -65,26 +70,15 @@ public class BehaviorTree<T extends IContext> extends AbstractService
     }
 
     @Override
-    public void tick(int inteval)
+    public void tick(int interval)
     {
         if (runningNode != null)
         {
-            runningNode.doLogic(inteval);
+            runningNode.tick(interval);
         }
         else
         {
-            rootNode.doLogic(inteval);
-        }
-
-        try
-        {
-            System.out.println("================我是分割线========================");
-
-            TimeUnit.SECONDS.sleep(1);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
+            rootNode.tick(interval);
         }
     }
 

@@ -2,7 +2,6 @@ package behaviorTree.impl;
 
 import behaviorTree.BehaviorTree;
 import behaviorTree.context.IContext;
-import behaviorTree.core.IEdge;
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.ifs.IBehaviourNode;
 
@@ -20,24 +19,6 @@ public abstract class BaseNode<T extends IContext> implements IBehaviourNode<T>
     }
 
     @Override
-    public NodeStatusEnum doLogic()
-    {
-        return null;
-    }
-
-    @Override
-    public void returnStatus(NodeStatusEnum nodeEnum)
-    {
-
-    }
-
-    @Override
-    public void mergeNodeStatuEnum(NodeStatusEnum statusEnum)
-    {
-
-    }
-
-    @Override
     public T getContext()
     {
         return null;
@@ -50,21 +31,26 @@ public abstract class BaseNode<T extends IContext> implements IBehaviourNode<T>
     }
 
     @Override
-    public void setEnterEgde(IEdge edge)
+    public NodeStatusEnum tick(int inteval)
+    {
+        return null;
+    }
+
+    @Override
+    public boolean isLeaf()
+    {
+        return false;
+    }
+
+    @Override
+    public void onEnter()
     {
 
     }
 
     @Override
-    public void enter()
+    public void onLeave()
     {
 
     }
-
-    @Override
-    public void leave()
-    {
-
-    }
-
 }

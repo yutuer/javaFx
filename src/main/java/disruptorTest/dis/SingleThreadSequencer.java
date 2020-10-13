@@ -64,10 +64,9 @@ public class SingleThreadSequencer extends Sequencer
         // 上次缓存的最小网关序号(消费最慢的消费者的进度)
         long cachedGatingSequence = this.cachedValue;
 
-
         // wrapPoint > cachedGatingSequence 表示生产者追上消费者产生环路(追尾)，即缓冲区已满，此时需要获取消费者们最新的进度，以确定是否队列满
-
-        if (wrapPoint > cachedGatingSequence || cachedGatingSequence > nextValue) // ? 这里为什么是nextValue, 而不是nextSequence
+        // cachedGatingSequence > nextValue 表示消费者的进度大于生产者进度，nextValue无效，建议忽略，正常情况下不会出现
+        if (wrapPoint > cachedGatingSequence || cachedGatingSequence > nextValue)
         {
 
         }

@@ -1,9 +1,11 @@
 package behaviorTree.impl;
 
 import behaviorTree.context.IContext;
-import behaviorTree.core.IEdge;
 import behaviorTree.ifs.IBehaviourNode;
 import behaviorTree.ifs.composite.ICompositeNode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description 组合节点
@@ -14,30 +16,29 @@ import behaviorTree.ifs.composite.ICompositeNode;
 public abstract class CompositeNode<T extends IContext> extends BaseNode<T> implements ICompositeNode<T>
 {
 
-
+    private List<IBehaviourNode<T>> childrens = new ArrayList<>();
 
     @Override
     public IBehaviourNode<T> get(int index)
     {
-        return null;
+        return childrens.get(index);
     }
 
     @Override
     public int size()
     {
-        return 0;
+        return childrens.size();
     }
 
     @Override
-    public void addOuterLinkLine(IEdge linkLine)
+    public void addChild(IBehaviourNode<T> node)
     {
-
+        childrens.add(node);
     }
 
     @Override
-    public void removeOuterLinkLine(IEdge linkLine)
+    public void removeChild(IBehaviourNode<T> node)
     {
-
+        childrens.remove(node);
     }
-
 }

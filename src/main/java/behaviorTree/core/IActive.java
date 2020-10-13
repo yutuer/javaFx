@@ -10,12 +10,12 @@ public interface IActive
 {
 
     /**
-     * 进入
+     * 第一次进入回调
      */
-    void enter();
+    void onEnter();
 
     /**
-     * 离开
+     * 离开回调
      */
-    void leave();
+    void onLeave();
 }

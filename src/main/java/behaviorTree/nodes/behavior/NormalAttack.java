@@ -7,7 +7,7 @@ public class NormalAttack extends ActionNode
 {
 
     @Override
-    public NodeStatusEnum doLogic()
+    public NodeStatusEnum tick(int interval)
     {
         System.out.println("普通攻击玩家");
         return NodeStatusEnum.Success;

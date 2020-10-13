@@ -4,16 +4,16 @@ import behaviorTree.context.IContext;
 import behaviorTree.ifs.IBehaviourNode;
 
 /**
- * 修饰节点
+ * 修饰节点(改变节点的行为)
  */
-public interface IDecoratorNode<T extends IContext> extends ICompositeNode<T>
+public interface IDecoratorNode<T extends IContext> extends IBehaviourNode<T>
 {
 
     /**
-     * 设置修饰的节点
+     * 包装修饰的节点
      *
      * @param node
      */
-    void setDecoratorNode(IBehaviourNode<T> node);
+    void wrapNode(IBehaviourNode<T> node);
 
 }

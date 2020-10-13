@@ -11,6 +11,6 @@ import behaviorTree.BehaviorTree;
 public interface ITreeEvent
 {
 
-    void accpet(BehaviorTree behaviorTree);
+    void accept(BehaviorTree behaviorTree);
 
 }

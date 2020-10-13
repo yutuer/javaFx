@@ -7,10 +7,9 @@ import behaviorTree.ifs.single.IConditionNode;
 public abstract class ConditionNode<T extends IContext> extends LeafNode<T> implements IConditionNode<T>
 {
 
-    @Override
-    public NodeStatusEnum doLogic()
+    public NodeStatusEnum tick(int interval)
     {
-        return isOk();
+        return isOk(interval);
     }
 
 }
