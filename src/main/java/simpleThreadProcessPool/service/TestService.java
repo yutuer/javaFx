@@ -28,7 +28,7 @@ public class TestService extends AbstractService
     }
 
     @Override
-    public void close()
+    public void destory()
     {
 
     }

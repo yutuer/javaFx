@@ -23,7 +23,7 @@ public abstract class AbstractService
     /**
      * 被从池中移除出去的时候, 可以做清理工作
      */
-    public abstract void close();
+    public abstract void destory();
 
     /**
      * 暂停(TODO)

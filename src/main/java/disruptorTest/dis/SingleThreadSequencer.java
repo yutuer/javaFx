@@ -2,6 +2,8 @@ package disruptorTest.dis;
 
 import disruptorTest.dis.consume.WaitStrategy;
 
+import java.util.concurrent.locks.LockSupport;
+
 /**
  * @Description 单线程计数器
  * @Author zhangfan
@@ -66,10 +68,35 @@ public class SingleThreadSequencer extends Sequencer
 
         // wrapPoint > cachedGatingSequence 表示生产者追上消费者产生环路(追尾)，即缓冲区已满，此时需要获取消费者们最新的进度，以确定是否队列满
         // cachedGatingSequence > nextValue 表示消费者的进度大于生产者进度，nextValue无效，建议忽略，正常情况下不会出现
+        // 调用claim(long)方法可能产生该情况，claim可能导致bug，只用在测试
         if (wrapPoint > cachedGatingSequence || cachedGatingSequence > nextValue)
         {
+            // 同步下. volatile语义: 后续的读能读取到之前写入的值(cursor), 所以这里的意思是, 将本地线程的缓存值写入共享内存(比如 cursor, 之前一直没有同步.)
+            // 插入StoreLoad内存屏障/栅栏，保证可见性。
+            // 因为publish使用的是set()/putOrderedLong，并不保证其他消费者能及时看见发布的数据
+            // 当我再次申请更多的空间时，必须保证消费者能消费发布的数据
+            cursor.putVolatile(nextValue);
 
+            // 同步下的最后序列
+            long minSequence;
+
+            // 如果末端的消费者们仍然没让出该插槽则等待，直到消费者们让出该插槽
+            // 注意：这是导致死锁的重要原因！
+            // 死锁分析：如果消费者挂掉了，而它的sequence没有从gatingSequences中删除的话，则生产者会死锁，它永远等不到消费者更新。
+            while (wrapPoint > (minSequence = Util.getMinimumSequence(gatingSequences, nextValue)))
+            {
+                LockSupport.parkNanos(1L); // TODO: Use waitStrategy to spin?
+            }
+
+            // 缓存生产者们最新的消费进度。
+            // (该值可能是大于wrapPoint的，那么如果下一次的 wrapPoint小于等于cachedValue则可以直接进行分配)
+            // 比如：我可能需要一个插槽位置，结果突然直接消费者们让出来3个插槽位置
+            this.cachedValue = minSequence;
         }
+
+        // 这里只写了缓存，并未写volatile变量，因为只是预分配了空间但是并未被发布数据，不需要让其他消费者感知到。
+        // 消费者只会感知到真正被发布的序号
+        this.nextValue = nextSequence;
 
         return 0;
     }

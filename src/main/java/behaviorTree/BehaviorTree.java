@@ -84,7 +84,7 @@ public class BehaviorTree<T extends IContext> extends AbstractService
     }
 
     @Override
-    public void close()
+    public void destory()
     {
 
     }

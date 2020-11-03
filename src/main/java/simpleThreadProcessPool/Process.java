@@ -50,6 +50,16 @@ public class Process implements Callable<Process>
         }
     }
 
+    public void destory()
+    {
+        if (isInit)
+        {
+            isInit = false;
+
+            service.destory();
+        }
+    }
+
     /**
      * 是否可以执行
      *
@@ -79,7 +89,7 @@ public class Process implements Callable<Process>
      */
     public void close()
     {
-        service.close();
+        service.destory();
     }
 
     @Override

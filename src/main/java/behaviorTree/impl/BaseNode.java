@@ -22,6 +22,8 @@ public abstract class BaseNode<T extends IContext> implements IBehaviourNode<T>
      */
     private String tip;
 
+    private BehaviorTree<T> behaviourTree;
+
     @Override
     public IBehaviourNode<T> getParentNode()
     {
@@ -48,7 +50,12 @@ public abstract class BaseNode<T extends IContext> implements IBehaviourNode<T>
     @Override
     public BehaviorTree<T> getBehaviourTree()
     {
-        return null;
+        return behaviourTree;
+    }
+
+    public void setBehaviourTree(BehaviorTree<T> behaviourTree)
+    {
+        this.behaviourTree = behaviourTree;
     }
 
     @Override
