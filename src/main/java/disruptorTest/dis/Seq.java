@@ -14,8 +14,9 @@ public class Seq
 {
     public static final long INITIAL_VALUE = -1L;
 
+    // 注意, 此处要是volatile的
     @Contended
-    protected long value;
+    protected volatile long value;
 
     private static Unsafe UNSAFE;
 
