@@ -5,7 +5,8 @@ package behaviorTree.core;
  */
 public enum NodeStatusEnum
 {
-    Failure,
-    Success,
+    Ready,
     Running,
+    Successed,
+    Failed,
 }

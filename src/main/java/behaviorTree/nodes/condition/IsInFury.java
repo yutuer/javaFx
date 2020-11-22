@@ -19,7 +19,7 @@ public class IsInFury extends ConditionNode
         {
             System.out.println("怪物没有发狂");
         }
-        return nextBoolean ? NodeStatusEnum.Success : NodeStatusEnum.Failure;
+        return nextBoolean ? NodeStatusEnum.Successed : NodeStatusEnum.Failed;
     }
 
 }

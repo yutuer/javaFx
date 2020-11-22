@@ -1,6 +1,5 @@
 package behaviorTree.ifs;
 
-import behaviorTree.BehaviorTree;
 import behaviorTree.context.IContext;
 import behaviorTree.core.*;
 
@@ -10,7 +9,7 @@ import behaviorTree.core.*;
  * BehaviourTree <-> BehaviourNode <-> IContext
  * 上下文应该之和节点之间有关系, 和行为树之间要通过behaviourNode来连接
  */
-public interface IBehaviourNode<T extends IContext> extends IActive
+public interface IBehaviourNode<T> extends IActive
 {
     /**
      * 节点当前状态
@@ -24,35 +23,30 @@ public interface IBehaviourNode<T extends IContext> extends IActive
      *
      * @return
      */
-    NodeStatusEnum tick(int interval);
+    NodeStatusEnum tick(IContext<T> context, int interval);
 
-    /**
-     * 获取上下文对象
-     *
-     * @return
-     */
-    T getContext();
+//    /**
+//     * 获取节点所在的行为树
+//     *
+//     * @return
+//     */
+//    BehaviorTree<T> getBehaviourTree();
 
-    /**
-     * 获取节点所在的行为树
-     *
-     * @return
-     */
-    BehaviorTree<T> getBehaviourTree();
+//    /**
+//     * 得到父节点
+//     *
+//     * @return
+//     */
+//    IBehaviourNode<T> getParentNode();
+    
+//    /**
+//     * 是否是叶子节点
+//     *
+//     * @return
+//     */
+//    boolean isLeaf();
 
-    /**
-     * 得到父节点
-     *
-     * @return
-     */
-    IBehaviourNode<T> getParentNode();
-
-    /**
-     * 是否是叶子节点
-     *
-     * @return
-     */
-    boolean isLeaf();
+    void reset();
 
     /**
      * 获得节点提示说明

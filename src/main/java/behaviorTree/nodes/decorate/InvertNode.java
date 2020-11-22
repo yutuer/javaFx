@@ -9,13 +9,13 @@ public class InvertNode extends DecoratorNode
     protected NodeStatusEnum decoratorNode(NodeStatusEnum resultEnum)
     {
         System.out.println("将结果反转后返回");
-        if (resultEnum == NodeStatusEnum.Success)
+        if (resultEnum == NodeStatusEnum.Successed)
         {
-            return NodeStatusEnum.Failure;
+            return NodeStatusEnum.Failed;
         }
-        else if (resultEnum == NodeStatusEnum.Failure)
+        else if (resultEnum == NodeStatusEnum.Failed)
         {
-            return NodeStatusEnum.Success;
+            return NodeStatusEnum.Successed;
         }
         throw new RuntimeException("错误的状态: " + resultEnum);
     }

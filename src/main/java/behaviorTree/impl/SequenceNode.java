@@ -24,7 +24,7 @@ public class SequenceNode<T extends IContext> extends CompositeNode<T> implement
             {
                 return result;
             }
-            else if (result == NodeStatusEnum.Failure)
+            else if (result == NodeStatusEnum.Failed)
             {
                 return result;
             }
@@ -35,7 +35,7 @@ public class SequenceNode<T extends IContext> extends CompositeNode<T> implement
         }
 
         // 全部成功后, 返回成功
-        return NodeStatusEnum.Success;
+        return NodeStatusEnum.Successed;
     }
 
 }

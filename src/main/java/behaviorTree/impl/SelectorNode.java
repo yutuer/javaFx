@@ -19,7 +19,7 @@ public class SelectorNode<T extends IContext> extends CompositeNode<T> implement
             {
                 return result;
             }
-            else if (result == NodeStatusEnum.Success)
+            else if (result == NodeStatusEnum.Successed)
             {
                 return result;
             }
@@ -30,7 +30,7 @@ public class SelectorNode<T extends IContext> extends CompositeNode<T> implement
         }
 
         // 全部结束, 返回失败
-        return NodeStatusEnum.Failure;
+        return NodeStatusEnum.Failed;
     }
 
 }

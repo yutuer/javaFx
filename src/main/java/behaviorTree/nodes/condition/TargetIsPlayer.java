@@ -19,7 +19,7 @@ public class TargetIsPlayer extends ConditionNode
         {
             System.out.println("目标不是玩家");
         }
-        return nextBoolean ? NodeStatusEnum.Success : NodeStatusEnum.Failure;
+        return nextBoolean ? NodeStatusEnum.Successed : NodeStatusEnum.Failed;
     }
 
 }

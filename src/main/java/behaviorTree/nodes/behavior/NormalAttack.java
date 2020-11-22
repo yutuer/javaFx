@@ -10,7 +10,7 @@ public class NormalAttack extends ActionNode
     public NodeStatusEnum tick0(int interval)
     {
         System.out.println("普通攻击玩家");
-        return NodeStatusEnum.Success;
+        return NodeStatusEnum.Successed;
     }
 
 }

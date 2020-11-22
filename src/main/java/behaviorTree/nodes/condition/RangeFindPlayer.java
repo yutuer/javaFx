@@ -19,7 +19,7 @@ public class RangeFindPlayer extends ConditionNode
         {
             System.out.println("視野內没有發現玩家");
         }
-        return nextBoolean ? NodeStatusEnum.Success : NodeStatusEnum.Failure;
+        return nextBoolean ? NodeStatusEnum.Successed : NodeStatusEnum.Failed;
     }
 
 }

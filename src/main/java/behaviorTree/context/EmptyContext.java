@@ -6,6 +6,6 @@ package behaviorTree.context;
  * @Date 2020/8/28 15:52
  * @Version 1.0
  */
-public class EmptyContext extends BaseContext
+public class EmptyContext extends BTContext
 {
 }
