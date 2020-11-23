@@ -1,4 +1,4 @@
-package behaviorTree.ifs.single.decorator;
+package behaviorTree.ifs.composite.decorator;
 
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.ifs.BaseBehaviourNode;
@@ -11,6 +11,11 @@ public abstract class DecoratorNode<T> extends BaseBehaviourNode<T>
 {
 
     protected IBehaviourNode<T> child;
+
+    public DecoratorNode(String tip)
+    {
+        super(tip);
+    }
 
     public DecoratorNode(String tip, IBehaviourNode<T> child)
     {

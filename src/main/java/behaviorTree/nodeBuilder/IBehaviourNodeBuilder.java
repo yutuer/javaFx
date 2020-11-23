@@ -8,8 +8,9 @@ import behaviorTree.ifs.IBehaviourNode;
  * @Date 2020/11/22 19:50
  * @Version 1.0
  */
-public interface BehaviourNodeBuilder<T>
+public interface IBehaviourNodeBuilder<T>
 {
+
     IBehaviourNode<T> build();
 
 }

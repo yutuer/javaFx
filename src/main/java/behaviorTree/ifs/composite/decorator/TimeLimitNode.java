@@ -1,4 +1,4 @@
-package behaviorTree.ifs.single.decorator;
+package behaviorTree.ifs.composite.decorator;
 
 import behaviorTree.context.IContext;
 import behaviorTree.core.NodeStatusEnum;

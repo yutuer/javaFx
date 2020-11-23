@@ -1,19 +1,18 @@
-package behaviorTree.ifs.single.decorator;
+package behaviorTree.ifs.composite.decorator;
 
 import behaviorTree.context.IContext;
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.ifs.IBehaviourNode;
 
 /**
- * @Description 翻转器
+ * @Description 不管子节点返回, 都设置为失败
  * @Author zhangfan
- * @Date 2020/11/22 19:45
+ * @Date 2020/11/22 20:04
  * @Version 1.0
  */
-public class InvertNode<T> extends DecoratorNode<T>
+public class FailedNode<T> extends DecoratorNode<T>
 {
-
-    public InvertNode(String tip, IBehaviourNode<T> child)
+    public FailedNode(String tip, IBehaviourNode<T> child)
     {
         super(tip, child);
     }
@@ -22,16 +21,10 @@ public class InvertNode<T> extends DecoratorNode<T>
     protected NodeStatusEnum update(IContext<T> context, int interval)
     {
         NodeStatusEnum childStatus = child.tick(context, interval);
-        if (childStatus == NodeStatusEnum.Failed)
-        {
-            return NodeStatusEnum.Successed;
-        }
-
-        if (childStatus == NodeStatusEnum.Successed)
+        if (childStatus == NodeStatusEnum.Failed || childStatus == NodeStatusEnum.Successed)
         {
             return NodeStatusEnum.Failed;
         }
-        // 肯能是 ready 和 Running
         return childStatus;
     }
 }

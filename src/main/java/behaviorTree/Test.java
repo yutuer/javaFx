@@ -1,15 +1,19 @@
 package behaviorTree;
 
-import behaviorTree.nodes.NodeUtil;
+import behaviorTree.entity.Bot;
+import behaviorTree.entity.Game;
 
 public class Test
 {
 
 	public static void main(String[] args)
 	{
-		BehaviorTree behaviorTree = new BehaviorTree();
-		behaviorTree.setRootNode(NodeUtil.AttackPlayer);
+		Game game = new Game();
+		Bot bot = game.newBot();
 
-		behaviorTree.tick(0);
+		game.addEntity(bot);
+
+
+		
 	}
 }

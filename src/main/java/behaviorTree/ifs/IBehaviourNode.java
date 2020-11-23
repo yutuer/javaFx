@@ -9,7 +9,7 @@ import behaviorTree.core.*;
  * BehaviourTree <-> BehaviourNode <-> IContext
  * 上下文应该之和节点之间有关系, 和行为树之间要通过behaviourNode来连接
  */
-public interface IBehaviourNode<T> extends IActive
+public interface IBehaviourNode<T> extends IActive, IContainer<IBehaviourNode<T>>
 {
     /**
      * 节点当前状态
@@ -38,7 +38,7 @@ public interface IBehaviourNode<T> extends IActive
 //     * @return
 //     */
 //    IBehaviourNode<T> getParentNode();
-    
+
 //    /**
 //     * 是否是叶子节点
 //     *

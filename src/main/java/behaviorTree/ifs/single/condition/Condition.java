@@ -5,12 +5,11 @@ import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.ifs.BaseBehaviourNode;
 import behaviorTree.ifs.single.ICondition;
 
-public class ConditionNode<T> extends BaseBehaviourNode<T>
+public class Condition<T> extends BaseBehaviourNode<T>
 {
-
     private ICondition condition;
 
-    public ConditionNode(String tip, ICondition condition)
+    public Condition(String tip, ICondition condition)
     {
         super(tip == null ? "Condition" : tip);
         this.condition = condition;

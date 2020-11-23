@@ -3,7 +3,8 @@ package behaviorTree.ifs;
 import behaviorTree.context.IContext;
 import behaviorTree.core.NodeStatusEnum;
 
-import javax.xml.soap.Node;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description 基础的行为节点
@@ -17,6 +18,8 @@ public abstract class BaseBehaviourNode<T> implements IBehaviourNode<T>
     private String tip;
 
     private NodeStatusEnum status;
+
+    private List<IBehaviourNode<T>> childs = new ArrayList<>();
 
     public BaseBehaviourNode(String tip)
     {
@@ -98,6 +101,12 @@ public abstract class BaseBehaviourNode<T> implements IBehaviourNode<T>
     public void setTip(String tip)
     {
         this.tip = tip;
+    }
+
+    @Override
+    public void addChild(IBehaviourNode<T> node)
+    {
+        childs.add(node);
     }
 
     @Override

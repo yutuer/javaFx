@@ -3,18 +3,16 @@ package behaviorTree.impl;
 import behaviorTree.context.IContext;
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.ifs.IBehaviourNode;
-import behaviorTree.ifs.composite.ISelectNode;
 
-public class SelectorNode<T extends IContext> extends CompositeNode<T> implements ISelectNode<T>
+public class SelectorNode<T extends IContext> extends CompositeNode<T>
 {
 
-    @Override
     public NodeStatusEnum tick(int interval)
     {
         while (hasNext())
         {
             IBehaviourNode<T> node = next();
-            NodeStatusEnum result = node.tick(interval);
+            NodeStatusEnum result = node.tick(null, interval);
             if (result == NodeStatusEnum.Running)
             {
                 return result;
@@ -33,4 +31,15 @@ public class SelectorNode<T extends IContext> extends CompositeNode<T> implement
         return NodeStatusEnum.Failed;
     }
 
+    @Override
+    public NodeStatusEnum tick(IContext<T> context, int interval)
+    {
+        return null;
+    }
+
+    @Override
+    public void reset()
+    {
+
+    }
 }

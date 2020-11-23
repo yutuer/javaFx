@@ -8,7 +8,7 @@ import behaviorTree.treeEvent.ITreeEvent;
  *
  * @author Administrator
  */
-public interface IActionNode<T extends IContext> extends ILeafNode<T>
+public interface IActionNode<T extends IContext>
 {
     /**
      * 叶子节点能接受事件

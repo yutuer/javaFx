@@ -1,18 +1,18 @@
-package behaviorTree.ifs.single.decorator;
+package behaviorTree.ifs.composite.decorator;
 
 import behaviorTree.context.IContext;
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.ifs.IBehaviourNode;
 
 /**
- * @Description 一直running, 直到执行失败
+ * @Description TODO
  * @Author zhangfan
- * @Date 2020/11/22 20:44
+ * @Date 2020/11/22 20:47
  * @Version 1.0
  */
-public class UntilFailedNode<T> extends DecoratorNode<T>
+public class UntilSuccessNode<T> extends DecoratorNode<T>
 {
-    public UntilFailedNode(String tip, IBehaviourNode<T> child)
+    public UntilSuccessNode(String tip, IBehaviourNode<T> child)
     {
         super(tip, child);
     }
@@ -21,6 +21,6 @@ public class UntilFailedNode<T> extends DecoratorNode<T>
     protected NodeStatusEnum update(IContext<T> context, int interval)
     {
         NodeStatusEnum childStatus = child.tick(context, interval);
-        return childStatus != NodeStatusEnum.Failed ? NodeStatusEnum.Running : NodeStatusEnum.Successed;
+        return childStatus != NodeStatusEnum.Successed ? NodeStatusEnum.Running : NodeStatusEnum.Successed;
     }
 }

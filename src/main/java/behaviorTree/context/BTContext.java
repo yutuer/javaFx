@@ -1,6 +1,6 @@
 package behaviorTree.context;
 
-import behaviorTree.entity.Entity;
+import behaviorTree.entity.BehaviourEntity;
 
 /**
  * @Description 上下文对象
@@ -10,14 +10,14 @@ import behaviorTree.entity.Entity;
  */
 public class BTContext
 {
-    private Entity entity;
+    private BehaviourEntity entity;
 
-    public BTContext(Entity entity)
+    public BTContext(BehaviourEntity entity)
     {
         this.entity = entity;
     }
 
-    public Entity getEntity()
+    public BehaviourEntity getEntity()
     {
         return entity;
     }

@@ -3,7 +3,6 @@ package behaviorTree;
 import behaviorTree.context.IContext;
 import behaviorTree.ifs.IBehaviourNode;
 import behaviorTree.treeEvent.ITreeEvent;
-import simpleThreadProcessPool.service.AbstractService;
 
 /**
  * 行为树 门面类 (一颗树下面仅允许有一个运行节点)
@@ -12,7 +11,7 @@ import simpleThreadProcessPool.service.AbstractService;
  *
  * @author Administrator
  */
-public class BehaviorTree<T> extends AbstractService
+public class BehaviorTree<T>
 {
 
     /**
@@ -27,9 +26,7 @@ public class BehaviorTree<T> extends AbstractService
      */
 //    private ILeafNode<T> runningNode;
 
-
-    private IContext<T> context;
-
+//    private IContext<T> context;
     public BehaviorTree(IBehaviourNode<T> rootNode)
     {
         this.rootNode = rootNode;
@@ -43,11 +40,6 @@ public class BehaviorTree<T> extends AbstractService
     public void accept(ITreeEvent treeEvent)
     {
         treeEvent.accept(this);
-    }
-
-    public void setRootNode(IBehaviourNode<T> rootNode)
-    {
-        this.rootNode = rootNode;
     }
 
 //    public boolean isRunning()
@@ -65,43 +57,26 @@ public class BehaviorTree<T> extends AbstractService
 //        this.runningNode = runningNode;
 //    }
 
-    public IBehaviourNode<T> getRootNode()
-    {
-        return rootNode;
-    }
-
-    @Override
     public void init()
     {
 
     }
 
-    @Override
-    public void tick(int interval)
+    public void tick(IContext<T> context, int interval)
     {
-//        if (runningNode != null)
-//        {
-//            runningNode.tick(interval);
-//        }
-//        else
-//        {
-//            rootNode.tick(interval);
-//        }
+        rootNode.tick(context, interval);
     }
 
-    @Override
     public void destory()
     {
 
     }
 
-    @Override
     public void pause()
     {
 
     }
 
-    @Override
     public void resume()
     {
 

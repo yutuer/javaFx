@@ -46,9 +46,4 @@ public interface ICompositeNode<T extends IContext> extends IBehaviourNode<T>
      */
     boolean hasNext();
 
-    @Override
-    default boolean isLeaf()
-    {
-        return false;
-    }
 }

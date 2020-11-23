@@ -1,7 +1,4 @@
-package behaviorTree.ifs.single.decorator;
-
-import behaviorTree.context.IContext;
-import behaviorTree.core.NodeStatusEnum;
+package behaviorTree.ifs.composite.decorator;
 
 /**
  * @Description 装饰行为器

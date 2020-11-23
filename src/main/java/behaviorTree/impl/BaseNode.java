@@ -24,7 +24,6 @@ public abstract class BaseNode<T extends IContext> implements IBehaviourNode<T>
 
     private BehaviorTree<T> behaviourTree;
 
-    @Override
     public IBehaviourNode<T> getParentNode()
     {
         return parentNode;
@@ -41,13 +40,11 @@ public abstract class BaseNode<T extends IContext> implements IBehaviourNode<T>
         return nodeStatusEnum;
     }
 
-    @Override
     public T getContext()
     {
         return null;
     }
 
-    @Override
     public BehaviorTree<T> getBehaviourTree()
     {
         return behaviourTree;

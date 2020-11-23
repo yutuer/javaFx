@@ -6,6 +6,6 @@ package behaviorTree;
  * @Date 2020/11/22 16:58
  * @Version 1.0
  */
-public class IComponent
+public interface IComponent
 {
 }

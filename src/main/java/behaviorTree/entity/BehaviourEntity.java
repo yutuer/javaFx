@@ -11,7 +11,7 @@ import java.util.Map;
  * @Date 2020/11/22 16:57
  * @Version 1.0
  */
-public class Entity
+public class BehaviourEntity
 {
 
     private int id;
@@ -20,12 +20,17 @@ public class Entity
      */
     private Map<Class, Object> components = new HashMap<>();
 
-    public Entity(int id)
+    public BehaviourEntity(int id)
     {
         this.id = id;
     }
 
-    public Entity addComponent(IComponent component)
+    public int getId()
+    {
+        return id;
+    }
+
+    public BehaviourEntity addComponent(IComponent component)
     {
         components.put(component.getClass(), component);
         onComponentAdded(component);
@@ -47,7 +52,7 @@ public class Entity
         return (T) components.get(c);
     }
 
-    public <T extends IComponent> Entity removeComponent(Class<T> c)
+    public <T extends IComponent> BehaviourEntity removeComponent(Class<T> c)
     {
         components.remove(c);
         return this;
