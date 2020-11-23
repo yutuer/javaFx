@@ -1,5 +1,6 @@
 package disruptorTest.dis;
 
+import com.lmax.disruptor.InsufficientCapacityException;
 import disruptorTest.dis.consume.WaitStrategy;
 
 /**
@@ -34,5 +35,17 @@ public class MultiThreadSequencer extends Sequencer
     public long next()
     {
         return next();
+    }
+
+    @Override
+    public long tryNext() throws InsufficientCapacityException
+    {
+        return 0;
+    }
+
+    @Override
+    public long remainingCapacity()
+    {
+        return 0;
     }
 }

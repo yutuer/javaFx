@@ -57,7 +57,7 @@ public class Seq
     /**
      * 执行一个volatile写操作。
      * 目的是在当前写操作与之前的写操作之间插入一个StoreStore屏障，在当前写操作和
-     * 后续的任意volatile变量读操作之间插入一个StoreLoad屏障，保证当前的volatile写操作
+     * 后续的任意volatile变量读操作之间插入一个StoreLoad屏障(消费大)，保证当前的volatile写操作
      * 对后续的volatile读操作立即可见。
      * <p>
      * 更多内存屏障/内存栅栏信息请查阅资料。

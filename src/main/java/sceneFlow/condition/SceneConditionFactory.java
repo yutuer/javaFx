@@ -20,5 +20,7 @@ public class SceneConditionFactory
             default:
                 break;
         }
+
+        return null;
     }
 }
