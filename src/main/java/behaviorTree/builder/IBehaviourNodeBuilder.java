@@ -1,4 +1,4 @@
-package behaviorTree.nodeBuilder;
+package behaviorTree.builder;
 
 import behaviorTree.ifs.IBehaviourNode;
 

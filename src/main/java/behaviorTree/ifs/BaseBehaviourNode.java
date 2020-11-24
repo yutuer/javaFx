@@ -1,6 +1,6 @@
 package behaviorTree.ifs;
 
-import behaviorTree.context.BTContext;
+import behaviorTree.core.BTContext;
 import behaviorTree.core.NodeStatusEnum;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package behaviorTree.GameEngine;
 
-import behaviorTree.context.BTContext;
+import behaviorTree.core.BTContext;
 import behaviorTree.entity.BehaviourEntity;
 import behaviorTree.entity.IDGen;
 import behaviorTree.entity.component.AiComponent;

@@ -1,6 +1,6 @@
 package behaviorTree.ifs.single;
 
-import behaviorTree.context.BTContext;
+import behaviorTree.core.BTContext;
 
 /**
  * @Description TODO

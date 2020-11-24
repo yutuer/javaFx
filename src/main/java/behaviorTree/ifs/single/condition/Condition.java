@@ -1,6 +1,6 @@
 package behaviorTree.ifs.single.condition;
 
-import behaviorTree.context.BTContext;
+import behaviorTree.core.BTContext;
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.ifs.BaseBehaviourNode;
 import behaviorTree.ifs.single.ICondition;

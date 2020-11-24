@@ -1,7 +1,7 @@
 package behaviorTree.entity;
 
 import behaviorTree.GameEngine.Engine;
-import behaviorTree.context.BTContext;
+import behaviorTree.core.BTContext;
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.entity.component.PositionComponent;
 

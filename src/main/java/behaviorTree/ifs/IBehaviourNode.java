@@ -1,6 +1,6 @@
 package behaviorTree.ifs;
 
-import behaviorTree.context.BTContext;
+import behaviorTree.core.BTContext;
 import behaviorTree.core.IActive;
 import behaviorTree.core.NodeStatusEnum;
 
@@ -26,26 +26,6 @@ public interface IBehaviourNode<T> extends IActive, IContainer<IBehaviourNode<T>
      */
     NodeStatusEnum tick(BTContext<T> context, int interval);
 
-//    /**
-//     * 获取节点所在的行为树
-//     *
-//     * @return
-//     */
-//    BehaviorTree<T> getBehaviourTree();
-
-//    /**
-//     * 得到父节点
-//     *
-//     * @return
-//     */
-//    IBehaviourNode<T> getParentNode();
-
-//    /**
-//     * 是否是叶子节点
-//     *
-//     * @return
-//     */
-//    boolean isLeaf();
 
     void reset();
 

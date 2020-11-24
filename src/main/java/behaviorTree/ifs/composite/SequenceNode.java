@@ -1,6 +1,6 @@
 package behaviorTree.ifs.composite;
 
-import behaviorTree.context.BTContext;
+import behaviorTree.core.BTContext;
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.ifs.IBehaviourNode;
 

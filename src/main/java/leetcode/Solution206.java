@@ -1,7 +1,7 @@
 package leetcode;
 
 /**
- * @Description 206
+ * @Description 206   逆序, 使用双指针
  * @Author zhangfan
  * @Date 2020/11/20 16:58
  * @Version 1.0

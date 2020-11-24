@@ -62,7 +62,7 @@ public class ProtobufNodeTreeCollection implements ICollectionNotify
             String arg = args[i];
             if (arg.endsWith(".proto"))
             {
-                ProtobufNodeTree protobufFile = new ProtobufNodeTree(this, arg.substring(0, arg.indexOf(".proto")));
+                ProtobufNodeTree protobufFile = new ProtobufNodeTree(this, getProtoFileName(arg));
                 protobufFile.start(arg);
 
                 protobufFiles[i] = protobufFile;
@@ -70,6 +70,11 @@ public class ProtobufNodeTreeCollection implements ICollectionNotify
         }
 
         EventHelper.notifyListener(header, this);
+    }
+
+    private String getProtoFileName(String fileName)
+    {
+        return fileName.substring(0, fileName.indexOf(".proto"));
     }
 
     public ProtobufFileNodeTxt findNodeTxt(String className)

@@ -1,4 +1,4 @@
-package behaviorTree.context;
+package behaviorTree.core;
 
 import behaviorTree.GameEngine.Engine;
 

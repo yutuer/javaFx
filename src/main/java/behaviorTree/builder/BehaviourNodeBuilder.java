@@ -1,7 +1,5 @@
 package behaviorTree.builder;
 
-import behaviorTree.nodeBuilder.IBehaviourNodeBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +13,6 @@ import java.util.List;
 public abstract class BehaviourNodeBuilder<T> implements IBehaviourNodeBuilder<T>
 {
     private List<BehaviourNodeBuilder<T>> childs = new ArrayList<>();
-
 
     /**
      * 这个接口如果不写在这里, 就要写在BehaviourNode里面, 所以这就是builder模式, 使用这个来构建, 可以避免在原对象上暴露接口

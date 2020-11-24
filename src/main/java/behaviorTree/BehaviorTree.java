@@ -1,6 +1,6 @@
 package behaviorTree;
 
-import behaviorTree.context.BTContext;
+import behaviorTree.core.BTContext;
 import behaviorTree.ifs.IBehaviourNode;
 import behaviorTree.treeEvent.ITreeEvent;
 
