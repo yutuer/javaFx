@@ -15,9 +15,9 @@ public class GenericEventHelper extends EventHelper
 {
     private List<ICollectionParseEndListener> listenerList = new LinkedList<>();
 
-    public GenericEventHelper(ICollectionNotify collectionNotify, ICollectionParseEndListener listener0, ICollectionParseEndListener listener1)
+    public GenericEventHelper(ICollectionParseEndListener listener0, ICollectionParseEndListener listener1)
     {
-        super(collectionNotify);
+        super();
         listenerList.add(listener0);
         listenerList.add(listener1);
     }

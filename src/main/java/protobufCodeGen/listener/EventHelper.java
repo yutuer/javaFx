@@ -13,14 +13,14 @@ import protobufCodeGen.parse.ProtobufNodeTreeCollection;
  */
 public abstract class EventHelper
 {
-    public static EventHelper addListener(EventHelper header, ICollectionNotify collectionNotify,
+    public static EventHelper addListener(EventHelper header,
                                           ICollectionParseEndListener listener)
     {
-        if (listener == null || collectionNotify == null)
+        if (listener == null)
         {
             throw new NullPointerException();
         }
-        return header == null ? new SingleEventHelper(collectionNotify, listener) : header.addListener(listener);
+        return header == null ? new SingleEventHelper(listener) : header.addListener(listener);
     }
 
     public static EventHelper removeListener(EventHelper header,
@@ -40,11 +40,9 @@ public abstract class EventHelper
     }
 
     ///////////////////////////////////////
-    protected ICollectionNotify collectionNotify;
 
-    public EventHelper(ICollectionNotify collectionNotify)
+    public EventHelper()
     {
-        this.collectionNotify = collectionNotify;
     }
 
     protected abstract EventHelper addListener(ICollectionParseEndListener listener);

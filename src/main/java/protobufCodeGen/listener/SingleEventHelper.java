@@ -12,16 +12,16 @@ public class SingleEventHelper extends EventHelper
 {
     private final ICollectionParseEndListener listener;
 
-    public SingleEventHelper(ICollectionNotify collectionNotify, ICollectionParseEndListener listener)
+    public SingleEventHelper(ICollectionParseEndListener listener)
     {
-        super(collectionNotify);
+        super();
         this.listener = listener;
     }
 
     @Override
     protected EventHelper addListener(ICollectionParseEndListener listener)
     {
-        return new GenericEventHelper(collectionNotify, this.listener, listener);
+        return new GenericEventHelper(this.listener, listener);
     }
 
     @Override

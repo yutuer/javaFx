@@ -103,7 +103,7 @@ public class ProtobufNodeTreeCollection implements ICollectionNotify
     @Override
     public void addListener(ICollectionParseEndListener listener)
     {
-        header = EventHelper.addListener(header, this, listener);
+        header = EventHelper.addListener(header, listener);
     }
 
     @Override
