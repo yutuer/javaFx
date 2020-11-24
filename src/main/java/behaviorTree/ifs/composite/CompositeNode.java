@@ -15,7 +15,7 @@ import java.util.function.Function;
  */
 public class CompositeNode<T> extends BaseBehaviourNode<T>
 {
-    protected List<IBehaviourNode<T>> childs;
+//    protected List<IBehaviourNode<T>> childs;
 
     /**
      * 终止条件
@@ -31,10 +31,10 @@ public class CompositeNode<T> extends BaseBehaviourNode<T>
             throw new RuntimeException("Children can not be null");
         }
 
-        if (childs.size() == 0)
-        {
-            throw new RuntimeException("Must have at least one child");
-        }
+//        if (childs.size() == 0)
+//        {
+//            throw new RuntimeException("Must have at least one child");
+//        }
 
         if (childs.stream().anyMatch(c -> c == null))
         {

@@ -9,12 +9,12 @@ import behaviorTree.entity.BehaviourEntity;
  * @Date 2020/11/23 10:56
  * @Version 1.0
  */
-public class CommonComponent implements IComponent
+public class BaseComponent implements IComponent
 {
 
     private BehaviourEntity entity;
 
-    public CommonComponent(BehaviourEntity entity)
+    public BaseComponent(BehaviourEntity entity)
     {
         this.entity = entity;
     }

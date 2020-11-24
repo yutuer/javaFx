@@ -8,9 +8,11 @@ import behaviorTree.entity.BehaviourEntity;
  * @Date 2020/11/23 10:45
  * @Version 1.0
  */
-public class HealthComponent extends CommonComponent
+public class HealthComponent extends BaseComponent
 {
     private int health;
+
+    private final int MaxHealth = 100;
 
     public HealthComponent(BehaviourEntity entity)
     {
@@ -22,8 +24,47 @@ public class HealthComponent extends CommonComponent
         return health;
     }
 
-    public void setHealth(int health)
+    /**
+     * 扣除血量
+     *
+     * @param health
+     * @return
+     */
+    public boolean subHealth(int health)
     {
-        this.health = health;
+        final int h = this.health;
+
+        this.health -= health;
+        if (this.health < 0)
+        {
+            this.health = 0;
+        }
+
+        if (h < health)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 添加血量
+     *
+     * @param health
+     */
+    public boolean addHealth(int health)
+    {
+        if (this.health >= MaxHealth)
+        {
+            return false;
+        }
+
+        this.health += health;
+        if (this.health > MaxHealth)
+        {
+            this.health = MaxHealth;
+        }
+
+        return true;
     }
 }

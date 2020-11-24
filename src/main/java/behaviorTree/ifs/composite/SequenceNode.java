@@ -1,9 +1,10 @@
 package behaviorTree.ifs.composite;
 
-import behaviorTree.context.IContext;
+import behaviorTree.context.BTContext;
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.ifs.IBehaviourNode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,13 +20,18 @@ public class SequenceNode<T> extends CompositeNode<T>
      */
     private int curIndex;
 
+    public SequenceNode(String tip)
+    {
+        this(tip, new ArrayList<>());
+    }
+
     public SequenceNode(String tip, List<IBehaviourNode<T>> childs)
     {
         super(tip, childs);
     }
 
     @Override
-    protected NodeStatusEnum update(IContext<T> context, int interval)
+    protected NodeStatusEnum update(BTContext<T> context, int interval)
     {
         int size = childs.size();
 

@@ -1,6 +1,6 @@
 package behaviorTree;
 
-import behaviorTree.context.IContext;
+import behaviorTree.context.BTContext;
 import behaviorTree.ifs.IBehaviourNode;
 import behaviorTree.treeEvent.ITreeEvent;
 
@@ -62,7 +62,7 @@ public class BehaviorTree<T>
 
     }
 
-    public void tick(IContext<T> context, int interval)
+    public void tick(BTContext<T> context, int interval)
     {
         rootNode.tick(context, interval);
     }

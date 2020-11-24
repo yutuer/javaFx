@@ -1,9 +1,11 @@
-package behaviorTree.ifs.composite;
+package behaviorTree.ifs.composite.selector;
 
-import behaviorTree.context.IContext;
+import behaviorTree.context.BTContext;
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.ifs.IBehaviourNode;
+import behaviorTree.ifs.composite.CompositeNode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,13 +21,18 @@ public class SelectorNode<T> extends CompositeNode<T>
      */
     private int curIndex;
 
+    public SelectorNode(String tip)
+    {
+        this(tip, new ArrayList<>());
+    }
+
     public SelectorNode(String tip, List<IBehaviourNode<T>> childs)
     {
         super(tip, childs);
     }
 
     @Override
-    protected NodeStatusEnum update(IContext<T> context, int interval)
+    protected NodeStatusEnum update(BTContext<T> context, int interval)
     {
         int size = childs.size();
         for (; curIndex < size; curIndex++)

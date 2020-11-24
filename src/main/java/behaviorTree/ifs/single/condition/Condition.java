@@ -1,6 +1,6 @@
 package behaviorTree.ifs.single.condition;
 
-import behaviorTree.context.IContext;
+import behaviorTree.context.BTContext;
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.ifs.BaseBehaviourNode;
 import behaviorTree.ifs.single.ICondition;
@@ -16,7 +16,7 @@ public class Condition<T> extends BaseBehaviourNode<T>
     }
 
     @Override
-    protected NodeStatusEnum update(IContext<T> context, int interval)
+    protected NodeStatusEnum update(BTContext<T> context, int interval)
     {
         return condition.testCondition(context, interval) ? NodeStatusEnum.Successed : NodeStatusEnum.Failed;
     }

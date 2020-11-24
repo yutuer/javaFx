@@ -11,28 +11,42 @@ public abstract class AbstractService
     /**
      * 初始化
      */
-    public abstract void init();
+    public void init()
+    {
+
+    }
 
     /**
      * 核心方法,  tick
      *
      * @param inteval 间隔的毫秒数
      */
-    public abstract void tick(int inteval);
+    public void tick(int inteval)
+    {
+
+    }
 
     /**
      * 被从池中移除出去的时候, 可以做清理工作
      */
-    public abstract void destory();
+    public void destory()
+    {
+
+    }
 
     /**
      * 暂停(TODO)
      */
-    public abstract void pause();
+    public void pause()
+    {
+
+    }
 
     /**
      * 重新启动(TODO)
      */
-    public abstract void resume();
+    public void resume()
+    {
+    }
 
 }

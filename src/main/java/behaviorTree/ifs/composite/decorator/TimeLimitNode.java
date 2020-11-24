@@ -1,6 +1,6 @@
 package behaviorTree.ifs.composite.decorator;
 
-import behaviorTree.context.IContext;
+import behaviorTree.context.BTContext;
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.ifs.IBehaviourNode;
 
@@ -23,7 +23,7 @@ public class TimeLimitNode<T> extends DecoratorNode<T>
     }
 
     @Override
-    protected NodeStatusEnum update(IContext<T> context, int interval)
+    protected NodeStatusEnum update(BTContext<T> context, int interval)
     {
         NodeStatusEnum childStatus = child.tick(context, interval);
         total += interval;

@@ -1,7 +1,5 @@
 package behaviorTree;
 
-import behaviorTree.core.NodeStatusEnum;
-
 /**
  * @Description 定时处理逻辑接口
  * @Author zhangfan

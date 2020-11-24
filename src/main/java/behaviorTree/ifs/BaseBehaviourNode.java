@@ -1,6 +1,6 @@
 package behaviorTree.ifs;
 
-import behaviorTree.context.IContext;
+import behaviorTree.context.BTContext;
 import behaviorTree.core.NodeStatusEnum;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public abstract class BaseBehaviourNode<T> implements IBehaviourNode<T>
 
     private NodeStatusEnum status;
 
-    private List<IBehaviourNode<T>> childs = new ArrayList<>();
+    protected List<IBehaviourNode<T>> childs = new ArrayList<>();
 
     public BaseBehaviourNode(String tip)
     {
@@ -33,7 +33,7 @@ public abstract class BaseBehaviourNode<T> implements IBehaviourNode<T>
     }
 
     @Override
-    public NodeStatusEnum tick(IContext<T> context, int interval)
+    public NodeStatusEnum tick(BTContext<T> context, int interval)
     {
         if (status == NodeStatusEnum.Ready)
         {
@@ -80,7 +80,7 @@ public abstract class BaseBehaviourNode<T> implements IBehaviourNode<T>
 
     }
 
-    protected NodeStatusEnum update(IContext<T> context, int interval)
+    protected NodeStatusEnum update(BTContext<T> context, int interval)
     {
         // 给个默认, 不能返回null
         return NodeStatusEnum.Failed;

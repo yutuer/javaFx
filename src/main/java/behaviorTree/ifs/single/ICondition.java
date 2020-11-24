@@ -1,6 +1,6 @@
 package behaviorTree.ifs.single;
 
-import behaviorTree.context.IContext;
+import behaviorTree.context.BTContext;
 
 /**
  * @Description TODO
@@ -10,5 +10,5 @@ import behaviorTree.context.IContext;
  */
 public interface ICondition<T>
 {
-    boolean testCondition(IContext<T> context, int interval);
+    boolean testCondition(BTContext<T> context, int interval);
 }

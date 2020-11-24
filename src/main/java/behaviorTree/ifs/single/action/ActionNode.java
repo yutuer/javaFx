@@ -1,6 +1,6 @@
 package behaviorTree.ifs.single.action;
 
-import behaviorTree.context.IContext;
+import behaviorTree.context.BTContext;
 import behaviorTree.core.NodeStatusEnum;
 import behaviorTree.ifs.BaseBehaviourNode;
 
@@ -15,16 +15,16 @@ import java.util.function.BiFunction;
 public class ActionNode<T> extends BaseBehaviourNode<T>
 {
 
-    private BiFunction<IContext<T>, Integer, NodeStatusEnum> func;
+    private BiFunction<BTContext<T>, Integer, NodeStatusEnum> func;
 
-    public ActionNode(String tip, BiFunction<IContext<T>, Integer, NodeStatusEnum> func)
+    public ActionNode(String tip, BiFunction<BTContext<T>, Integer, NodeStatusEnum> func)
     {
         super(tip);
         this.func = func;
     }
 
     @Override
-    protected NodeStatusEnum update(IContext<T> context, int interval)
+    protected NodeStatusEnum update(BTContext<T> context, int interval)
     {
         return func.apply(context, interval);
     }

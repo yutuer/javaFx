@@ -8,7 +8,7 @@ import behaviorTree.entity.BehaviourEntity;
  * @Date 2020/11/23 10:57
  * @Version 1.0
  */
-public class StaminaComponent extends CommonComponent
+public class StaminaComponent extends BaseComponent
 {
     private int stamina;
 

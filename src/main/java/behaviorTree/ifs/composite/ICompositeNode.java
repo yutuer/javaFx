@@ -1,6 +1,5 @@
 package behaviorTree.ifs.composite;
 
-import behaviorTree.context.IContext;
 import behaviorTree.ifs.IBehaviourNode;
 
 /**
@@ -8,7 +7,7 @@ import behaviorTree.ifs.IBehaviourNode;
  *
  * @param <T>
  */
-public interface ICompositeNode<T extends IContext> extends IBehaviourNode<T>
+public interface ICompositeNode<T> extends IBehaviourNode<T>
 {
     /**
      * 根据索引获得节点

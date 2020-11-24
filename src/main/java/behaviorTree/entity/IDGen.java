@@ -23,6 +23,6 @@ public class IDGen
 
     public static int getCurId()
     {
-        return curId++;
+        return ++curId;
     }
 }

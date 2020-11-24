@@ -1,6 +1,5 @@
 package behaviorTree.ifs.single;
 
-import behaviorTree.context.IContext;
 import behaviorTree.treeEvent.ITreeEvent;
 
 /**
@@ -8,7 +7,7 @@ import behaviorTree.treeEvent.ITreeEvent;
  *
  * @author Administrator
  */
-public interface IActionNode<T extends IContext>
+public interface IActionNode<T>
 {
     /**
      * 叶子节点能接受事件

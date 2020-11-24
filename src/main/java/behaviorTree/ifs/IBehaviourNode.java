@@ -1,7 +1,8 @@
 package behaviorTree.ifs;
 
-import behaviorTree.context.IContext;
-import behaviorTree.core.*;
+import behaviorTree.context.BTContext;
+import behaviorTree.core.IActive;
+import behaviorTree.core.NodeStatusEnum;
 
 /**
  * 行为树节点抽象
@@ -23,7 +24,7 @@ public interface IBehaviourNode<T> extends IActive, IContainer<IBehaviourNode<T>
      *
      * @return
      */
-    NodeStatusEnum tick(IContext<T> context, int interval);
+    NodeStatusEnum tick(BTContext<T> context, int interval);
 
 //    /**
 //     * 获取节点所在的行为树

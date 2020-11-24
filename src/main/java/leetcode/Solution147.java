@@ -6,7 +6,7 @@ package leetcode;
  * @Date 2020/11/20 16:58
  * @Version 1.0
  */
-public class Solution
+public class Solution147
 {
     public ListNode insertionSortList(ListNode head)
     {
@@ -26,15 +26,17 @@ public class Solution
         }
         return head.next;
     }
-}
 
-class ListNode
-{
-    int val;
-    ListNode next;
-
-    ListNode(int x)
+    private static class ListNode
     {
-        val = x;
+        int val;
+        ListNode next;
+
+        ListNode(int x)
+        {
+            val = x;
+        }
     }
 }
+
+

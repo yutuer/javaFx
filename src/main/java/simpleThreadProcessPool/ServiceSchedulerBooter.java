@@ -12,13 +12,13 @@ public class ServiceSchedulerBooter
 {
     public static void main(String[] args) throws InterruptedException
     {
-        SimpleProcessPool SimpleProcessPool = new SimpleProcessPool(Runtime.getRuntime().availableProcessors());
-        MainCircle mainCircle = new MainCircle(SimpleProcessPool);
+        SimpleProcessPool simpleProcessPool = new SimpleProcessPool(Runtime.getRuntime().availableProcessors());
+        MainCircle mainCircle = new MainCircle(simpleProcessPool);
         mainCircle.start();
 
         for (int i = 0; i < 10; i++)
         {
-            SimpleProcessPool.addService(new TestService(i), (i + 1) * 1000);
+            simpleProcessPool.addService(new TestService(i), (i + 1) * 1000);
         }
     }
 }
