@@ -12,9 +12,9 @@ import behaviorTree.ifs.IBehaviourNode;
 public class BotBehaviourTreeBuilder2
 {
 
-    public static IBehaviourNode<Bot> createBotBehaviour1()
+    public static IBehaviourNode<BehaviourEntity> createBotBehaviour1()
     {
-        BehaviourTreeBuilder2<Bot> botBehaviourTreeBuilder = BehaviourTreeBuilder2.create();
+        BehaviourTreeBuilder2<BehaviourEntity> botBehaviourTreeBuilder = BehaviourTreeBuilder2.create();
         return botBehaviourTreeBuilder
 //                .pushComposite(BehaviourNodeBuilder.invertNodeBuilder())
 //                .pushLeafNode()

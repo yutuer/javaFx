@@ -1,6 +1,6 @@
 package behaviorTree.context;
 
-import behaviorTree.entity.Game;
+import behaviorTree.GameEngine.Engine;
 
 /**
  * @Description 上下文对象
@@ -10,13 +10,13 @@ import behaviorTree.entity.Game;
  */
 public class BTContext<T>
 {
-    private Game game;
+    private Engine engine;
 
     private T entity;
 
-    public BTContext(Game game, T entity)
+    public BTContext(Engine engine, T entity)
     {
-        this.game = game;
+        this.engine = engine;
         this.entity = entity;
     }
 
@@ -25,8 +25,8 @@ public class BTContext<T>
         return entity;
     }
 
-    public Game getGame()
+    public Engine getEngine()
     {
-        return game;
+        return engine;
     }
 }

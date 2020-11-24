@@ -15,9 +15,9 @@ import behaviorTree.ifs.IBehaviourNode;
 public class BotBehaviourTreeBuilder
 {
 
-    public static IBehaviourNode<Bot> BotBehaviour()
+    public static IBehaviourNode<BehaviourEntity> BotBehaviour()
     {
-        BehaviourTreeBuilder<Bot> botBehaviourTreeBuilder = BehaviourTreeBuilder.create();
+        BehaviourTreeBuilder<BehaviourEntity> botBehaviourTreeBuilder = BehaviourTreeBuilder.create();
         return botBehaviourTreeBuilder
                 .PrioritySelector("Root")
 //                .Invert("Test Invert")
@@ -27,51 +27,51 @@ public class BotBehaviourTreeBuilder
 //                        return NodeStatusEnum.Successed;
 //                    })
 //                .end()
-                .pushSubTree(LowHealthBehaviour())
+                .pushSubTree(TestBehaviour())
                 .build();
     }
 
-    public static IBehaviourNode<Bot> BotTestBehaviour()
+    public static IBehaviourNode<BehaviourEntity> TestBehaviour()
     {
-        BehaviourTreeBuilder<Bot> botBehaviourTreeBuilder = BehaviourTreeBuilder.create();
+        BehaviourTreeBuilder<BehaviourEntity> botBehaviourTreeBuilder = BehaviourTreeBuilder.create();
         return botBehaviourTreeBuilder
                 .Sequence("Sequence test")
-                .Condition("Cond1 Test", (botContext, interval) ->
-                {
-                    Bot bot = botContext.getContext();
-                    System.out.println(bot.getId() + ": Cond1 cond");
-                    return true;
-                })
-                .Condition("Cond2 Test", (botContext, interval) ->
-                {
-                    Bot bot = botContext.getContext();
-                    System.out.println(bot.getId() + ": Cond2 cond");
-                    return true;
-                })
-                .Condition("Cond3 Test", (botContext, interval) ->
-                {
-                    Bot bot = botContext.getContext();
-                    System.out.println(bot.getId() + ": Cond3 cond");
-                    return true;
-                })
-                .Do("Do some Action", (botContext, integer) ->
-                {
-                    Bot bot = botContext.getContext();
-                    System.out.println(bot.getId() + ": action");
-                    return NodeStatusEnum.Successed;
-                })
+                    .Condition("Cond1 Test", (entityContext, interval) ->
+                    {
+                        BehaviourEntity bot = entityContext.getContext();
+                        System.out.println(bot.getId() + ": Cond1 cond");
+                        return true;
+                    })
+                    .Condition("Cond2 Test", (entityContext, interval) ->
+                    {
+                        BehaviourEntity bot = entityContext.getContext();
+                        System.out.println(bot.getId() + ": Cond2 cond");
+                        return true;
+                    })
+                    .Condition("Cond3 Test", (entityContext, interval) ->
+                    {
+                        BehaviourEntity bot = entityContext.getContext();
+                        System.out.println(bot.getId() + ": Cond3 cond");
+                        return true;
+                    })
+                    .Do("Do some Action", (entityContext, integer) ->
+                    {
+                        BehaviourEntity bot = entityContext.getContext();
+                        System.out.println(bot.getId() + ": action");
+                        return NodeStatusEnum.Successed;
+                    })
                 .end()
                 .build();
     }
 
-    public static IBehaviourNode<Bot> LowHealthBehaviour()
+    public static IBehaviourNode<BehaviourEntity> LowHealthBehaviour()
     {
-        BehaviourTreeBuilder<Bot> botBehaviourTreeBuilder = BehaviourTreeBuilder.create();
+        BehaviourTreeBuilder<BehaviourEntity> botBehaviourTreeBuilder = BehaviourTreeBuilder.create();
         return botBehaviourTreeBuilder
                 .Sequence("Low health")
-                    .Condition("Is health low?", (botContext, interval) ->
+                    .Condition("Is health low?", (entityContext, interval) ->
                     {
-                        Bot bot = botContext.getContext();
+                        BehaviourEntity bot = entityContext.getContext();
                         HealthComponent component = bot.getComponent(HealthComponent.class);
                         if (component.getHealth() < 50)
                         {
@@ -80,9 +80,9 @@ public class BotBehaviourTreeBuilder
                         return false;
                     })
                     .Selector("Find and eat food")
-                        .Do("Eat food from inventory", ((botContext, interval) ->
+                        .Do("Eat food from inventory", ((entityContext, interval) ->
                         {
-                            Bot bot = botContext.getContext();
+                            BehaviourEntity bot = entityContext.getContext();
                             InventoryComponent inventoryComponent = bot.getComponent(InventoryComponent.class);
                             if (!inventoryComponent.deleteItemNum(ItemType.Food, 1))
                             {
@@ -99,24 +99,23 @@ public class BotBehaviourTreeBuilder
                 .build();
     }
 
-
-    public static IBehaviourNode<Bot> FindAndPickupItem(ItemType itemType)
+    public static IBehaviourNode<BehaviourEntity> FindAndPickupItem(ItemType itemType)
     {
-        BehaviourTreeBuilder<Bot> botBehaviourTreeBuilder = BehaviourTreeBuilder.create();
+        BehaviourTreeBuilder<BehaviourEntity> botBehaviourTreeBuilder = BehaviourTreeBuilder.create();
         return botBehaviourTreeBuilder
                 .Sequence("Find and pick up item")
                     .Do(String.format("Set closest %s as target", itemType.name()),
-                            (botContext, interval) -> BotBehaviourFunc.SetItemAsTarget(botContext, interval, itemType))
-                    .Do("Move to target", (botContext, interval)->{
+                            (entityContext, interval) -> BehaviourFunc.SetItemAsTarget(entityContext, interval, itemType))
+                    .Do("Move to target", (entityContext, interval) ->
+                    {
                         return NodeStatusEnum.Failed;
                     })
-                    .Do("Pickup target",(botContext, interval)->{
+                    .Do("Pickup target", (entityContext, interval) ->
+                    {
                         return NodeStatusEnum.Failed;
                     })
                 .end()
                 .build();
     }
-
-
 
 }

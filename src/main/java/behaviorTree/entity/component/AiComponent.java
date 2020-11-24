@@ -1,7 +1,7 @@
 package behaviorTree.entity.component;
 
 import behaviorTree.BehaviorTree;
-import behaviorTree.entity.Bot;
+import behaviorTree.entity.BehaviourEntity;
 import behaviorTree.entity.BotBehaviourTreeBuilder;
 import behaviorTree.ifs.IBehaviourNode;
 
@@ -11,15 +11,15 @@ import behaviorTree.ifs.IBehaviourNode;
  * @Date 2020/11/23 11:03
  * @Version 1.0
  */
-public class BotAiComponent extends BaseComponent
+public class AiComponent extends BaseComponent
 {
-    public BehaviorTree<Bot> tree;
+    public BehaviorTree<BehaviourEntity> tree;
 
-    public BotAiComponent(Bot entity)
+    public AiComponent(BehaviourEntity entity)
     {
         super(entity);
 
-        IBehaviourNode<Bot> root = BotBehaviourTreeBuilder.BotBehaviour();
+        IBehaviourNode<BehaviourEntity> root = BotBehaviourTreeBuilder.BotBehaviour();
         tree = new BehaviorTree<>(root);
     }
 

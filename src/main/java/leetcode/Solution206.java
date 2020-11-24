@@ -1,30 +1,32 @@
 package leetcode;
 
 /**
- * @Description 147
+ * @Description 206
  * @Author zhangfan
  * @Date 2020/11/20 16:58
  * @Version 1.0
  */
-public class Solution147
+public class Solution206
 {
-    public ListNode insertionSortList(ListNode head)
+    public ListNode reverseList(ListNode head)
     {
         if (head == null || head.next == null)
         {
             return head;
         }
 
-        ListNode dummy = new ListNode(Integer.MIN_VALUE);
-        dummy.next = head;
-        head = dummy;
-
-        ListNode cur = head.next;
+        ListNode pre = null;
+        ListNode cur = head;
+        ListNode tmp;
         while (cur != null)
         {
-            
+            tmp = cur;
+            cur = cur.next;
+
+            tmp.next = pre;
+            pre = tmp;
         }
-        return head.next;
+        return pre;
     }
 
     private static class ListNode
