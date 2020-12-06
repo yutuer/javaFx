@@ -24,7 +24,6 @@ public class Game
 
     public void create()
     {
-
         newBot();
     }
 

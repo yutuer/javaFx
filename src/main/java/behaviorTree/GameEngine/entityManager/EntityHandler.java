@@ -1,5 +1,6 @@
-package behaviorTree.GameEngine;
+package behaviorTree.GameEngine.entityManager;
 
+import behaviorTree.GameEngine.entityManager.EntityManager;
 import behaviorTree.entity.BehaviourEntity;
 
 /**

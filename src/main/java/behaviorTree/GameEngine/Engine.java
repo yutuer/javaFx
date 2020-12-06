@@ -1,5 +1,6 @@
 package behaviorTree.GameEngine;
 
+import behaviorTree.GameEngine.entityManager.EntityManager;
 import behaviorTree.IClock;
 import behaviorTree.entity.BehaviourEntity;
 import simpleThreadProcessPool.service.AbstractService;
@@ -13,6 +14,7 @@ import simpleThreadProcessPool.service.AbstractService;
 public class Engine extends AbstractService implements IClock
 {
     private EntityManager entityManager;
+
 
     public Engine()
     {
@@ -42,6 +44,11 @@ public class Engine extends AbstractService implements IClock
         }
 
         entityManager.removeEntity(entity.getId());
+    }
+
+    public BehaviourEntity getEntity(int id)
+    {
+        return entityManager.getEntity(id);
     }
 
     @Override
