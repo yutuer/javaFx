@@ -1,11 +1,10 @@
 package disruptorTest.dis;
 
-import com.lmax.disruptor.util.Util;
 import sun.misc.Contended;
 import sun.misc.Unsafe;
 
 /**
- * @Description 包装了long, 替代了long值的作用. 多线程下使用
+ * @Description 包装了long, 使用了缓存行, 替代了long值的作用. 多线程下使用
  * @Author zhangfan
  * @Date 2020/9/27 23:28
  * @Version 1.0
@@ -14,7 +13,7 @@ public class Seq
 {
     public static final long INITIAL_VALUE = -1L;
 
-    // 注意, 此处要是volatile的
+    // 注意, 此处必须是volatile的
     @Contended
     protected volatile long value;
 

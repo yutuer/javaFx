@@ -38,4 +38,9 @@ public interface Seqer
      * @return The number of slots remaining.
      */
     long remainingCapacity();
+
+    /**
+     * @return
+     */
+    int bufferSize();
 }

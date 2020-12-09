@@ -13,9 +13,11 @@ public class PositionComponent extends BaseComponent
     private int x;
     private int y;
 
-    public PositionComponent(BehaviourEntity entity)
+    public PositionComponent(BehaviourEntity entity, int x, int y)
     {
         super(entity);
+        this.x = x;
+        this.y = y;
     }
 
     public int getX()

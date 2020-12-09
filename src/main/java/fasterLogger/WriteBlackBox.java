@@ -1,6 +1,5 @@
 package fasterLogger;
 
-import fasterLogger.v2.IDataProviderFactory;
 import fasterLogger.v2.LoggerRingBuffer;
 import fasterLogger.write.StringDataProvider;
 
@@ -30,14 +29,7 @@ public class WriteBlackBox implements IWriteBlackBox
         IWriteUnit doubleCache = tl.get();
         if (doubleCache == null)
         {
-            doubleCache = new LoggerRingBuffer(new IDataProviderFactory()
-            {
-                @Override
-                public IDataProvider createDataProvider()
-                {
-                    return new StringDataProvider();
-                }
-            }, 1 << 10);
+            doubleCache = new LoggerRingBuffer(() -> new StringDataProvider(), 1 << 10);
             binder.register(doubleCache);
 
             tl.set(doubleCache);

@@ -16,15 +16,46 @@ public class Solution147
         }
 
         ListNode dummy = new ListNode(Integer.MIN_VALUE);
-        dummy.next = head;
-        head = dummy;
 
-        ListNode cur = head.next;
+        ListNode cur = head;
         while (cur != null)
         {
-            
+            ListNode next = cur.next;
+            cur.next = null;
+
+            insertToDummy(dummy, cur);
+
+            cur = next;
         }
-        return head.next;
+        return dummy.next;
+    }
+
+    private void insertToDummy(ListNode dummy, ListNode node)
+    {
+        if (dummy.next == null)
+        {
+            dummy.next = node;
+        }
+        else
+        {
+            ListNode cur = dummy;
+            ListNode next = cur.next;
+            while (cur != null && next != null)
+            {
+                if (node.val < next.val)
+                {
+                    // 插入cur和next中间
+                    node.next = next;
+                    cur.next = node;
+                    return;
+                }
+
+                cur = next;
+                next = cur.next;
+            }
+
+            cur.next = node;
+        }
     }
 
     private static class ListNode
@@ -36,6 +67,10 @@ public class Solution147
         {
             val = x;
         }
+    }
+
+    public static void main(String[] args)
+    {
     }
 }
 
