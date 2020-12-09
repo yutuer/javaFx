@@ -1,8 +1,8 @@
-package behaviorTree.GameEngine;
+package behaviorTree.GameEngine.entityManager;
 
+import behaviorTree.GameEngine.Engine;
 import behaviorTree.core.BTContext;
 import behaviorTree.entity.BehaviourEntity;
-import behaviorTree.entity.IDGen;
 import behaviorTree.entity.component.AiComponent;
 import behaviorTree.entity.component.HealthComponent;
 
@@ -15,8 +15,10 @@ import java.util.Map;
  * @Date 2020/11/24 17:31
  * @Version 1.0
  */
-public class EntityManager
+public class EntityManager implements IEntityManager
 {
+
+    private int _maxId;
 
     private Engine engine;
 
@@ -30,16 +32,18 @@ public class EntityManager
         this.engine = engine;
     }
 
+    @Override
     public BehaviourEntity newEntity()
     {
-        BehaviourEntity entity = new BehaviourEntity(IDGen.getCurId());
+        BehaviourEntity entity = new BehaviourEntity(++_maxId);
 
         addEntity(entity);
 
         return entity;
     }
 
-    public void addEntity(BehaviourEntity entity)
+
+    private void addEntity(BehaviourEntity entity)
     {
         if (entity == null)
         {
@@ -65,6 +69,12 @@ public class EntityManager
                 removeEntityHandler.handler(this, entity);
             }
         }
+    }
+
+    @Override
+    public BehaviourEntity getEntity(int id)
+    {
+        return entityMap.get(id);
     }
 
     public void tick(int interval)
