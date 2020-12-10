@@ -181,4 +181,10 @@ public class SingleThreadSequencer extends Sequencer
         long cachedGatingSequence = this.cachedValue;
         return cachedGatingSequence + buffSize - nextValue;
     }
+
+    @Override
+    public int bufferSize()
+    {
+        return 0;
+    }
 }

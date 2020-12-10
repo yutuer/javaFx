@@ -32,7 +32,7 @@ public class Game
     {
         BehaviourEntity food = engine.newEntity();
         food.addComponent(new PositionComponent(food, 100, 200))
-                .addComponent(new LootableComponent(food, 1));
+                .addComponent(new LootableComponent(food));
         ;
 
     }

@@ -24,8 +24,9 @@ public class EntityManager implements IEntityManager
 
     private Map<Integer, BehaviourEntity> entityMap = new HashMap<>();
 
-    private EntityHandler addEntityHandler;
-    private EntityHandler removeEntityHandler;
+    private EntityHandler addEntityHandler = new EntityHandler();
+
+    private EntityHandler removeEntityHandler = new EntityHandler();
 
     public EntityManager(Engine engine)
     {
@@ -42,7 +43,6 @@ public class EntityManager implements IEntityManager
         return entity;
     }
 
-
     private void addEntity(BehaviourEntity entity)
     {
         if (entity == null)
@@ -52,10 +52,7 @@ public class EntityManager implements IEntityManager
 
         if (entityMap.put(entity.getId(), entity) == null)
         {
-            if (addEntityHandler != null)
-            {
-                addEntityHandler.handler(this, entity);
-            }
+            addEntityHandler.handler(this, entity);
         }
     }
 
@@ -64,10 +61,7 @@ public class EntityManager implements IEntityManager
         BehaviourEntity entity;
         if ((entity = entityMap.remove(id)) != null)
         {
-            if (removeEntityHandler != null)
-            {
-                removeEntityHandler.handler(this, entity);
-            }
+            removeEntityHandler.handler(this, entity);
         }
     }
 
@@ -75,6 +69,26 @@ public class EntityManager implements IEntityManager
     public BehaviourEntity getEntity(int id)
     {
         return entityMap.get(id);
+    }
+
+    public void addAddHandler(IEntityHandler entityHandler)
+    {
+        this.addEntityHandler.addHandler(entityHandler);
+    }
+
+    public void addRemoveHandler(IEntityHandler entityHandler)
+    {
+        this.removeEntityHandler.addHandler(entityHandler);
+    }
+
+    public void removeAddHandler(IEntityHandler entityHandler)
+    {
+        this.addEntityHandler.removeHandler(entityHandler);
+    }
+
+    public void removeRemoveHandler(IEntityHandler entityHandler)
+    {
+        this.removeEntityHandler.removeHandler(entityHandler);
     }
 
     public void tick(int interval)

@@ -48,4 +48,10 @@ public class MultiThreadSequencer extends Sequencer
     {
         return 0;
     }
+
+    @Override
+    public int bufferSize()
+    {
+        return 0;
+    }
 }
