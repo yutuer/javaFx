@@ -1,8 +1,9 @@
 package behaviorTree.GameEngine.familyManager;
 
 import behaviorTree.GameEngine.entityManager.EntityManager;
-import behaviorTree.IComponent;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public class FamilyManager
 
     private EntityManager entityManager;
 
-    private Map<Class, List<FNode>> nodes;
+    private Map<Type, IFamily> nodes;
 
     public FamilyManager(EntityManager entityManager)
     {
@@ -29,15 +30,17 @@ public class FamilyManager
         });
     }
 
-    public <T extends IComponent> List<FNode> getNodes(Class<T> c)
+    public <TNodeType> List<TNodeType> getNodes()
     {
-        return nodes.get(c);
-    }
+        try
+        {
+            Method m = this.getClass().getDeclaredMethod("getNodes");
 
-
-    public <TNodeType> List<FNode<TNodeType>> getNodes()
-    {
-
+        }
+        catch (NoSuchMethodException e)
+        {
+            e.printStackTrace();
+        }
         return null;
     }
 }

@@ -1,7 +1,7 @@
 package behaviorTree.GameEngine.system;
 
 import behaviorTree.GameEngine.Engine;
-import behaviorTree.GameEngine.familyManager.FNode;
+import behaviorTree.GameEngine.familyManager.node.Node;
 
 import java.util.List;
 
@@ -12,19 +12,28 @@ import java.util.List;
  * @Date 2020/12/10 11:29
  * @Version 1.0
  */
-public abstract class System<TNodeType> implements ISystem
+public abstract class IterativeSystem<TNodeType extends Node> implements ISystem
 {
 
     protected Engine engine;
 
-    protected List<FNode<TNodeType>> nodes;
+    protected List<TNodeType> nodes;
 
-    public System(Engine engine)
+    public IterativeSystem(Engine engine)
     {
         this.engine = engine;
+
         nodes = engine.getNodes();
     }
 
-    public abstract void update(int interval);
+    public void update(int interval)
+    {
+        for (TNodeType node : nodes)
+        {
+            updateNode(node, interval);
+        }
+    }
+
+    protected abstract void updateNode(TNodeType node, int interval);
 
 }

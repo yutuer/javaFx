@@ -10,16 +10,16 @@ import behaviorTree.entity.BehaviourEntity;
  */
 public class HealthComponent extends BaseComponent
 {
-    private int health;
+    private double health;
 
-    private final int MaxHealth = 100;
+    private final double MaxHealth = 100.0;
 
     public HealthComponent(BehaviourEntity entity)
     {
         super(entity);
     }
 
-    public int getHealth()
+    public double getHealth()
     {
         return health;
     }
@@ -30,9 +30,9 @@ public class HealthComponent extends BaseComponent
      * @param health
      * @return
      */
-    public boolean subHealth(int health)
+    public boolean subHealth(double health)
     {
-        final int h = this.health;
+        final double h = this.health;
 
         this.health -= health;
         if (this.health < 0)
@@ -52,7 +52,7 @@ public class HealthComponent extends BaseComponent
      *
      * @param health
      */
-    public boolean addHealth(int health)
+    public boolean addHealth(double health)
     {
         if (this.health >= MaxHealth)
         {

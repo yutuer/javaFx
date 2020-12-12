@@ -3,8 +3,9 @@ package behaviorTree.GameEngine;
 import behaviorTree.GameEngine.entityManager.EntityManager;
 import behaviorTree.GameEngine.eventManager.EventManager;
 import behaviorTree.GameEngine.eventManager.GlobalId;
-import behaviorTree.GameEngine.familyManager.FNode;
+import behaviorTree.GameEngine.eventManager.event.Event;
 import behaviorTree.GameEngine.familyManager.FamilyManager;
+import behaviorTree.GameEngine.familyManager.node.HealthNode;
 import behaviorTree.IClock;
 import behaviorTree.entity.BehaviourEntity;
 import simpleThreadProcessPool.service.AbstractService;
@@ -71,8 +72,20 @@ public class Engine extends AbstractService implements IClock
         entityManager.tick(interval);
     }
 
-    public <TNodeType> List<FNode<TNodeType>> getNodes()
+    public <TNodeType> List<TNodeType> getNodes()
     {
         return familyManager.getNodes();
+    }
+
+    public void publishEvent(BehaviourEntity sender, Event event)
+    {
+        eventManager.publishEvent(sender, event);
+    }
+
+    public static void main(String[] args)
+    {
+        Engine engine = new Engine();
+        List<HealthNode> nodes = engine.getNodes();
+
     }
 }
