@@ -11,7 +11,7 @@ import java.util.concurrent.locks.LockSupport;
  * @Date 2020/9/28 23:38
  * @Version 1.0
  */
-public class SingleThreadSequencer extends Sequencer
+public class SingleThreadMySequencer extends MySequencer
 {
 
     /**
@@ -34,7 +34,7 @@ public class SingleThreadSequencer extends Sequencer
      */
     long cachedValue;
 
-    public SingleThreadSequencer(int buffSize, WaitStrategy waitStrategy)
+    public SingleThreadMySequencer(int buffSize, WaitStrategy waitStrategy)
     {
         super(buffSize, waitStrategy);
     }

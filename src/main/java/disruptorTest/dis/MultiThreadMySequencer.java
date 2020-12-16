@@ -9,7 +9,7 @@ import disruptorTest.dis.consume.WaitStrategy;
  * @Date 2020/9/29 8:16
  * @Version 1.0
  */
-public class MultiThreadSequencer extends Sequencer
+public class MultiThreadMySequencer extends MySequencer
 {
     /**
      * 预分配的生产者序列号
@@ -26,7 +26,7 @@ public class MultiThreadSequencer extends Sequencer
      */
     protected Seq gatingValue;
 
-    public MultiThreadSequencer(int buffSize, WaitStrategy waitStrategy)
+    public MultiThreadMySequencer(int buffSize, WaitStrategy waitStrategy)
     {
         super(buffSize, waitStrategy);
     }
