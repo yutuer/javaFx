@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
  * @Date 2020/9/28 8:19
  * @Version 1.0
  */
-public interface WaitStrategy
+public interface My_WaitStrategy
 {
 
     /**

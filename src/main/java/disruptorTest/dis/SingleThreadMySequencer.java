@@ -1,7 +1,7 @@
 package disruptorTest.dis;
 
 import com.lmax.disruptor.InsufficientCapacityException;
-import disruptorTest.dis.consume.WaitStrategy;
+import disruptorTest.dis.consume.My_WaitStrategy;
 
 import java.util.concurrent.locks.LockSupport;
 
@@ -11,7 +11,7 @@ import java.util.concurrent.locks.LockSupport;
  * @Date 2020/9/28 23:38
  * @Version 1.0
  */
-public class SingleThreadMySequencer extends MySequencer
+public class SingleThreadMySequencer extends My_Sequencer
 {
 
     /**
@@ -34,9 +34,9 @@ public class SingleThreadMySequencer extends MySequencer
      */
     long cachedValue;
 
-    public SingleThreadMySequencer(int buffSize, WaitStrategy waitStrategy)
+    public SingleThreadMySequencer(int buffSize, My_WaitStrategy myWaitStrategy)
     {
-        super(buffSize, waitStrategy);
+        super(buffSize, myWaitStrategy);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class SingleThreadMySequencer extends MySequencer
             // 注意：这是导致死锁的重要原因！
             // 死锁分析：如果消费者挂掉了，而它的sequence没有从gatingSequences中删除的话，则生产者会死锁，它永远等不到消费者更新。
             // (如果消费者一直不消费, 不就惨了.)
-            while (wrapPoint > (minSequence = Util.getMinimumSequence(gatingSequences, nextValue)))
+            while (wrapPoint > (minSequence = My_Util.getMinimumSequence(gatingSequences, nextValue)))
             {
                 LockSupport.parkNanos(1L); // TODO: Use waitStrategy to spin?
             }
@@ -159,7 +159,7 @@ public class SingleThreadMySequencer extends MySequencer
             }
 
             // 获取最新的消费者进度并缓存起来
-            long minSequence = Util.getMinimumSequence(gatingSequences, nextValue);
+            long minSequence = My_Util.getMinimumSequence(gatingSequences, nextValue);
             this.cachedValue = minSequence;
 
             // 根据最新的消费者进度，仍然形成环路(产生追尾)，则表示空间不足

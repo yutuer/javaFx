@@ -12,7 +12,7 @@ import java.security.PrivilegedExceptionAction;
  * @Date 2020/10/20 10:07
  * @Version 1.0
  */
-public class Util
+public class My_Util
 {
     private static final Unsafe THE_UNSAFE;
 
@@ -55,7 +55,7 @@ public class Util
      * @param minimum
      * @return
      */
-    public static long getMinimumSequence(final Seq[] sequences, long minimum)
+    public static long getMinimumSequence(final MultiThreadLongSeq[] sequences, long minimum)
     {
         for (int i = 0, n = sequences.length; i < n; i++)
         {

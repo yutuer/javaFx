@@ -9,7 +9,7 @@ import sun.misc.Unsafe;
  * @Date 2020/9/27 23:28
  * @Version 1.0
  */
-public class Seq
+public class MultiThreadLongSeq
 {
     public static final long INITIAL_VALUE = -1L;
 
@@ -23,10 +23,10 @@ public class Seq
 
     static
     {
-        UNSAFE = Util.getUnsafe();
+        UNSAFE = My_Util.getUnsafe();
         try
         {
-            VALUE_OFFSET = UNSAFE.objectFieldOffset(Seq.class.getDeclaredField("value"));
+            VALUE_OFFSET = UNSAFE.objectFieldOffset(MultiThreadLongSeq.class.getDeclaredField("value"));
         }
         catch (final Exception e)
         {
@@ -34,11 +34,11 @@ public class Seq
         }
     }
 
-    public Seq()
+    public MultiThreadLongSeq()
     {
     }
 
-    public Seq(long value)
+    public MultiThreadLongSeq(long value)
     {
         this.value = value;
     }

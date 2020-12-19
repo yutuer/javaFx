@@ -1,7 +1,7 @@
 package disruptorTest.dis;
 
 import com.lmax.disruptor.InsufficientCapacityException;
-import disruptorTest.dis.consume.WaitStrategy;
+import disruptorTest.dis.consume.My_WaitStrategy;
 
 /**
  * @Description TODO
@@ -9,26 +9,26 @@ import disruptorTest.dis.consume.WaitStrategy;
  * @Date 2020/9/29 8:16
  * @Version 1.0
  */
-public class MultiThreadMySequencer extends MySequencer
+public class MultiThreadMySequencer extends My_Sequencer
 {
     /**
      * 预分配的生产者序列号
      */
-    protected Seq nextValue;
+    protected MultiThreadLongSeq nextValue;
 
     /**
      * 当前的序号
      */
-    protected Seq cachedValue;
+    protected MultiThreadLongSeq cachedValue;
 
     /**
      * 消费者序号
      */
-    protected Seq gatingValue;
+    protected MultiThreadLongSeq gatingValue;
 
-    public MultiThreadMySequencer(int buffSize, WaitStrategy waitStrategy)
+    public MultiThreadMySequencer(int buffSize, My_WaitStrategy myWaitStrategy)
     {
-        super(buffSize, waitStrategy);
+        super(buffSize, myWaitStrategy);
     }
 
     @Override

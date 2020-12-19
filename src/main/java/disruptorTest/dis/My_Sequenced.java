@@ -15,7 +15,7 @@ import com.lmax.disruptor.InsufficientCapacityException;
  * @Date 2020/9/27 23:26
  * @Version 1.0
  */
-public interface MySequenced
+public interface My_Sequenced
 {
     /**
      * 获取下一个数据的索引，空间不足是会阻塞(等待)
