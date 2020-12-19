@@ -1,7 +1,7 @@
 package disruptorTest.dis.common;
 
 import disruptorTest.dis.Cursor;
-import disruptorTest.dis.Seqer;
+import disruptorTest.dis.MySequenced;
 import disruptorTest.dis.consume.EventProcess;
 import disruptorTest.dis.produce.EventFactory;
 
@@ -28,19 +28,19 @@ public class RBuff<T> implements Cursor
     /**
      * 用于计算消费者的索引
      */
-    private Seqer produceSeq;
+    private MySequenced produceSeq;
 
     /**
      * 用于计算消费者的索引
      */
-    private Seqer consumeSeq;
+    private MySequenced consumeSeq;
 
     /**
      * 消费者集合
      */
     private List<EventProcess> eventProcesses;
 
-    public RBuff(EventFactory<T> eventFactory, Seqer seq, int size)
+    public RBuff(EventFactory<T> eventFactory, MySequenced seq, int size)
     {
         this.eventFactory = eventFactory;
 //        this.seq = seq;

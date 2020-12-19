@@ -10,7 +10,7 @@ import disruptorTest.dis.consume.WaitStrategy;
  * @Date 2020/9/29 7:40
  * @Version 1.0
  */
-public abstract class MySequencer implements Seqer
+public abstract class MySequencer implements MySequenced
 {
     // 一个数组大小, 用来获取下标. 所以是len-1
     protected int buffSize;
