@@ -1,4 +1,6 @@
-package disruptorTest;
+package disruptorTest.locklessQueue;
+
+import disruptorTest.ICreateTemplateArray;
 
 /**
  * 无锁队列

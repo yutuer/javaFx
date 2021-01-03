@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
  */
 public interface My_WaitStrategy
 {
-
     /**
      * 等待策略
      *

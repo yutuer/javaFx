@@ -1,4 +1,6 @@
-package disruptorTest;
+package disruptorTest.locklessQueue;
+
+import disruptorTest.ICreateTemplateArray;
 
 /**
  * @Description 单线程读, 单线程写 交互的Queue

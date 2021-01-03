@@ -9,24 +9,24 @@ import disruptorTest.dis.consume.My_WaitStrategy;
  * @Date 2020/9/29 8:16
  * @Version 1.0
  */
-public class MultiThreadMySequencer extends My_Sequencer
+public class My_MultiThreadSequencer extends My_AbstractSequencer
 {
     /**
      * 预分配的生产者序列号
      */
-    protected MultiThreadLongSeq nextValue;
+    protected LongForCacheLine nextValue;
 
     /**
      * 当前的序号
      */
-    protected MultiThreadLongSeq cachedValue;
+    protected LongForCacheLine cachedValue;
 
     /**
      * 消费者序号
      */
-    protected MultiThreadLongSeq gatingValue;
+    protected LongForCacheLine gatingValue;
 
-    public MultiThreadMySequencer(int buffSize, My_WaitStrategy myWaitStrategy)
+    public My_MultiThreadSequencer(int buffSize, My_WaitStrategy myWaitStrategy)
     {
         super(buffSize, myWaitStrategy);
     }
@@ -49,9 +49,4 @@ public class MultiThreadMySequencer extends My_Sequencer
         return 0;
     }
 
-    @Override
-    public int bufferSize()
-    {
-        return 0;
-    }
 }

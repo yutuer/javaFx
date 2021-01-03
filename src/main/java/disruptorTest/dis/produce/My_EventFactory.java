@@ -6,7 +6,7 @@ package disruptorTest.dis.produce;
  * @Date 2020/9/28 8:29
  * @Version 1.0
  */
-public interface EventFactory<T>
+public interface My_EventFactory<T>
 {
     T create();
 }

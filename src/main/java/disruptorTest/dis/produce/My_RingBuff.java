@@ -6,6 +6,6 @@ package disruptorTest.dis.produce;
  * @Date 2020/11/27 20:39
  * @Version 1.0
  */
-public class RingBuff
+public class My_RingBuff
 {
 }

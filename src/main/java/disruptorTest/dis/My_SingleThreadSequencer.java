@@ -11,7 +11,7 @@ import java.util.concurrent.locks.LockSupport;
  * @Date 2020/9/28 23:38
  * @Version 1.0
  */
-public class SingleThreadMySequencer extends My_Sequencer
+public class My_SingleThreadSequencer extends My_AbstractSequencer
 {
 
     /**
@@ -34,7 +34,7 @@ public class SingleThreadMySequencer extends My_Sequencer
      */
     long cachedValue;
 
-    public SingleThreadMySequencer(int buffSize, My_WaitStrategy myWaitStrategy)
+    public My_SingleThreadSequencer(int buffSize, My_WaitStrategy myWaitStrategy)
     {
         super(buffSize, myWaitStrategy);
     }
@@ -62,7 +62,7 @@ public class SingleThreadMySequencer extends My_Sequencer
 
         // 构成环路的点：环形缓冲区可能追尾的点 = 等于本次申请的序号-环形缓冲区大小
         // 如果该序号大于最慢消费者的进度，那么表示追尾了，需要等待
-        long wrapPoint = nextSequence - buffSize;
+        long wrapPoint = nextSequence - bufferSize;
 
         // 上次缓存的最小网关序号(消费最慢的消费者的进度)
         long cachedGatingSequence = this.cachedValue;
@@ -76,6 +76,7 @@ public class SingleThreadMySequencer extends My_Sequencer
             // 插入StoreLoad内存屏障/栅栏，保证可见性。
             // 因为publish使用的是set()/putOrderedLong，并不保证其他消费者能及时看见发布的数据
             // 当我再次申请更多的空间时，必须保证消费者能消费发布的数据
+            // 而且这里使用的是nextValue, 不是 nextSequence. 因为这里的n只是预读, 还没有真正的设置值
             cursor.putVolatile(nextValue);
 
             // 同步下的最后序列
@@ -98,6 +99,7 @@ public class SingleThreadMySequencer extends My_Sequencer
 
         // 这里只写了缓存，并未写volatile变量，因为只是预分配了空间但是并未被发布数据，不需要让其他消费者感知到。
         // 消费者只会感知到真正被发布的序号(也就是cursor的值)
+        // 所以也使得可以调用多次next后,  再统一调用publish()来进行volalite来进行同步
         this.nextValue = nextSequence;
 
         return nextSequence;
@@ -109,7 +111,8 @@ public class SingleThreadMySequencer extends My_Sequencer
         return tryNext(1);
     }
 
-    private long tryNext(int n) throws InsufficientCapacityException
+    @Override
+    public long tryNext(int n) throws InsufficientCapacityException
     {
         if (n < 1)
         {
@@ -147,7 +150,7 @@ public class SingleThreadMySequencer extends My_Sequencer
 
         // 构成环路的点：环形缓冲区可能追尾的点 = 等于本次申请的序号-环形缓冲区大小
         // 如果该序号大于最慢消费者的进度，那么表示追尾了，需要等待
-        long wrapPoint = nextSequence - buffSize;
+        long wrapPoint = nextSequence - bufferSize;
 
         // 上次缓存的最小网关序号(消费最慢的消费者的进度)
         long cachedGatingSequence = this.cachedValue;
@@ -160,6 +163,7 @@ public class SingleThreadMySequencer extends My_Sequencer
 
             // 获取最新的消费者进度并缓存起来
             long minSequence = My_Util.getMinimumSequence(gatingSequences, nextValue);
+            // 这里会更新缓存
             this.cachedValue = minSequence;
 
             // 根据最新的消费者进度，仍然形成环路(产生追尾)，则表示空间不足
@@ -179,12 +183,8 @@ public class SingleThreadMySequencer extends My_Sequencer
         long nextValue = this.nextValue;
         // 上次缓存的最小网关序号(消费最慢的消费者的进度)
         long cachedGatingSequence = this.cachedValue;
-        return cachedGatingSequence + buffSize - nextValue;
+        return cachedGatingSequence + bufferSize - nextValue;
     }
 
-    @Override
-    public int bufferSize()
-    {
-        return 0;
-    }
+
 }

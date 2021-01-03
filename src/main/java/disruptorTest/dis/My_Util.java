@@ -55,7 +55,7 @@ public class My_Util
      * @param minimum
      * @return
      */
-    public static long getMinimumSequence(final MultiThreadLongSeq[] sequences, long minimum)
+    public static long getMinimumSequence(final LongForCacheLine[] sequences, long minimum)
     {
         for (int i = 0, n = sequences.length; i < n; i++)
         {

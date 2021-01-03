@@ -2,8 +2,8 @@ package disruptorTest.dis.common;
 
 import disruptorTest.dis.My_Cursor;
 import disruptorTest.dis.My_Sequenced;
-import disruptorTest.dis.consume.EventProcess;
-import disruptorTest.dis.produce.EventFactory;
+import disruptorTest.dis.consume.My_EventProcessor;
+import disruptorTest.dis.produce.My_EventFactory;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class My_RBuff<T> implements My_Cursor
 
     private Object[] datas;
 
-    private EventFactory<T> eventFactory;
+    private My_EventFactory<T> eventFactory;
 
     /**
      * 用于计算消费者的索引
@@ -38,9 +38,9 @@ public class My_RBuff<T> implements My_Cursor
     /**
      * 消费者集合
      */
-    private List<EventProcess> eventProcesses;
+    private List<My_EventProcessor> eventProcesses;
 
-    public My_RBuff(EventFactory<T> eventFactory, My_Sequenced seq, int size)
+    public My_RBuff(My_EventFactory<T> eventFactory, My_Sequenced seq, int size)
     {
         this.eventFactory = eventFactory;
 //        this.seq = seq;
