@@ -15,15 +15,21 @@ import java.util.List;
 public abstract class IterativeSystem<TNodeType extends Node> implements ISystem
 {
 
+    /**
+     * 引擎
+     */
     protected Engine engine;
 
+    /**
+     * 特定System 的Node集合
+     */
     protected List<TNodeType> nodes;
 
     public IterativeSystem(Engine engine)
     {
         this.engine = engine;
 
-        nodes = engine.getNodes();
+        nodes = engine.getNodes(this);
     }
 
     public void update(int interval)

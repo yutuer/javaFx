@@ -1,8 +1,10 @@
 package behaviorTree.GameEngine.familyManager;
 
 import behaviorTree.GameEngine.entityManager.EntityManager;
+import behaviorTree.GameEngine.familyManager.node.Node;
+import behaviorTree.GameEngine.system.IterativeSystem;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
@@ -19,28 +21,31 @@ public class FamilyManager
 
     private EntityManager entityManager;
 
-    private Map<Type, IFamily> nodes;
+    private Map<Type, IFamily> families;
 
     public FamilyManager(EntityManager entityManager)
     {
         this.entityManager = entityManager;
-        entityManager.addAddHandler((game, entity) ->
-        {
-
-        });
     }
 
-    public <TNodeType> List<TNodeType> getNodes()
+    private <TNodeType extends Node> Type getType(IterativeSystem<TNodeType> system)
     {
-        try
-        {
-            Method m = this.getClass().getDeclaredMethod("getNodes");
-
-        }
-        catch (NoSuchMethodException e)
-        {
-            e.printStackTrace();
-        }
-        return null;
+        Type genericSuperclass = system.getClass().getGenericSuperclass();
+        ParameterizedType pt = (ParameterizedType) genericSuperclass;
+        Type actualTypeArgument = pt.getActualTypeArguments()[0];
+        return actualTypeArgument;
     }
+
+    public <TNodeType extends Node> List<Node> getNodes(IterativeSystem<TNodeType> system)
+    {
+        Type type = getType(system);
+        IFamily iFamily = families.get(type);
+        if (iFamily == null)
+        {
+            iFamily = new ComponentMatchingFamily(type);
+            families.put(type, iFamily);
+        }
+        return iFamily.getNodes();
+    }
+
 }

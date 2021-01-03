@@ -5,11 +5,13 @@ import behaviorTree.GameEngine.eventManager.EventManager;
 import behaviorTree.GameEngine.eventManager.GlobalId;
 import behaviorTree.GameEngine.eventManager.event.Event;
 import behaviorTree.GameEngine.familyManager.FamilyManager;
-import behaviorTree.GameEngine.familyManager.node.HealthNode;
+import behaviorTree.GameEngine.familyManager.node.Node;
+import behaviorTree.GameEngine.system.IterativeSystem;
 import behaviorTree.IClock;
 import behaviorTree.entity.BehaviourEntity;
 import simpleThreadProcessPool.service.AbstractService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,9 +74,9 @@ public class Engine extends AbstractService implements IClock
         entityManager.tick(interval);
     }
 
-    public <TNodeType> List<TNodeType> getNodes()
+    public <TNodeType extends Node> List<TNodeType> getNodes(IterativeSystem<TNodeType> system)
     {
-        return familyManager.getNodes();
+        return new ArrayList(familyManager.getNodes(system));
     }
 
     public void publishEvent(BehaviourEntity sender, Event event)
@@ -82,10 +84,4 @@ public class Engine extends AbstractService implements IClock
         eventManager.publishEvent(sender, event);
     }
 
-    public static void main(String[] args)
-    {
-        Engine engine = new Engine();
-        List<HealthNode> nodes = engine.getNodes();
-
-    }
 }
