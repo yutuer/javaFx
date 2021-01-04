@@ -1,7 +1,6 @@
 package disruptorTest.dis;
 
 import com.lmax.disruptor.InsufficientCapacityException;
-import com.lmax.disruptor.Sequencer;
 
 /**
  * 该接口是面向生产者的(发布接口)，生产者通过该接口获取队列容量，和可用空间，
@@ -58,7 +57,7 @@ public interface My_Sequenced
      * <p>
      * Attempt to claim the next n events in sequence for publishing.  Will return the
      * highest numbered slot if there is at least <code>requiredCapacity</code> slots
-     * available.  Have a look at {@link Sequencer#next()} for a description on how to
+     * available.  Have a look at {@link My_Sequencer#next()} for a description on how to
      * use this method.
      *
      * @param n the number of sequences to claim

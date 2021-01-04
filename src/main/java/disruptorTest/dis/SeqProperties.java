@@ -8,5 +8,5 @@ package disruptorTest.dis;
  */
 public interface SeqProperties
 {
-    int bufferSize();
+    int getBufferSize();
 }

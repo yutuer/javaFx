@@ -78,5 +78,16 @@ public abstract class My_AbstractSequencer implements My_Sequencer
         My_SequenceGroups.addSequences(this, SEQUENCE_UPDATER, this, gatingSequences);
     }
 
+    /**
+     * 移除消费者的进度信息，这些消费者的进度不再被关心
+     *
+     * @see My_Sequencer#removeGatingSequence(LongForCacheLine)
+     */
+    @Override
+    public boolean removeGatingSequence(LongForCacheLine sequence)
+    {
+        return My_SequenceGroups.removeSequence(this, SEQUENCE_UPDATER, sequence);
+    }
+
 
 }
