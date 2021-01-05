@@ -44,9 +44,32 @@ public class My_MultiThreadSequencer extends My_AbstractSequencer
     }
 
     @Override
+    public long tryNext(int n) throws InsufficientCapacityException
+    {
+        return 0;
+    }
+
+    @Override
     public long remainingCapacity()
     {
         return 0;
     }
 
+    @Override
+    public void publish(long sequence)
+    {
+
+    }
+
+    @Override
+    public void publish(long lo, long hi)
+    {
+
+    }
+
+    @Override
+    public boolean isAvailable(long sequence)
+    {
+        return false;
+    }
 }

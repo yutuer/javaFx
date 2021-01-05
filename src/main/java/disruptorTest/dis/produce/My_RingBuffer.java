@@ -1,9 +1,7 @@
 package disruptorTest.dis.produce;
 
-import disruptorTest.dis.My_Cursor;
-import disruptorTest.dis.My_Sequencer;
-import disruptorTest.dis.My_SingleThreadSequencer;
-import disruptorTest.dis.My_Util;
+import com.lmax.disruptor.InsufficientCapacityException;
+import disruptorTest.dis.*;
 import disruptorTest.dis.consume.My_WaitStrategy;
 import sun.misc.Unsafe;
 
@@ -13,7 +11,7 @@ import sun.misc.Unsafe;
  * @Date 2020/11/27 20:39
  * @Version 1.0
  */
-public final class My_RingBuffer<E> implements My_Cursor
+public final class My_RingBuffer<E> implements My_Cursor, My_EventSequencer<E>
 {
     // 数组填充大小，避免数组的有效元素出现伪共享
     // 数组的前X个元素会出现伪共享和后X个元素可能会出现伪共享,可能和无关数据加载到同一个缓存行。
@@ -104,11 +102,72 @@ public final class My_RingBuffer<E> implements My_Cursor
         return new My_RingBuffer(eventFactory, sequencer);
     }
 
+    public static <E> My_RingBuffer<E> create(final My_ProducerType producerType, My_EventFactory eventFactory, int bufferSize,
+                                              My_WaitStrategy myWaitStrategy)
+    {
+        My_Sequencer sequencer;
+        if (producerType == My_ProducerType.SINGLE)
+        {
+            sequencer = new My_SingleThreadSequencer(bufferSize, myWaitStrategy);
+        }
+        else if (producerType == My_ProducerType.MULTI)
+        {
+            sequencer = new My_SingleThreadSequencer(bufferSize, myWaitStrategy);
+        }
+        return new My_RingBuffer(eventFactory, sequencer);
+    }
+
     @Override
     public long getCursor()
     {
         return sequencer.getCursor();
     }
 
+    @Override
+    public E get(long sequence)
+    {
+        return null;
+    }
 
+    @Override
+    public int getBufferSize()
+    {
+        return sequencer.getBufferSize();
+    }
+
+    @Override
+    public long next()
+    {
+        return sequencer.next();
+    }
+
+    @Override
+    public long tryNext() throws InsufficientCapacityException
+    {
+        return sequencer.tryNext();
+    }
+
+    @Override
+    public long tryNext(int n) throws InsufficientCapacityException
+    {
+        return sequencer.tryNext(n);
+    }
+
+    @Override
+    public long remainingCapacity()
+    {
+        return sequencer.remainingCapacity();
+    }
+
+    @Override
+    public void publish(long sequence)
+    {
+        sequencer.publish(sequence);
+    }
+
+    @Override
+    public void publish(long lo, long hi)
+    {
+        sequencer.publish(lo, hi);
+    }
 }
