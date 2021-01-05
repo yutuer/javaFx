@@ -45,14 +45,18 @@ public abstract class My_AbstractSequencer implements My_Sequencer
     protected volatile LongForCacheLine[] gatingSequences = new LongForCacheLine[0];
 
     /**
-     * 一个生产者和消费者 都会使用的 等待策略
+     * 一个消费者使用的等待策略
+     * 当消费者没有可以消费的数据的时候, 会使用这个策略等待
+     * <p>
+     * 当生产者无法再进行生产的时候(生产的速度大于消费的速度. 这里就是next()的时候发现拿不到新的索引),
+     * 此时使用的策略是LockSupport.Park(1L)不停的暂停去检查消费者的进度
      */
-    protected My_WaitStrategy myWaitStrategy;
+    protected My_WaitStrategy waitStrategy;
 
-    public My_AbstractSequencer(int bufferSize, My_WaitStrategy myWaitStrategy)
+    public My_AbstractSequencer(int bufferSize, My_WaitStrategy waitStrategy)
     {
         this.bufferSize = bufferSize;
-        this.myWaitStrategy = myWaitStrategy;
+        this.waitStrategy = waitStrategy;
     }
 
     @Override

@@ -182,9 +182,42 @@ public class My_SingleThreadSequencer extends My_AbstractSequencer
         // 已分配序号缓存
         long nextValue = this.nextValue;
         // 上次缓存的最小网关序号(消费最慢的消费者的进度)
-        long cachedGatingSequence = this.cachedValue;
-        return cachedGatingSequence + bufferSize - nextValue;
+        long consumed = My_Util.getMinimumSequence(gatingSequences, nextValue);
+        long produced = nextValue;
+
+        // nowEntity = produced - consumed 表示的是未取走的.  所以剩下能放置的就是 buffsize - nowEntity
+        return getBufferSize() - (produced - consumed);
     }
 
+    /**
+     * 发布一个数据，这个sequence最终会等于{@link #nextValue}
+     *
+     * @see My_Sequencer#publish(long)
+     */
+    @Override
+    public void publish(long sequence)
+    {
+        // 更新发布进度，使用的是set（putOrderedLong），并没有保证对其他线程立即可见(最终会看见)
+        // 在下一次申请更多的空间时，如果发现需要消费者加快消费，则必须保证数据对消费者可见
+        cursor.set(sequence);
+        // 唤醒阻塞的消费者们(事件处理器们)
+        waitStrategy.signalAllWhenBlocking();
+    }
 
+    /**
+     * 发布数据，这个hi其实就是{@link #nextValue}
+     *
+     * @see My_Sequencer#publish(long, long)
+     */
+    @Override
+    public void publish(long lo, long hi)
+    {
+        publish(hi);
+    }
+
+    @Override
+    public boolean isAvailable(long sequence)
+    {
+        return sequence <= cursor.get();
+    }
 }
