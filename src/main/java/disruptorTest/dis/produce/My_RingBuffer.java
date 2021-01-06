@@ -1,6 +1,8 @@
 package disruptorTest.dis.produce;
 
 import com.lmax.disruptor.InsufficientCapacityException;
+import com.lmax.disruptor.Sequence;
+import com.lmax.disruptor.SequenceBarrier;
 import disruptorTest.dis.*;
 import disruptorTest.dis.consume.My_WaitStrategy;
 import sun.misc.Unsafe;
@@ -105,7 +107,7 @@ public final class My_RingBuffer<E> implements My_Cursor, My_EventSequencer<E>
     public static <E> My_RingBuffer<E> create(final My_ProducerType producerType, My_EventFactory eventFactory, int bufferSize,
                                               My_WaitStrategy myWaitStrategy)
     {
-        My_Sequencer sequencer;
+        My_Sequencer sequencer = null;
         if (producerType == My_ProducerType.SINGLE)
         {
             sequencer = new My_SingleThreadSequencer(bufferSize, myWaitStrategy);
@@ -169,5 +171,20 @@ public final class My_RingBuffer<E> implements My_Cursor, My_EventSequencer<E>
     public void publish(long lo, long hi)
     {
         sequencer.publish(lo, hi);
+    }
+
+    /**
+     * 注释见@see Sequencer#newBarrier(Sequence...)
+     *
+     * Create a new SequenceBarrier to be used by an EventProcessor to track which messages
+     * are available to be read from the ring buffer given a list of sequences to track.
+     *
+     * @param sequencesToTrack the additional sequences to track
+     * @return A sequence barrier that will track the specified sequences.
+     * @see My_SequenceBarrier
+     */
+    public My_SequenceBarrier newBarrier(LongForCacheLine... sequencesToTrack)
+    {
+        return sequencer.newBarrier(sequencesToTrack);
     }
 }

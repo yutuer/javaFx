@@ -6,7 +6,7 @@ import disruptorTest.dis.consume.My_EventProcessor;
 /**
  * 此接口是面向消费者的(查询接口). 所以继承了之后, 就同时能使用生产者和消费者的接口了
  * 序号生成器。
- *
+ * <p>
  * 这个接口已经封装完了 消费者, 生产者的行为了. 获取了索引之后, 用什么数据结构存储并不重要. 我们可以用一个无限长的数组, 只不过为了复用, 才设计了
  * 环形数组. 但是那个结构已经是在这个接口操作成功之后的处理了.
  * 这个接口 真正做到了只利用接口, 就把逻辑表述清楚了. 我们可以利用这个接口得到插入的索引, 然后将数据放入底层实现. 然后利用接口publish发布出去
@@ -57,4 +57,18 @@ public interface My_Sequencer extends My_Cursor, My_Sequenced
      */
     boolean removeGatingSequence(LongForCacheLine sequence);
 
+    /**
+     * 为事件处理器创建一个序号屏障，追踪这些Sequence的信息，用于从RingBuffer中获取可用的数据。
+     * 为啥放在Sequencer接口中？ Barrier需要知道序号生成器(Sequencer)的生产进度，需要持有Sequencer对象引用。
+     * <p>
+     * Create a new SequenceBarrier to be used by an EventProcessor to track which messages
+     * are available to be read from the ring buffer given a list of sequences to track.
+     *
+     * @param sequencesToTrack All of the sequences that the newly constructed barrier will wait on.
+     *                         所有需要追踪的序列，其实也是所有要追踪的前置消费者。
+     *                         即消费者只能消费被这些Sequence代表的消费者们已经消费的序列
+     * @return A sequence barrier that will track the specified sequences.
+     * 一个新创建的用于追踪给定序列的屏障
+     */
+    My_SequenceBarrier newBarrier(LongForCacheLine[] sequencesToTrack);
 }

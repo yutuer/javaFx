@@ -1,5 +1,8 @@
 package disruptorTest.dis;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadInfo;
+import java.lang.management.ThreadMXBean;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
@@ -35,5 +38,31 @@ public class My_BasicExecutor implements Executor
         threads.add(thread);
     }
 
+    @Override
+    public String toString()
+    {
+        return "My_BasicExecutor{" +
+                "threads=" + dumpThreadInfo() +
+                '}';
+    }
 
+    private String dumpThreadInfo()
+    {
+        final StringBuilder sb = new StringBuilder();
+
+        final ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
+
+        for (Thread t : threads)
+        {
+            ThreadInfo threadInfo = threadMXBean.getThreadInfo(t.getId());
+            sb.append("{");
+            sb.append("name=").append(t.getName()).append(",");
+            sb.append("id=").append(t.getId()).append(",");
+            sb.append("state=").append(threadInfo.getThreadState()).append(",");
+            sb.append("lockInfo=").append(threadInfo.getLockInfo());
+            sb.append("}");
+        }
+
+        return sb.toString();
+    }
 }
