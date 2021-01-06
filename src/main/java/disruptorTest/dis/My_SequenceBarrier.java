@@ -5,8 +5,7 @@ import com.lmax.disruptor.TimeoutException;
 
 /**
  * 序号屏障（协调屏障）：
- *
- *
+ * 通过跟踪生产者的cursor 和 当前事件处理器依赖的的sequence(dependentSequence/traceSequences)，来协调对共享数据结构的访问。
  *
  * @Description
  * @Author zhangfan
