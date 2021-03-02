@@ -1,6 +1,5 @@
 package disruptorTest.dis;
 
-import com.lmax.disruptor.Sequence;
 import disruptorTest.dis.consume.My_EventProcessor;
 
 /**
@@ -24,8 +23,13 @@ public class My_EventHandlerGroup<T>
 {
     /**
      * 方便回调，用于创建具有依赖关系的消费者
-     * {@link My_Disruptor#createEventProcessors(Sequence[], My_EventHandler[])}
-     * {@link My_Disruptor#createEventProcessors(Sequence[], My_EventProcessorFactory[])}
+     * {@link My_Disruptor#createEventProcessors(LongForCacheLine[], My_EventHandler[])}
+     * {@link My_Disruptor#createEventProcessors(LongForCacheLine[], My_EventProcessorFactory[])}
      */
     private final My_Disruptor<T> disruptor;
+
+    public My_EventHandlerGroup(My_Disruptor<T> disruptor)
+    {
+        this.disruptor = disruptor;
+    }
 }

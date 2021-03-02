@@ -220,4 +220,10 @@ public class My_SingleThreadSequencer extends My_AbstractSequencer
     {
         return sequence <= cursor.get();
     }
+
+    @Override
+    public My_SequenceBarrier newBarrier(LongForCacheLine[] sequencesToTrack)
+    {
+        return null;
+    }
 }

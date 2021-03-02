@@ -60,6 +60,7 @@ public interface My_Sequencer extends My_Cursor, My_Sequenced
     /**
      * 为事件处理器创建一个序号屏障，追踪这些Sequence的信息，用于从RingBuffer中获取可用的数据。
      * 为啥放在Sequencer接口中？ Barrier需要知道序号生成器(Sequencer)的生产进度，需要持有Sequencer对象引用。
+     * 如果不放在这个接口里面, 就需要用参数传入了(构造方法的方式不通用).
      * <p>
      * Create a new SequenceBarrier to be used by an EventProcessor to track which messages
      * are available to be read from the ring buffer given a list of sequences to track.

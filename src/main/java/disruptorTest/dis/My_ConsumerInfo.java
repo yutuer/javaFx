@@ -1,5 +1,7 @@
 package disruptorTest.dis;
 
+import java.util.concurrent.Executor;
+
 /**
  * 一个消费者信息的抽象，
  *
@@ -9,4 +11,7 @@ package disruptorTest.dis;
  */
 public interface My_ConsumerInfo
 {
+    My_Sequencer[] getSequences();
+
+    void start(Executor executor);
 }

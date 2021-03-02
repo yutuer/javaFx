@@ -1,6 +1,5 @@
 package disruptorTest.dis;
 
-import com.lmax.disruptor.SequenceBarrier;
 import com.lmax.disruptor.WorkerPool;
 import com.lmax.disruptor.dsl.BasicExecutor;
 import disruptorTest.dis.consume.My_WaitStrategy;
@@ -148,7 +147,10 @@ public class My_Disruptor<T>
         // 收集添加的消费者的序号
         final LongForCacheLine[] processorSequences = new LongForCacheLine[eventHandlers.length];
         // 本批次消费由于添加在同一个节点之后，因此共享该屏障
-        final SequenceBarrier barrier = ringBuffer.newBarrier(barrierSequences);
+        final My_SequenceBarrier barrier = ringBuffer.newBarrier(barrierSequences);
+
+        // 创建单线程消费者(BatchEventProcessor)
+
 
         return null;
     }

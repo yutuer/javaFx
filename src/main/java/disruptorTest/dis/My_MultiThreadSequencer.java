@@ -72,4 +72,10 @@ public class My_MultiThreadSequencer extends My_AbstractSequencer
     {
         return false;
     }
+
+    @Override
+    public My_SequenceBarrier newBarrier(LongForCacheLine[] sequencesToTrack)
+    {
+        return null;
+    }
 }
