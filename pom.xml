@@ -6,7 +6,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
-        <pulsar.version>2.6.0</pulsar.version>
+        <pulsar.version>2.7.5</pulsar.version>
     </properties>
 
     <dependencies>
